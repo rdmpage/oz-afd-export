@@ -98,7 +98,7 @@ while (!$done)
 	FROM bibliography';
 	
 	// A specific journal or publication, otherwise we are getting everything
-	//$sql .= ' WHERE PUBLICATION_GUID = "30bc1c51-6b67-40d1-8419-045b3a13fa71"';
+	$sql .= ' WHERE PUBLICATION_GUID = "30bc1c51-6b67-40d1-8419-045b3a13fa71"';
 
 	// chapter
 	//$sql .= ' WHERE PUBLICATION_GUID = "504be1f6-4dbb-4012-944c-1f7303cb105f"';
@@ -565,7 +565,7 @@ while (!$done)
 		$t = join("\n", $triples);
 	
 		// triples or JSON-LD?
-		if (1)
+		if (0)
 		{
 			echo $t . "\n";
 		}
@@ -578,7 +578,6 @@ while (!$done)
 	
 			$context = (object)array(
 				'@vocab' => 'http://schema.org/',
-				'bibo' => 'http://purl.org/ontology/bibo/',
 				'sha1' => 'http://id.loc.gov/vocabulary/preservation/cryptographicHashFunctions/sha1'
 			);
 	
