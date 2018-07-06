@@ -98,7 +98,13 @@ while (!$done)
 	FROM bibliography';
 	
 	// A specific journal or publication, otherwise we are getting everything
-	$sql .= ' WHERE PUBLICATION_GUID = "30bc1c51-6b67-40d1-8419-045b3a13fa71"';
+	//$sql .= ' WHERE PUBLICATION_GUID = "30bc1c51-6b67-40d1-8419-045b3a13fa71"';
+
+	// chapter
+	//$sql .= ' WHERE PUBLICATION_GUID = "504be1f6-4dbb-4012-944c-1f7303cb105f"';
+	
+	// book
+	$sql .= ' WHERE PUBLICATION_GUID = "9ba81e54-8180-4ec2-9a92-41f783656562"';
 	
 	//$sql .= ' WHERE updated > "2018-06-16"';
 	//$sql .= ' WHERE updated > "2018-06-21"';
@@ -257,11 +263,21 @@ while (!$done)
 				}
 			}
 		
-			// Book
+			// Book that contains this chapter
 			if ($result->fields['PUB_PARENT_BOOK_TITLE'] != '')
 			{
 				$triples[] = $container_id . ' <http://schema.org/name> ' .  '"' . addcslashes($result->fields['PUB_PARENT_BOOK_TITLE'], '"') . '" .';
 				$triples[] = $container_id . ' <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://schema.org/Book> .';
+										
+				if ($enhance_identifiers)
+				{
+					// ISBN
+					if ($result->fields['isbn'] != '')
+					{
+						$triples[] = $container_id . ' <http://schema.org/isbn> ' . '"' . addcslashes($result->fields['isbn'], '"') . '"' . '.';
+						$triples[] = $container_id . ' <http://schema.org/sameAs> "http://worldcat.org/isbn/' . $result->fields['isbn'] . '" .';
+					}	
+				}
 			}
 		
 		}	
@@ -302,140 +318,147 @@ while (!$done)
 	
 		if ($enhance_identifiers)
 		{
-			// BioStor
-			if ($result->fields['biostor'] != '')
+			switch ($result->fields['PUB_TYPE'])
 			{
-				$identifier_id = '<' . $subject_id . '#biostor' . '>';
+				case 'Book':
+					// ISBN
+					if ($result->fields['isbn'] != '')
+					{
+						$triples[] = $s . ' <http://schema.org/isbn> ' . '"' . addcslashes($result->fields['isbn'], '"') . '"' . '.';
+						$triples[] = $s . ' <http://schema.org/sameAs> "http://worldcat.org/isbn/' . $result->fields['isbn'] . '" .';
+					}					
+					break;
+				
+				case 'Article in Journal':
+				default:
+					// BioStor
+					if ($result->fields['biostor'] != '')
+					{
+						$identifier_id = '<' . $subject_id . '#biostor' . '>';
 		
-				$triples[] = $s . ' <http://schema.org/identifier> ' . $identifier_id . '.';			
-				$triples[] = $identifier_id . ' <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://schema.org/PropertyValue> .';
-				$triples[] = $identifier_id . ' <http://schema.org/propertyID> ' . '"biostor"' . '.';
-				$triples[] = $identifier_id . ' <http://schema.org/value> ' . '"' . addcslashes($result->fields['biostor'], '"') . '"' . '.';
+						$triples[] = $s . ' <http://schema.org/identifier> ' . $identifier_id . '.';			
+						$triples[] = $identifier_id . ' <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://schema.org/PropertyValue> .';
+						$triples[] = $identifier_id . ' <http://schema.org/propertyID> ' . '"biostor"' . '.';
+						$triples[] = $identifier_id . ' <http://schema.org/value> ' . '"' . addcslashes($result->fields['biostor'], '"') . '"' . '.';
 			
-				//$triples[] = $s . ' <http://schema.org/sameAs> ' . '<https://hdl.handle.net/' . $result->fields['handle'] . '> ' . '. ';
+						//$triples[] = $s . ' <http://schema.org/sameAs> ' . '<https://hdl.handle.net/' . $result->fields['handle'] . '> ' . '. ';
 			
-			}	
+					}	
 		
-			// DOI
-			if ($result->fields['doi'] != '')
-			{
-				$identifier_id = '<' . $subject_id . '#doi' . '>';
+					// DOI
+					if ($result->fields['doi'] != '')
+					{
+						$identifier_id = '<' . $subject_id . '#doi' . '>';
 		
-				$triples[] = $s . ' <http://schema.org/identifier> ' . $identifier_id . '.';			
-				$triples[] = $identifier_id . ' <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://schema.org/PropertyValue> .';
-				$triples[] = $identifier_id . ' <http://schema.org/propertyID> ' . '"doi"' . '.';
-				$triples[] = $identifier_id . ' <http://schema.org/value> ' . '"' . addcslashes($result->fields['doi'], '"') . '"' . '.';
+						$triples[] = $s . ' <http://schema.org/identifier> ' . $identifier_id . '.';			
+						$triples[] = $identifier_id . ' <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://schema.org/PropertyValue> .';
+						$triples[] = $identifier_id . ' <http://schema.org/propertyID> ' . '"doi"' . '.';
+						$triples[] = $identifier_id . ' <http://schema.org/value> ' . '"' . addcslashes($result->fields['doi'], '"') . '"' . '.';
 			
-				//$triples[] = $s . ' <http://schema.org/sameAs> ' . '<https://doi.org/' . $result->fields['doi'] . '> ' . '. ';
-				$triples[] = $s . ' <http://schema.org/sameAs> ' . '"https://doi.org/' . $result->fields['doi'] . '" ' . '. ';
+						//$triples[] = $s . ' <http://schema.org/sameAs> ' . '<https://doi.org/' . $result->fields['doi'] . '> ' . '. ';
+						$triples[] = $s . ' <http://schema.org/sameAs> ' . '"https://doi.org/' . $result->fields['doi'] . '" ' . '. ';
 			
+					}
+			
+					// Handle
+					if ($result->fields['handle'] != '')
+					{
+						$identifier_id = '<' . $subject_id . '#handle' . '>';
+		
+						$triples[] = $s . ' <http://schema.org/identifier> ' . $identifier_id . '.';			
+						$triples[] = $identifier_id . ' <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://schema.org/PropertyValue> .';
+						$triples[] = $identifier_id . ' <http://schema.org/propertyID> ' . '"handle"' . '.';
+						$triples[] = $identifier_id . ' <http://schema.org/value> ' . '"' . addcslashes($result->fields['handle'], '"') . '"' . '.';
+			
+						//$triples[] = $s . ' <http://schema.org/sameAs> ' . '<https://hdl.handle.net/' . $result->fields['handle'] . '> ' . '. ';
+						$triples[] = $s . ' <http://schema.org/sameAs> ' . '"https://hdl.handle.net/' . $result->fields['handle'] . '" ' . '. ';
+			
+					}	
+			
+					// JSTOR
+					if ($result->fields['jstor'] != '')
+					{
+						$identifier_id = '<' . $subject_id . '#jstor' . '>';
+		
+						$triples[] = $s . ' <http://schema.org/identifier> ' . $identifier_id . '.';			
+						$triples[] = $identifier_id . ' <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://schema.org/PropertyValue> .';
+						$triples[] = $identifier_id . ' <http://schema.org/propertyID> ' . '"jstor"' . '.';
+						$triples[] = $identifier_id . ' <http://schema.org/value> ' . '"' . addcslashes($result->fields['jstor'], '"') . '"' . '.';
+			
+						//$triples[] = $s . ' <http://schema.org/sameAs> ' . '<https://www.jstor.org/stable/' . $result->fields['jstor'] . '> ' . '. ';
+						$triples[] = $s . ' <http://schema.org/sameAs> ' . '"https://www.jstor.org/stable/' . $result->fields['jstor'] . '" ' . '. ';
+			
+					}		
+						
+					// PMID
+					if ($result->fields['pmid'] != '')
+					{
+						$identifier_id = '<' . $subject_id . '#pmid' . '>';
+		
+						$triples[] = $s . ' <http://schema.org/identifier> ' . $identifier_id . '.';			
+						$triples[] = $identifier_id . ' <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://schema.org/PropertyValue> .';
+						$triples[] = $identifier_id . ' <http://schema.org/propertyID> ' . '"pmid"' . '.';
+						$triples[] = $identifier_id . ' <http://schema.org/value> ' . '"' . addcslashes($result->fields['pmid'], '"') . '"' . '.';
+			
+						$triples[] = $s . ' <http://schema.org/sameAs> ' . '<https://www.ncbi.nlm.nih.gov/pubmed/' . $result->fields['pmid'] . '> ' . '. ';
+			
+					}		
+		
+					// SICI-style identifier to help automate citation linking	
+					$sici = array();
+				
+					if ($result->fields['issn'] != '')
+					{
+						$sici[] = $result->fields['issn'];
+			
+						if ($result->fields['PUB_YEAR'] != '')
+						{
+							$sici[] = '(' . $result->fields['PUB_YEAR'] . ')';
+						}										
+
+						if ($result->fields['volume'] != '')
+						{
+							$sici[] = $result->fields['volume'];
+						}
+
+						if ($result->fields['spage'] != '')
+						{
+							$sici[] = '<' . $result->fields['spage'] . '>';
+						}
+		
+						if (count($sici) == 4)
+						{
+							$identifier_id = '<' . $subject_id . '#sici' . '>';
+
+							$triples[] = $s . ' <http://schema.org/identifier> ' . $identifier_id . '.';			
+							$triples[] = $identifier_id . ' <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://schema.org/PropertyValue> .';
+							$triples[] = $identifier_id . ' <http://schema.org/propertyID> ' . '"sici"' . '.';
+							$triples[] = $identifier_id . ' <http://schema.org/value> ' . '"' . addcslashes(join('', $sici), '"') . '"' . '.';
+		
+						}
+					}
+		
+					// URL
+					if ($result->fields['url'] != '')
+					{
+						$triples[] = $s . ' <http://schema.org/url> ' . '"' . addcslashes($result->fields['url'], '"') . '"' . '.';
+					}	
+		
+					// Zenodo
+					if ($result->fields['zenodo'] != '')
+					{
+						$identifier_id = '<' . $subject_id . '#zenodo' . '>';
+
+						$triples[] = $s . ' <http://schema.org/identifier> ' . $identifier_id . '.';			
+						$triples[] = $identifier_id . ' <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://schema.org/PropertyValue> .';
+						$triples[] = $identifier_id . ' <http://schema.org/propertyID> ' . '"zenodo"' . '.';
+						$triples[] = $identifier_id . ' <http://schema.org/value> ' . '"' . $result->fields['zenodo'] . '"' . '.';
+				
+						// sameAs link?
+						//$triples[] = $s . ' <http://schema.org/sameAs> <https://zenodo.org/record/' . $result->fields['zenodo'] . '> .';				
+					}	
+					break;
 			}
-			
-			// Handle
-			if ($result->fields['handle'] != '')
-			{
-				$identifier_id = '<' . $subject_id . '#handle' . '>';
-		
-				$triples[] = $s . ' <http://schema.org/identifier> ' . $identifier_id . '.';			
-				$triples[] = $identifier_id . ' <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://schema.org/PropertyValue> .';
-				$triples[] = $identifier_id . ' <http://schema.org/propertyID> ' . '"handle"' . '.';
-				$triples[] = $identifier_id . ' <http://schema.org/value> ' . '"' . addcslashes($result->fields['handle'], '"') . '"' . '.';
-			
-				//$triples[] = $s . ' <http://schema.org/sameAs> ' . '<https://hdl.handle.net/' . $result->fields['handle'] . '> ' . '. ';
-				$triples[] = $s . ' <http://schema.org/sameAs> ' . '"https://hdl.handle.net/' . $result->fields['handle'] . '" ' . '. ';
-			
-			}	
-			
-			// JSTOR
-			if ($result->fields['jstor'] != '')
-			{
-				$identifier_id = '<' . $subject_id . '#jstor' . '>';
-		
-				$triples[] = $s . ' <http://schema.org/identifier> ' . $identifier_id . '.';			
-				$triples[] = $identifier_id . ' <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://schema.org/PropertyValue> .';
-				$triples[] = $identifier_id . ' <http://schema.org/propertyID> ' . '"jstor"' . '.';
-				$triples[] = $identifier_id . ' <http://schema.org/value> ' . '"' . addcslashes($result->fields['jstor'], '"') . '"' . '.';
-			
-				//$triples[] = $s . ' <http://schema.org/sameAs> ' . '<https://www.jstor.org/stable/' . $result->fields['jstor'] . '> ' . '. ';
-				$triples[] = $s . ' <http://schema.org/sameAs> ' . '"https://www.jstor.org/stable/' . $result->fields['jstor'] . '" ' . '. ';
-			
-			}		
-				
-			
-		
-			// ISBN
-			if ($result->fields['isbn'] != '')
-			{
-				$triples[] = $s . ' <http://schema.org/isbn> ' . '"' . addcslashes($result->fields['doi'], '"') . '"' . '.';
-			}	
-		
-			// PMID
-			if ($result->fields['pmid'] != '')
-			{
-				$identifier_id = '<' . $subject_id . '#pmid' . '>';
-		
-				$triples[] = $s . ' <http://schema.org/identifier> ' . $identifier_id . '.';			
-				$triples[] = $identifier_id . ' <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://schema.org/PropertyValue> .';
-				$triples[] = $identifier_id . ' <http://schema.org/propertyID> ' . '"pmid"' . '.';
-				$triples[] = $identifier_id . ' <http://schema.org/value> ' . '"' . addcslashes($result->fields['pmid'], '"') . '"' . '.';
-			
-				$triples[] = $s . ' <http://schema.org/sameAs> ' . '<https://www.ncbi.nlm.nih.gov/pubmed/' . $result->fields['pmid'] . '> ' . '. ';
-			
-			}		
-		
-			// SICI-style identifier to help automate citation linking	
-			$sici = array();
-				
-			if ($result->fields['issn'] != '')
-			{
-				$sici[] = $result->fields['issn'];
-			
-				if ($result->fields['PUB_YEAR'] != '')
-				{
-					$sici[] = '(' . $result->fields['PUB_YEAR'] . ')';
-				}										
-
-				if ($result->fields['volume'] != '')
-				{
-					$sici[] = $result->fields['volume'];
-				}
-
-				if ($result->fields['spage'] != '')
-				{
-					$sici[] = '<' . $result->fields['spage'] . '>';
-				}
-		
-				if (count($sici) == 4)
-				{
-					$identifier_id = '<' . $subject_id . '#sici' . '>';
-
-					$triples[] = $s . ' <http://schema.org/identifier> ' . $identifier_id . '.';			
-					$triples[] = $identifier_id . ' <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://schema.org/PropertyValue> .';
-					$triples[] = $identifier_id . ' <http://schema.org/propertyID> ' . '"sici"' . '.';
-					$triples[] = $identifier_id . ' <http://schema.org/value> ' . '"' . addcslashes(join('', $sici), '"') . '"' . '.';
-		
-				}
-			}
-		
-			// URL
-			if ($result->fields['url'] != '')
-			{
-				$triples[] = $s . ' <http://schema.org/url> ' . '"' . addcslashes($result->fields['url'], '"') . '"' . '.';
-			}	
-		
-			// Zenodo
-			if ($result->fields['zenodo'] != '')
-			{
-				$identifier_id = '<' . $subject_id . '#zenodo' . '>';
-
-				$triples[] = $s . ' <http://schema.org/identifier> ' . $identifier_id . '.';			
-				$triples[] = $identifier_id . ' <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://schema.org/PropertyValue> .';
-				$triples[] = $identifier_id . ' <http://schema.org/propertyID> ' . '"zenodo"' . '.';
-				$triples[] = $identifier_id . ' <http://schema.org/value> ' . '"' . $result->fields['zenodo'] . '"' . '.';
-				
-				// sameAs link?
-				//$triples[] = $s . ' <http://schema.org/sameAs> <https://zenodo.org/record/' . $result->fields['zenodo'] . '> .';				
-			}	
 		
 		}
 	
