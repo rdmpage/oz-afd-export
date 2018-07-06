@@ -1,0 +1,59 @@
+{
+	"@context": "http://schema.org",
+	"@id": "https://academic.oup.com/zoolinnean/advance-article/doi/10.1093/zoolinnean/zlx111/4932782",
+	"@type": "ScholarlyArticle",
+	"name": "Phylogenetic relationships of the Australasian open-holed trapdoor spiders (Araneae: Mygalomorphae: Nemesiidae: Anaminae): multi-locus molecular analyses resolve the generic classification of a highly diverse fauna",
+	"datePublished": "2018-03-13",
+	"isPartOf": {
+		"@id": "https://academic.oup.com/zoolinnean",
+		"@type": "Periodical",
+		"name": "Zoological Journal of the Linnean Society",
+		"issn": ["1096-3642"]
+	},
+	"url": "http://dx.doi.org/10.1093/zoolinnean/zlx111",
+	"keywords": ["biogeography", "dispersal", "Miocene diversification"],
+	"inLanguage": "en",
+	"copyrightHolder": "The Linnean Society of London",
+	"copyrightYear": "2018",
+	"publisher": "Oxford University Press",
+	"sameAs": "https://academic.oup.com/zoolinnean/advance-article/doi/10.1093/zoolinnean/zlx111/4932782",
+	"author": [{
+		"name": "Harvey, Mark S",
+		"affiliation": "Department of Terrestrial Zoology, Western Australian Museum, Locked Bag, Welshpool DC, Western Australia, Australia  School of Biological Sciences, University of Western Australia, Crawley, Western Australia, Australia  Adjunct, School of Natural Sciences, Edith Cowan University, Joondalup, Western Australia, Australia  Division of Invertebrate Zoology, American Museum of Natural History, Central Park West, New York, NY, USA  Department of Entomology, California Academy of Sciences, San Francisco, CA, USA",
+		"@type": "Person"
+	}, {
+		"name": "Hillyer, Mia J",
+		"affiliation": "Department of Terrestrial Zoology, Western Australian Museum, Locked Bag, Welshpool DC, Western Australia, Australia",
+		"@type": "Person"
+	}, {
+		"name": "Main, Barbara York",
+		"affiliation": "School of Biological Sciences, University of Western Australia, Crawley, Western Australia, Australia",
+		"@type": "Person"
+	}, {
+		"name": "Moulds, Timothy A",
+		"affiliation": "Department of Terrestrial Zoology, Western Australian Museum, Locked Bag, Welshpool DC, Western Australia, Australia",
+		"@type": "Person"
+	}, {
+		"name": "Raven, Robert J",
+		"affiliation": "Biodiversity and Geosciences, Queensland Museum, South Brisbane, Queensland, Australia",
+		"@type": "Person"
+	}, {
+		"name": "Rix, Michael G",
+		"affiliation": "Department of Terrestrial Zoology, Western Australian Museum, Locked Bag, Welshpool DC, Western Australia, Australia  Biodiversity and Geosciences, Queensland Museum, South Brisbane, Queensland, Australia  Australian Centre for Evolutionary Biology and Biodiversity, School of Biological Sciences, The University of Adelaide, Adelaide, South Australia, Australia",
+		"@type": "Person"
+	}, {
+		"name": "Vink, Cor J",
+		"affiliation": "Canterbury Museum, Rolleston Avenue, Christchurch, New Zeal",
+		"@type": "Person"
+	}, {
+		"name": "Huey, Joel A",
+		"affiliation": "Department of Terrestrial Zoology, Western Australian Museum, Locked Bag, Welshpool DC, Western Australia, Australia  School of Biological Sciences, University of Western Australia, Crawley, Western Australia, Australia  Adjunct, School of Natural Sciences, Edith Cowan University, Joondalup, Western Australia, Australia",
+		"@type": "Person"
+	}],
+	"description": "Abstract.  Spiders of the nemesiid mygalomorph subfamily Anaminae are common in the Australasian region from rainforests to deserts. Using specimens from all 12",
+	"pageStart": "zlx111",
+	"pageEnd": "",
+	"thumbnailURL": "https://academic.oup.com/UI/app/img/generic-cover.png",
+	"headline": "Phylogenetic relationships of the Australasian open-holed trapdoor spiders (Araneae: Mygalomorphae: Nemesiidae: Anaminae): multi-locus molecular analyses resolve the generic classification of a highly diverse fauna",
+	"image": "https://academic.oup.com/UI/app/img/generic-cover.png"
+}

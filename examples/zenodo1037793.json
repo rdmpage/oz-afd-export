@@ -1,0 +1,563 @@
+{
+  "@context": "https://schema.org/", 
+  "@id": "https://doi.org/10.11646/zootaxa.4340.1.1", 
+  "@type": "ScholarlyArticle", 
+  "citation": [
+    {
+      "@id": "https://doi.org/10.1093/database/bav054", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "https://doi.org/10.11646/zootaxa.3948.3.1", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "https://doi.org/10.3853/j.2201-4349.67.2015.1646", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "https://doi.org/10.3853/j.2201-4349.67.2015.1643", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "https://doi.org/10.11646/zootaxa.4001.1.1", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "https://doi.org/10.5962/bhl.part.20173", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "https://doi.org/10.1371/journal.pone.0004185", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "https://doi.org/10.1093/sysbio/syv069", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "https://doi.org/10.3853/j.0067-1975.57.2005.1447", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "https://doi.org/10.3853/j.2201-4349.68.2016.1598", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "https://doi.org/10.11646/zootaxa.4263.3.1", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "https://doi.org/10.3853/j.1031-8062.16.2002.1353", 
+      "@type": "CreativeWork"
+    }
+  ], 
+  "creator": [
+    {
+      "@type": "Person", 
+      "name": "Popple, Lindsay W."
+    }
+  ], 
+  "datePublished": "2017-10-27", 
+  "description": "Popple, Lindsay W. (2017): A revision of the Myopsalta crucifera (Ashton) species group (Hemiptera: Cicadidae: Cicadettini) with 14 new species from mainland Australia. Zootaxa 4340 (1): 1-98, DOI: https://doi.org/10.11646/zootaxa.4340.1.1", 
+  "hasPart": [
+    {
+      "@id": "http://treatment.plazi.org/id/03E787F0F017757CFF4BFE17C335FDFB", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "http://treatment.plazi.org/id/03E787F0F0177576FF4BFDDBC7ADF8BF", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "http://treatment.plazi.org/id/03E787F0F01F7568FF4BFF32C7ACF9A3", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "http://treatment.plazi.org/id/03E787F0F003756DFF4BF964C7A2F8E5", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "http://treatment.plazi.org/id/03E787F0F0067566FF4BF8D4C202FB25", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "http://treatment.plazi.org/id/03E787F0F00D7559FF4BFA99C2E7FE1D", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "http://treatment.plazi.org/id/03E787F0F0327553FF4BFD81C7BBF8C9", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "http://treatment.plazi.org/id/03E787F0F0387557FF4BF8F2C4C4FE60", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "http://treatment.plazi.org/id/03E787F0F03D754CFF4BFA35C489FD65", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "http://treatment.plazi.org/id/03E787F0F0277547FF4BFD54C7D3FD48", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "http://treatment.plazi.org/id/03E787F0F02C753AFF4BFD72C4FCFDD5", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "http://treatment.plazi.org/id/03E787F0F051753FFF4BFDC4C514F858", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "http://treatment.plazi.org/id/03E787F0F0557533FF4BFF32C43EF815", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "http://treatment.plazi.org/id/03E787F0F0597530FF4BFF32C4F0F823", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "http://treatment.plazi.org/id/03E787F0F05C752AFF4BF817C778FE60", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "http://treatment.plazi.org/id/03E787F0F041752DFF4BFA09C537FDAD", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "http://treatment.plazi.org/id/03E787F0F0467527FF4BFD11C4DAF83C", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "https://doi.org/10.5281/zenodo.1037795", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "http://zenodo.org/record/1037795", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "https://doi.org/10.5281/zenodo.1037797", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "http://zenodo.org/record/1037797", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "https://doi.org/10.5281/zenodo.1037800", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "http://zenodo.org/record/1037800", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "https://doi.org/10.5281/zenodo.1037802", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "http://zenodo.org/record/1037802", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "https://doi.org/10.5281/zenodo.1037804", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "http://zenodo.org/record/1037804", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "https://doi.org/10.5281/zenodo.1037806", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "http://zenodo.org/record/1037806", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "https://doi.org/10.5281/zenodo.1037808", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "http://zenodo.org/record/1037808", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "https://doi.org/10.5281/zenodo.1037810", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "http://zenodo.org/record/1037810", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "https://doi.org/10.5281/zenodo.1037812", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "http://zenodo.org/record/1037812", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "https://doi.org/10.5281/zenodo.1037814", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "http://zenodo.org/record/1037814", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "https://doi.org/10.5281/zenodo.1037816", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "http://zenodo.org/record/1037816", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "https://doi.org/10.5281/zenodo.1037818", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "http://zenodo.org/record/1037818", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "https://doi.org/10.5281/zenodo.1037820", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "http://zenodo.org/record/1037820", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "https://doi.org/10.5281/zenodo.1037822", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "http://zenodo.org/record/1037822", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "https://doi.org/10.5281/zenodo.1037824", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "http://zenodo.org/record/1037824", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "https://doi.org/10.5281/zenodo.1037826", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "http://zenodo.org/record/1037826", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "https://doi.org/10.5281/zenodo.1037828", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "http://zenodo.org/record/1037828", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "https://doi.org/10.5281/zenodo.1037830", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "http://zenodo.org/record/1037830", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "https://doi.org/10.5281/zenodo.1037832", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "http://zenodo.org/record/1037832", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "https://doi.org/10.5281/zenodo.1037834", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "http://zenodo.org/record/1037834", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "https://doi.org/10.5281/zenodo.1037836", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "http://zenodo.org/record/1037836", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "https://doi.org/10.5281/zenodo.1037838", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "http://zenodo.org/record/1037838", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "https://doi.org/10.5281/zenodo.1037840", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "http://zenodo.org/record/1037840", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "https://doi.org/10.5281/zenodo.1037842", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "http://zenodo.org/record/1037842", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "https://doi.org/10.5281/zenodo.1037844", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "http://zenodo.org/record/1037844", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "https://doi.org/10.5281/zenodo.1037846", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "http://zenodo.org/record/1037846", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "https://doi.org/10.5281/zenodo.1037848", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "http://zenodo.org/record/1037848", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "https://doi.org/10.5281/zenodo.1037850", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "http://zenodo.org/record/1037850", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "https://doi.org/10.5281/zenodo.1037852", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "http://zenodo.org/record/1037852", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "https://doi.org/10.5281/zenodo.1037854", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "http://zenodo.org/record/1037854", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "https://doi.org/10.5281/zenodo.1037856", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "http://zenodo.org/record/1037856", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "https://doi.org/10.5281/zenodo.1037858", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "http://zenodo.org/record/1037858", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "https://doi.org/10.5281/zenodo.1037860", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "http://zenodo.org/record/1037860", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "https://doi.org/10.5281/zenodo.1037862", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "http://zenodo.org/record/1037862", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "https://doi.org/10.5281/zenodo.1037864", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "http://zenodo.org/record/1037864", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "https://doi.org/10.5281/zenodo.1037866", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "http://zenodo.org/record/1037866", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "https://doi.org/10.5281/zenodo.1037868", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "http://zenodo.org/record/1037868", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "https://doi.org/10.5281/zenodo.1037870", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "http://zenodo.org/record/1037870", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "https://doi.org/10.5281/zenodo.1037872", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "http://zenodo.org/record/1037872", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "https://doi.org/10.5281/zenodo.1037874", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "http://zenodo.org/record/1037874", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "https://doi.org/10.5281/zenodo.1037876", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "http://zenodo.org/record/1037876", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "https://doi.org/10.5281/zenodo.1037878", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "http://zenodo.org/record/1037878", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "https://doi.org/10.5281/zenodo.1037880", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "http://zenodo.org/record/1037880", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "https://doi.org/10.5281/zenodo.1037882", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "http://zenodo.org/record/1037882", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "https://doi.org/10.5281/zenodo.1037884", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "http://zenodo.org/record/1037884", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "https://doi.org/10.5281/zenodo.1037886", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "http://zenodo.org/record/1037886", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "https://doi.org/10.5281/zenodo.1037888", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "http://zenodo.org/record/1037888", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "https://doi.org/10.5281/zenodo.1037890", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "http://zenodo.org/record/1037890", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "https://doi.org/10.5281/zenodo.1037892", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "http://zenodo.org/record/1037892", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "https://doi.org/10.5281/zenodo.1037896", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "http://zenodo.org/record/1037896", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "https://doi.org/10.5281/zenodo.1037898", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "http://zenodo.org/record/1037898", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "https://doi.org/10.5281/zenodo.1037900", 
+      "@type": "CreativeWork"
+    }, 
+    {
+      "@id": "http://zenodo.org/record/1037900", 
+      "@type": "CreativeWork"
+    }
+  ], 
+  "headline": "A revision of the Myopsalta crucifera (Ashton) species group (Hemiptera: Cicadidae: Cicadettini) with 14 new species from mainland Australia", 
+  "identifier": "https://doi.org/10.11646/zootaxa.4340.1.1", 
+  "image": "https://zenodo.org/static/img/logos/zenodo-gradient-round.svg", 
+  "keywords": [
+    "Biodiversity", 
+    "Taxonomy", 
+    "Animalia", 
+    "Arthropoda", 
+    "Insecta", 
+    "Hemiptera", 
+    "Cicadidae"
+  ], 
+  "name": "A revision of the Myopsalta crucifera (Ashton) species group (Hemiptera: Cicadidae: Cicadettini) with 14 new species from mainland Australia", 
+  "url": "https://zenodo.org/record/1037793"
+}
