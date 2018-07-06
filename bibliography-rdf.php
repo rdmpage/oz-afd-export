@@ -104,7 +104,7 @@ while (!$done)
 	//$sql .= ' WHERE PUBLICATION_GUID = "504be1f6-4dbb-4012-944c-1f7303cb105f"';
 	
 	// book
-	$sql .= ' WHERE PUBLICATION_GUID = "9ba81e54-8180-4ec2-9a92-41f783656562"';
+	//$sql .= ' WHERE PUBLICATION_GUID = "9ba81e54-8180-4ec2-9a92-41f783656562"';
 	
 	//$sql .= ' WHERE updated > "2018-06-16"';
 	//$sql .= ' WHERE updated > "2018-06-21"';
@@ -155,11 +155,11 @@ while (!$done)
 					$triples[] = $s . ' <http://schema.org/creator> ' .  $author_id . ' .';
 					$triples[] = $author_id . ' <http://schema.org/name> ' . '"' . addcslashes($p[$i]->name, '"') . '"' . ' .';
 				
-					if (isset($author->givenName))
+					if (isset($p[$i]->givenName))
 					{
 						$triples[] = $author_id . ' <http://schema.org/givenName> ' . '"' . addcslashes($p[$i]->givenName, '"') . '"' . ' .';				
 					}
-					if (isset($author->familyName))
+					if (isset($p[$i]->familyName))
 					{
 						$triples[] = $author_id . ' <http://schema.org/familyName> ' . '"' . addcslashes($p[$i]->familyName, '"') . '"' . ' .';				
 					}
@@ -564,7 +564,8 @@ while (!$done)
 	
 		$t = join("\n", $triples);
 	
-		if (0)
+		// triples or JSON-LD?
+		if (1)
 		{
 			echo $t . "\n";
 		}
