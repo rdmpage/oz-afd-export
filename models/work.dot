@@ -1,0 +1,32 @@
+digraph G { 
+rankdir = LR;
+"work" -> "http://schema.org/ScholarlyArticle" [label="type"];
+"work" -> "periodical" [label="isPartOf"];
+
+"work" -> "\"A revision of the Myopsalta crucifera...\"" [label="name"];
+"work" -> "\"https://doi.org/10.11646/zootaxa.4340.1.1\"" [label="sameAs"];
+
+"work" -> "\"a8447363-5982-472b-b54a-f40476f50f5b\"" [label="identifier"];
+
+"work" -> "identifier" [label="identifier"];
+
+"identifier" -> "PropertyValue" [label="type"];
+"identifier" -> "doi" [label="propertyID"];
+"identifier" -> "\"10.11646/zootaxa.4340.1.1\"" [label="value"];
+
+"work" -> "role" [label="creator"];
+"role" -> "Role" [label="type"];
+"role" -> "\"1\"" [label="roleName"];
+"role" -> "creator" [label="creator"];
+
+"creator" -> "http://schema.org/Person" [label="type"];
+"creator" -> "\"L. W. Popple\"" [label="name"];
+"creator" -> "\"L. W.\"" [label="givenName"];
+"creator" -> "\"Popple\"" [label="familyName"];
+
+"periodical" -> "http://schema.org/Periodical" [label="type"];
+"periodical" -> "\"96466227-221c-4922-ac97-1ac2dd946d0a\"" [label="identifier"];
+"periodical" -> "\"1175-5326\"" [label="issn"];
+"periodical" -> "\"http://worldcat.org/issn/1175-5326\"" [label="sameAs"];
+
+}
