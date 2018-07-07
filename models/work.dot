@@ -4,6 +4,15 @@ rankdir = LR;
 "work" -> "periodical" [label="isPartOf"];
 
 "work" -> "\"A revision of the Myopsalta crucifera...\"" [label="name"];
+
+"work" -> "\"4340\"" [label="volume"];
+"work" -> "\"1\"" [label="issueNumber"];
+"work" -> "\"1\"" [label="pageStart"];
+"work" -> "\"98\"" [label="pageEnd"];
+"work" -> "\"pagination\"" [label="1-98"];
+"work" -> "\"2017\"" [label="datePublished"];
+
+
 "work" -> "\"https://doi.org/10.11646/zootaxa.4340.1.1\"" [label="sameAs"];
 
 "work" -> "\"a8447363-5982-472b-b54a-f40476f50f5b\"" [label="identifier"];
@@ -29,4 +38,16 @@ rankdir = LR;
 "periodical" -> "\"1175-5326\"" [label="issn"];
 "periodical" -> "\"http://worldcat.org/issn/1175-5326\"" [label="sameAs"];
 
+/* Citation from Zenodo */
+"work" -> "https://doi.org/10.3853/j.2201-4349.67.2015.1646" [label="citation"];
+"https://doi.org/10.3853/j.2201-4349.67.2015.1646" -> "http://schema.org/CreativeWork" [label="type"];
+
+/* Figure from Zenodo */
+"work" -> "https://doi.org/10.5281/zenodo.1037795" [label="hasPart"];
+"https://doi.org/10.5281/zenodo.1037795" -> "work" [label="isPartOf"];
+
+"https://doi.org/10.5281/zenodo.1037795" -> "http://schema.org/ImageObject" [label="type"];
+"https://doi.org/10.5281/zenodo.1037795" -> "FIGURE 1 in A revision of the Myopsalta crucifera..." [label="name"];
+
 }
+
