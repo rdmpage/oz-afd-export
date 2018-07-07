@@ -233,8 +233,8 @@ while (!$done)
 			$triples[] = $s . ' <http://schema.org/isPartOf> ' . $container_id . ' .';
 			
 			// generic UUID
-			//$triples[] = $container_id . ' <http://schema.org/identifier> <urn:uuid:' . $result->fields['PUBLICATION_GUID'] . '> .';
-			$triples[] = $container_id . ' <http://schema.org/identifier> "' . $result->fields['PUBLICATION_GUID'] . '" .';
+			//$triples[] = $container_id . ' <http://schema.org/identifier> <urn:uuid:' . $result->fields['PARENT_PUBLICATION_GUID'] . '> .';
+			$triples[] = $container_id . ' <http://schema.org/identifier> "' . $result->fields['PARENT_PUBLICATION_GUID'] . '" .';
 			
 			// Journal
 			if ($result->fields['PUB_PARENT_JOURNAL_TITLE'] != '')
