@@ -34,6 +34,11 @@ class ElasticSearch
 		curl_setopt ($ch, CURLOPT_RETURNTRANSFER, 1); 
 		
 		curl_setopt ($ch, CURLOPT_SSL_VERIFYPEER, false);
+		
+		if (isset($this->user))
+		{
+			curl_setopt($ch, CURLOPT_USERPWD, $this->user . ":" . $this->password); 
+		}
 
 		// Set HTTP headers
 		$headers = array();

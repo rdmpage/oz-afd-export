@@ -28,20 +28,27 @@ $config['proxy_port'] 	= '';
 
 // Elastic--------------------------------------------------------------------------------
 
-// Bitnami https://google.bitnami.com/vms/bitnami-elasticsearch-dm-4693
-$config['elastic_options'] = array(
-		'index' => 'elasticsearch/ala',
-		'protocol' => 'http',
-		'host' => '130.211.107.26',
-		'port' => 80
-		);
-		
-// Local Docker Elasticsearch version 5.6.4, e.g. http://localhost:32770
-$config['elastic_options'] = array(
-		'index' => 'ala',
-		'protocol' => 'http',
-		'host' => '127.0.0.1',
-		'port' => 32770
-		);
+if (1)
+{
+	// Bitnami https://google.bitnami.com/vms/bitnami-elasticsearch-dm-c610
+	$config['elastic_options'] = array(
+			'index' => 'elasticsearch/ala',
+			'protocol' => 'http',
+			'host' => '35.204.73.93',
+			'port' => 80,
+			'user' => 'user',
+			'password' => '7WbQZedlAvzQ'
+			);
+}
+else
+{		
+	// Local Docker Elasticsearch version 5.6.4, e.g. http://localhost:32773
+	$config['elastic_options'] = array(
+			'index' => 'ala',
+			'protocol' => 'http',
+			'host' => '127.0.0.1',
+			'port' => 32773
+			);
+}
 	
 ?>
