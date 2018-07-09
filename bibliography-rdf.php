@@ -9,6 +9,7 @@ require_once (dirname(__FILE__) . '/adodb5/adodb.inc.php');
 require_once('php-json-ld/jsonld.php');
 
 require_once (dirname(__FILE__) . '/parse_authors.php');
+require_once (dirname(__FILE__) . '/thumbnails.php');
 
 
 //--------------------------------------------------------------------------------------------------
@@ -83,6 +84,8 @@ $enhance_authors 		= true;
 $enhance_metadata 		= true;
 $enhance_identifiers	= true;
 $enhance_pdf			= true;
+$enhance_pdf_as_images	= false;
+
 
 $use_role				= true;
 //$use_role				= false;
@@ -110,7 +113,17 @@ while (!$done)
 	// book
 	//$sql .= ' WHERE PUBLICATION_GUID = "9ba81e54-8180-4ec2-9a92-41f783656562"';
 	
-	$sql .= ' WHERE PUBLICATION_GUID = "d7630315-e7f2-458b-9028-9223a093fef1"';
+	//$sql .= ' WHERE PUBLICATION_GUID = "d7630315-e7f2-458b-9028-9223a093fef1"'; // PLos with PDF
+	
+	//$sql .= ' WHERE PUBLICATION_GUID = "8600f99a-f346-4bd1-80b1-f665b505fef4"'; // JSTOR with thumbnail
+	
+	//$sql .= ' WHERE PUBLICATION_GUID = "6c225120-a4d8-4784-a920-bb9366a4463c"';
+	
+	$sql .= ' WHERE PUBLICATION_GUID = "7f35eac2-e94e-4698-b760-a5cae499ea9d"';
+	
+	//$sql .= ' WHERE PUB_AUTHOR LIKE "%Patoleta%"';
+	
+	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Copeia" AND jstor IS NOT NULL';
 	
 	//$sql .= ' WHERE PUB_TITLE LIKE "%Paraulopus%"';
 	
@@ -384,6 +397,20 @@ while (!$done)
 			
 						//$triples[] = $s . ' <http://schema.org/sameAs> ' . '<https://www.jstor.org/stable/' . $result->fields['jstor'] . '> ' . '. ';
 						$triples[] = $s . ' <http://schema.org/sameAs> ' . '"https://www.jstor.org/stable/' . $result->fields['jstor'] . '" ' . '. ';
+						
+						// JSTOR thumbnail
+						
+						$thumbnail = get_jstor_thumbnail($result->fields['jstor']);
+						if ($thumbnail != '')
+						{
+							// Grab first page image to use as thumbnail
+							$image_id = '<' . $subject_id . '#jstorimage' . '>';
+					
+							$triples[] = $s . ' <http://schema.org/image> ' .  $image_id . ' .';						
+							$triples[] = $image_id . ' <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://schema.org/ImageObject> .';
+							$triples[] = $image_id . ' <http://schema.org/thumbnailUrl> ' . '"' . addcslashes($thumbnail, '"') . '"' . ' .';
+						}
+						
 			
 					}		
 						
@@ -516,23 +543,26 @@ while (!$done)
 						$triples[] = $image_id . ' <http://schema.org/contentUrl> ' . '"' . addcslashes('http://bionames.org/bionames-archive/documentcloud/pages/' . $sha1 . '/1-large', '"') . '"' . ' .';
 						$triples[] = $image_id . ' <http://schema.org/thumbnailUrl> ' . '"' . addcslashes('http://bionames.org/bionames-archive/documentcloud/pages/' . $sha1 . '/1-small', '"') . '"' . ' .';
 								
-						// Include page images in RDF (do we want to do this?)
-						for ($i = 1; $i <= $images->pages; $i++)
+						if ($enhance_pdf_as_images)
 						{
-							// image
-							$image_id = '<' . $subject_id . '/page#' . $i . '>';
-							$triples[] = $image_id . ' <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://schema.org/ImageObject> .';
+							// Include page images in RDF (do we want to do this?)
+							for ($i = 1; $i <= $images->pages; $i++)
+							{
+								// image
+								$image_id = '<' . $subject_id . '/page#' . $i . '>';
+								$triples[] = $image_id . ' <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://schema.org/ImageObject> .';
 
-							// order 
-							$triples[] = $image_id . ' <http://schema.org/position> ' . '"' . addcslashes($i, '"') . '"' . ' .';
+								// order 
+								$triples[] = $image_id . ' <http://schema.org/position> ' . '"' . addcslashes($i, '"') . '"' . ' .';
 
-							// URLs to images
-							$triples[] = $image_id . ' <http://schema.org/contentUrl> ' . '"' . addcslashes('http://bionames.org/bionames-archive/documentcloud/pages/' . $sha1 . '/' . $i . '-large', '"') . '"' . ' .';
-							$triples[] = $image_id . ' <http://schema.org/thumbnailUrl> ' . '"' . addcslashes('http://bionames.org/bionames-archive/documentcloud/pages/' . $sha1 . '/' . $i . '-small', '"') . '"' . ' .';
+								// URLs to images
+								$triples[] = $image_id . ' <http://schema.org/contentUrl> ' . '"' . addcslashes('http://bionames.org/bionames-archive/documentcloud/pages/' . $sha1 . '/' . $i . '-large', '"') . '"' . ' .';
+								$triples[] = $image_id . ' <http://schema.org/thumbnailUrl> ' . '"' . addcslashes('http://bionames.org/bionames-archive/documentcloud/pages/' . $sha1 . '/' . $i . '-small', '"') . '"' . ' .';
 
-							// page image is part of the work
-							$triples[] = $s . ' <http://schema.org/hasPart> ' .  $image_id . ' .';						
+								// page image is part of the work
+								$triples[] = $s . ' <http://schema.org/hasPart> ' .  $image_id . ' .';						
 					
+							}
 						}
 					}
 				}
@@ -585,7 +615,7 @@ while (!$done)
 		$t = join("\n", $triples);
 	
 		// triples or JSON-LD?
-		if (0)
+		if (1)
 		{
 			echo $t . "\n";
 		}
