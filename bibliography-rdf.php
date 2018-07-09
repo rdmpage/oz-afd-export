@@ -102,13 +102,17 @@ while (!$done)
 	
 	//$sql .= ' WHERE PUBLICATION_GUID = "a8447363-5982-472b-b54a-f40476f50f5b"';
 	
-	$sql .= ' WHERE PUBLICATION_GUID = "48da0d1d-b942-4088-b553-74000d04db19"';
+	//$sql .= ' WHERE PUBLICATION_GUID = "48da0d1d-b942-4088-b553-74000d04db19"';
 
 	// chapter
 	//$sql .= ' WHERE PUBLICATION_GUID = "504be1f6-4dbb-4012-944c-1f7303cb105f"';
 	
 	// book
 	//$sql .= ' WHERE PUBLICATION_GUID = "9ba81e54-8180-4ec2-9a92-41f783656562"';
+	
+	$sql .= ' WHERE PUBLICATION_GUID = "d7630315-e7f2-458b-9028-9223a093fef1"';
+	
+	//$sql .= ' WHERE PUB_TITLE LIKE "%Paraulopus%"';
 	
 	//$sql .= ' WHERE updated > "2018-06-16"';
 	//$sql .= ' WHERE updated > "2018-06-21"';
@@ -450,6 +454,29 @@ while (!$done)
 						// sameAs link?
 						//$triples[] = $s . ' <http://schema.org/sameAs> <https://zenodo.org/record/' . $result->fields['zenodo'] . '> .';				
 					}	
+					
+					
+					// Zoobank
+					if ($result->fields['zoobank'] != '')
+					{
+						$identifier_id = '<' . $subject_id . '#zoobank' . '>';
+
+						$triples[] = $s . ' <http://schema.org/identifier> ' . $identifier_id . '.';			
+						$triples[] = $identifier_id . ' <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://schema.org/PropertyValue> .';
+						$triples[] = $identifier_id . ' <http://schema.org/propertyID> ' . '"zoobank"' . '.';
+						$triples[] = $identifier_id . ' <http://schema.org/value> ' . '"urn:lsid:zoobank.org:pub:' . $result->fields['zoobank'] . '"' . '.';
+						
+						// uuid
+						$triples[] = $s . ' <http://schema.org/identifier> "' . $result->fields['zoobank'] . '" .';	
+				
+						// sameAs link?
+						$triples[] = $s . ' <http://schema.org/sameAs> "http://zoobank.org/References/' . $result->fields['zoobank'] . '" .';				
+					}	
+					
+					
+					
+					
+					
 					break;
 			}
 		
