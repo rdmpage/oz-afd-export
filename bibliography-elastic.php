@@ -78,7 +78,7 @@ while (!$done)
 	
 	//$sql .= ' WHERE updated > "2018-06-01"';
 	//$sql .= ' WHERE updated > "2018-06-26"';
-	//$sql .= ' WHERE updated > "2018-07-05"';
+	$sql .= ' WHERE updated > "2018-07-08"';
 	
 	$sql .= ' LIMIT ' . $page . ' OFFSET ' . $offset;
 
@@ -218,7 +218,6 @@ while (!$done)
 			// For search
 			$fulltext[] = $result->fields['PUB_PAGES'];
 		}
-		
 	
 		if ($result->fields['PUB_TYPE'] != '')
 		{
@@ -264,7 +263,6 @@ while (!$done)
 			$doc->search_data->type = array($type);
 		}
 		
-		
 		//--------------------------------------------------------------------------------
 		$names = taxa_in_work($result->fields['PUBLICATION_GUID']);
 		
@@ -292,14 +290,11 @@ while (!$done)
 		print_r($elastic_doc);
 
 		// PUT for first time, POST for update
-		$elastic->send('PUT',  $elastic_doc->doc->search_result_data->type . '/' . urlencode($id), json_encode($elastic_doc));				
-		//$elastic->send('POST',  $elastic_doc->doc->search_result_data->type . '/' . urlencode($id) . '/_update', json_encode($elastic_doc));	
+		$elastic->send('PUT', '_doc/' . urlencode($id), json_encode($elastic_doc));				
+		//$elastic->send('POST',  '_doc/' . urlencode($id) . '/_update', json_encode($elastic_doc));	
 
-	
 		$result->MoveNext();
-
 	}
-	
 	
 	if ($result->NumRows() < $page)
 	{
@@ -310,8 +305,7 @@ while (!$done)
 		$offset += $page;
 		
 		//if ($offset > 3000) { $done = true; }
-	}
-	
+	}	
 
 }
 

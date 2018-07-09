@@ -15,6 +15,10 @@ Take data and convert to a schema (see https://project-a.github.io/on-site-searc
 
 Use local GUIDs for document ids, e.g. UUID for publication is Elasticsearch document id. We also store URL identifier in the document itself.
 
+### Index types and ES6
+
+Elasticsearch 6 only supports one type of document per index (see e.g., https://github.com/elastic/elasticsearch-rails/issues/779), preferred type name is ```_doc```, see https://www.elastic.co/guide/en/elasticsearch/reference/current/removal-of-types.html#_schedule_for_removal_of_mapping_types
+
 ### PUT versus POST
 
 First upload uses PUT, we can subsequently update the records (for example, if we want to change the data we store) using POST to the document id and append ```_update``` to the URL.
