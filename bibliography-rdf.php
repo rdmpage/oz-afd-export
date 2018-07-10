@@ -119,7 +119,7 @@ while (!$done)
 	
 	//$sql .= ' WHERE PUBLICATION_GUID = "6c225120-a4d8-4784-a920-bb9366a4463c"';
 	
-	$sql .= ' WHERE PUBLICATION_GUID = "7f35eac2-e94e-4698-b760-a5cae499ea9d"';
+	//$sql .= ' WHERE PUBLICATION_GUID = "b1d9e8cc-f0d0-4ebf-9f31-30a9d81942e3"';
 	
 	//$sql .= ' WHERE PUB_AUTHOR LIKE "%Patoleta%"';
 	
@@ -127,6 +127,12 @@ while (!$done)
 	
 	//$sql .= ' WHERE PUB_TITLE LIKE "%Paraulopus%"';
 	
+	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE LIKE "%Auckland%"';
+	
+	$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Journal of Crustacean Biology"';
+	
+	//$sql .= ' WHERE doi="10.1051/parasite/1968432131"';
+
 	//$sql .= ' WHERE updated > "2018-06-16"';
 	//$sql .= ' WHERE updated > "2018-06-21"';
 	
@@ -367,6 +373,17 @@ while (!$done)
 			
 						//$triples[] = $s . ' <http://schema.org/sameAs> ' . '<https://doi.org/' . $result->fields['doi'] . '> ' . '. ';
 						$triples[] = $s . ' <http://schema.org/sameAs> ' . '"https://doi.org/' . $result->fields['doi'] . '" ' . '. ';
+						
+						$thumbnail = get_doi_thumbnail($result->fields['doi']);
+						if ($thumbnail != '')
+						{
+							// Grab first page image to use as thumbnail
+							$image_id = '<' . $subject_id . '#doiimage' . '>';
+					
+							$triples[] = $s . ' <http://schema.org/image> ' .  $image_id . ' .';						
+							$triples[] = $image_id . ' <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://schema.org/ImageObject> .';
+							$triples[] = $image_id . ' <http://schema.org/thumbnailUrl> ' . '"' . addcslashes($thumbnail, '"') . '"' . ' .';
+						}
 			
 					}
 			
