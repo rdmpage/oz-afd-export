@@ -136,5 +136,77 @@ function get_doi_thumbnail($doi)
 	return $thumbnail;
 }
 
+//----------------------------------------------------------------------------------------
+function get_bionames_thumbnail($sha1)
+{
+	$thumbnail = '';
+	
+	$filename = dirname(__FILE__) . '/tmp/' . $sha1 . '.png';	
+	
+	if (!file_exists($filename))
+	{
+	
+		$url = 'http://bionames.org/bionames-archive/documentcloud/pages/' . $sha1 . '/1-small';
+	
+		$opts = array(
+		  CURLOPT_URL =>$url,
+		  CURLOPT_FOLLOWLOCATION => TRUE,
+		  CURLOPT_RETURNTRANSFER => TRUE,
+		  CURLOPT_HTTPHEADER => array("Accept: application/ld+json")
+		);
+	
+		$ch = curl_init();
+		curl_setopt_array($ch, $opts);
+		$data = curl_exec($ch);
+		$info = curl_getinfo($ch); 
+		curl_close($ch);
+	
+		if ($data != '')
+		{
+			file_put_contents($filename, $data);
+		
+			// resize
+			$command = 'mogrify -resize 100x ' . $filename;
+			//echo $command . "\n";
+
+			system($command);
+		}
+	}
+	
+	if (file_exists($filename))
+	{
+	
+		// load resized image
+		$image = file_get_contents($filename);
+		
+		$image_type = exif_imagetype($filename);
+		switch ($image_type)
+		{
+			case IMAGETYPE_GIF:
+				$mime_type = 'image/gif';
+				break;
+			case IMAGETYPE_JPEG:
+				$mime_type = 'image/jpg';
+				break;
+			case IMAGETYPE_PNG:
+				$mime_type = 'image/png';
+				break;
+			case IMAGETYPE_TIFF_II:
+			case IMAGETYPE_TIFF_MM:
+				$mime_type = 'image/tif';
+				break;
+			default:
+				$mime_type = 'image/gif';
+				break;
+		}		
+	
+		//$base64 = chunk_split(base64_encode($image));
+		$base64 = base64_encode($image);
+		$thumbnail = 'data:' . $mime_type . ';base64,' . $base64;				
+	}
+		
+	return $thumbnail;
+}
+
 ?>
 

@@ -119,7 +119,7 @@ while (!$done)
 	
 	//$sql .= ' WHERE PUBLICATION_GUID = "6c225120-a4d8-4784-a920-bb9366a4463c"';
 	
-	//$sql .= ' WHERE PUBLICATION_GUID = "b1d9e8cc-f0d0-4ebf-9f31-30a9d81942e3"';
+	$sql .= ' WHERE PUBLICATION_GUID = "0d76aea2-8896-4dae-91e9-4d6f9441dc97"';
 	
 	//$sql .= ' WHERE PUB_AUTHOR LIKE "%Patoleta%"';
 	
@@ -129,7 +129,7 @@ while (!$done)
 	
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE LIKE "%Auckland%"';
 	
-	$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Journal of Crustacean Biology"';
+	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Journal of Crustacean Biology"';
 	
 	//$sql .= ' WHERE doi="10.1051/parasite/1968432131"';
 
@@ -552,14 +552,30 @@ while (!$done)
 				
 					if ($images)
 					{
-						// Grab first page image to use as thumbnail
-						$image_id = '<' . $subject_id . '#image' . '>';
+						if (0)
+						{
+							// Grab first page image to use as thumbnail
+							$image_id = '<' . $subject_id . '#image' . '>';
 					
-						$triples[] = $s . ' <http://schema.org/image> ' .  $image_id . ' .';						
-						$triples[] = $image_id . ' <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://schema.org/ImageObject> .';
-						$triples[] = $image_id . ' <http://schema.org/contentUrl> ' . '"' . addcslashes('http://bionames.org/bionames-archive/documentcloud/pages/' . $sha1 . '/1-large', '"') . '"' . ' .';
-						$triples[] = $image_id . ' <http://schema.org/thumbnailUrl> ' . '"' . addcslashes('http://bionames.org/bionames-archive/documentcloud/pages/' . $sha1 . '/1-small', '"') . '"' . ' .';
-								
+							$triples[] = $s . ' <http://schema.org/image> ' .  $image_id . ' .';						
+							$triples[] = $image_id . ' <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://schema.org/ImageObject> .';
+							$triples[] = $image_id . ' <http://schema.org/contentUrl> ' . '"' . addcslashes('http://bionames.org/bionames-archive/documentcloud/pages/' . $sha1 . '/1-large', '"') . '"' . ' .';
+							$triples[] = $image_id . ' <http://schema.org/thumbnailUrl> ' . '"' . addcslashes('http://bionames.org/bionames-archive/documentcloud/pages/' . $sha1 . '/1-small', '"') . '"' . ' .';
+						}
+						else
+						{
+							// local static copy
+							$thumbnail = get_bionames_thumbnail($sha1);
+							if ($thumbnail != '')
+							{
+								$image_id = '<' . $subject_id . '#sha1image' . '>';
+					
+								$triples[] = $s . ' <http://schema.org/image> ' .  $image_id . ' .';						
+								$triples[] = $image_id . ' <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://schema.org/ImageObject> .';
+								$triples[] = $image_id . ' <http://schema.org/thumbnailUrl> ' . '"' . addcslashes($thumbnail, '"') . '"' . ' .';
+							}
+						
+						}								
 						if ($enhance_pdf_as_images)
 						{
 							// Include page images in RDF (do we want to do this?)
