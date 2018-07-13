@@ -9,7 +9,7 @@
 "size":20,
     "query": {
        "multi_match" : {
-      "query": "10.1007/s10228-002-0156-0",
+      "query": "Paraulopus",
       "fields":["doc.search_data.fulltext", "doc.search_data.fulltext_boosted^4"] 
     }
 },
