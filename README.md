@@ -5,6 +5,40 @@ Export AFD data for Elasticsearch, RDF, etc.
 ## RDF
 
 
+## CouchDB
+
+Use CouchDB to cache data, and also post-process to generate triples, etc.
+
+### Lists
+
+Lists are a feature of CocuhDB we can use to dump all the triples in a view. It is faster than querying the view itself as we avoid paging through the rows, which is slow.
+
+Here is a simple list to output triples:
+```
+"lists": {
+    "triples": "function(head,req) { var row; start({ 'headers': { 'Content-Type': 'text/plain' } }); while(row = getRow()) { send(row.value); } }"
+  }
+```
+
+It simply takes a row from the view and dumps it as a line of plain text. To use this, do the following:
+
+```<couchdb server>:5984/<database>/_design/<design-name>/_list/triples/<view-name>```
+
+For example, 
+
+```http://127.0.0.1:5984/oz-csl/_design/crossref/_list/triples/citation-nt```
+
+Call this using ```curl``` to generate a file of triples, e.g.:
+
+```
+curl http://127.0.0.1:5984/oz-csl/_design/crossref/_list/triples/citation-nt > csl.nt```
+
+Taxa: 
+
+curl http://127.0.0.1:5984/ala/_design/nt/_list/triples_nt/triples > taxa.nt
+
+
+
 ## Elasticsearch
 
 ### Basic idea
