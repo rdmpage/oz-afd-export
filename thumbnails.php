@@ -6,62 +6,87 @@
 function get_jstor_thumbnail($jstor)
 {	
 	$thumbnail = '';
-	
 	$extension = 'gif';
-
-	// GIF
-	$filename = '/Users/rpage/Development/jstor-thumbnails-o/' . $jstor . '.' . $extension;
+	
+	// do we have it already?
+	$tmp_file = dirname(__FILE__) . '/tmp/jstor-' . $jstor . '.' . $extension;
 	
 	// if no GIF try JPEG
-	if (!file_exists($filename))
+	if (!file_exists($tmp_file))
 	{
 		$extension = 'jpg';
-		$filename = dirname(dirname(__FILE__)) . '/jstor_thumbnails/' . $jstor. '.' . $extension;
+		$tmp_file = dirname(__FILE__) . '/tmp/jstor-' . $jstor . '.' . $extension;
 	}
 
-	if (!file_exists($filename))
+	if (!file_exists($tmp_file))
 	{
 		$extension = 'jpeg';
-		$filename = dirname(dirname(__FILE__)) . '/jstor_thumbnails/' . $jstor. '.' . $extension;
+		$tmp_file = dirname(__FILE__) . '/tmp/jstor-' . $jstor . '.' . $extension;
 	}
-		
-	if (file_exists($filename))
-	{		
-		$image_type = exif_imagetype($filename);
-		switch ($image_type)
+	
+	if (!file_exists($tmp_file))
+	{
+		// OK, we don't have local copy so go get
+
+		// GIF
+		$filename = '/Users/rpage/Development/jstor-thumbnails-o/' . $jstor . '.' . $extension;
+	
+		// if no GIF try JPEG
+		if (!file_exists($filename))
 		{
-			case IMAGETYPE_GIF:
-				$mime_type = 'image/gif';
-				break;
-			case IMAGETYPE_JPEG:
-				$mime_type = 'image/jpg';
-				break;
-			case IMAGETYPE_PNG:
-				$mime_type = 'image/png';
-				break;
-			case IMAGETYPE_TIFF_II:
-			case IMAGETYPE_TIFF_MM:
-				$mime_type = 'image/tif';
-				break;
-			default:
-				$mime_type = 'image/gif';
-				break;
+			$extension = 'jpg';
+			$filename = dirname(dirname(__FILE__)) . '/jstor_thumbnails/' . $jstor. '.' . $extension;
+		}
+
+		if (!file_exists($filename))
+		{
+			$extension = 'jpeg';
+			$filename = dirname(dirname(__FILE__)) . '/jstor_thumbnails/' . $jstor. '.' . $extension;
 		}
 		
-		$image = file_get_contents($filename);
+		if (file_exists($filename))
+		{		
+			$image_type = exif_imagetype($filename);
+			switch ($image_type)
+			{
+				case IMAGETYPE_GIF:
+					$mime_type = 'image/gif';
+					break;
+				case IMAGETYPE_JPEG:
+					$mime_type = 'image/jpg';
+					break;
+				case IMAGETYPE_PNG:
+					$mime_type = 'image/png';
+					break;
+				case IMAGETYPE_TIFF_II:
+				case IMAGETYPE_TIFF_MM:
+					$mime_type = 'image/tif';
+					break;
+				default:
+					$mime_type = 'image/gif';
+					break;
+			}
 		
-		$tmp_file = dirname(__FILE__) . '/tmp/jstor-' . $jstor . '.' . $extension;
-		file_put_contents($tmp_file, $image);
+			$image = file_get_contents($filename);
 		
-		// resize
-		$command = 'mogrify -resize 100x ' . $tmp_file;
-		//echo $command . "\n";
+			$tmp_file = dirname(__FILE__) . '/tmp/jstor-' . $jstor . '.' . $extension;
+			file_put_contents($tmp_file, $image);
+		
+			// resize
+			$command = 'mogrify -resize 100x ' . $tmp_file;
+			//echo $command . "\n";
 	
-		system($command);
+			system($command);
+		}
+	}
+	
+	// If thumbnail exists we should now have a local copy...
+	if (file_exists($tmp_file))
+	{
 		
 		// load resized image
 		$image = file_get_contents($tmp_file);
-		
+	
 		//$base64 = chunk_split(base64_encode($image));
 		$base64 = base64_encode($image);
 		$thumbnail = 'data:' . $mime_type . ';base64,' . $base64;				
@@ -207,6 +232,79 @@ function get_bionames_thumbnail($sha1)
 		
 	return $thumbnail;
 }
+
+//----------------------------------------------------------------------------------------
+function get_biostor_thumbnail($biostor)
+{
+	$thumbnail = '';
+	
+	$filename = dirname(__FILE__) . '/tmp/biostor-' . $biostor . '.png';	
+	
+	if (!file_exists($filename))
+	{
+	
+		$url = 'http://biostor.org/documentcloud/biostor/' . $biostor . '/pages/1-small';
+	
+		$opts = array(
+		  CURLOPT_URL =>$url,
+		  CURLOPT_FOLLOWLOCATION => TRUE,
+		  CURLOPT_RETURNTRANSFER => TRUE,
+		  CURLOPT_HTTPHEADER => array("Accept: application/ld+json")
+		);
+	
+		$ch = curl_init();
+		curl_setopt_array($ch, $opts);
+		$data = curl_exec($ch);
+		$info = curl_getinfo($ch); 
+		curl_close($ch);
+	
+		if ($data != '')
+		{
+			file_put_contents($filename, $data);
+		
+			// resize
+			$command = 'mogrify -resize 100x ' . $filename;
+			//echo $command . "\n";
+
+			system($command);
+		}
+	}
+	
+	if (file_exists($filename))
+	{
+	
+		// load resized image
+		$image = file_get_contents($filename);
+		
+		$image_type = exif_imagetype($filename);
+		switch ($image_type)
+		{
+			case IMAGETYPE_GIF:
+				$mime_type = 'image/gif';
+				break;
+			case IMAGETYPE_JPEG:
+				$mime_type = 'image/jpg';
+				break;
+			case IMAGETYPE_PNG:
+				$mime_type = 'image/png';
+				break;
+			case IMAGETYPE_TIFF_II:
+			case IMAGETYPE_TIFF_MM:
+				$mime_type = 'image/tif';
+				break;
+			default:
+				$mime_type = 'image/gif';
+				break;
+		}		
+	
+		//$base64 = chunk_split(base64_encode($image));
+		$base64 = base64_encode($image);
+		$thumbnail = 'data:' . $mime_type . ';base64,' . $base64;				
+	}
+		
+	return $thumbnail;
+}
+
 
 ?>
 
