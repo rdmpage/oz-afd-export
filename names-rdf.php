@@ -24,7 +24,7 @@ $done = false;
 while (!$done)
 {
 //	$sql = 'SELECT * FROM afd WHERE NAME_GUID IS NOT NULL AND PUBLICATION_GUID IS NOT NULL';
-//	$sql = 'SELECT * FROM afd WHERE NAME_GUID IS NOT NULL';
+	$sql = 'SELECT * FROM afd WHERE NAME_GUID IS NOT NULL';
 
 	//$sql = 'SELECT * FROM afd WHERE TAXON_GUID="124ab9d1-5ed7-46c3-aecf-76e70a04e209"';
 
@@ -32,14 +32,16 @@ while (!$done)
 	//$sql = 'SELECT * FROM afd WHERE TAXON_GUID="069530f5-a83f-4532-b544-0671eea8bbfb"';
 	
 	// Parabopyrella essingtoni (Bourdon & Bruce, 1983)
-	$sql = 'SELECT * FROM afd WHERE TAXON_GUID="d0204b5f-7093-419e-a6fb-d84b95effbe4"';
+	//$sql = 'SELECT * FROM afd WHERE TAXON_GUID="d0204b5f-7093-419e-a6fb-d84b95effbe4"';
 	
 	// 'Ochlerotatus' daliensis (Taylor, 1916)
 	//$sql = 'SELECT * FROM afd WHERE TAXON_GUID="26eb3cc2-adb1-4628-86cd-65cdd3d3e377"';
 
+
+	//$sql = 'SELECT * FROM afd WHERE GENUS="Manestella"';
+
 	$sql .= ' LIMIT ' . $page . ' OFFSET ' . $offset;
-	
-	
+		
 	$result = $db->Execute($sql);
 	if ($result == false) die("failed [" . __FILE__ . ":" . __LINE__ . "]: " . $sql);
 
@@ -170,9 +172,9 @@ while (!$done)
 					$authorship .= ', ' . $result->fields['YEAR'];
 				}
 				
-				$authorship = str_replace('?', '\?', $authorship);
+				$pattern = '\s+\(?' . preg_quote($authorship, '/') . '\)?';
 				
-				$nameComplete = preg_replace('/\s+\(?' . $authorship . '\)?/u', '', $nameComplete);
+				$nameComplete = preg_replace('/' . $pattern . '/u', '', $nameComplete);
 								
 				$triples[] = $name . ' <http://rs.tdwg.org/ontology/voc/TaxonName#nameComplete> ' . '"' . addcslashes($nameComplete, '"') . '" . ';						
 			}
@@ -319,7 +321,7 @@ while (!$done)
 		
 		//print_r($t);
 		
-		if (0)
+		if (1)
 		{
 			echo $t . "\n";
 		}
