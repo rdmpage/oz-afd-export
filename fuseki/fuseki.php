@@ -4,17 +4,18 @@ error_reporting(E_ALL);
 
 // Jena-Fuseki API
 
+// Sloppy.io
 $config['fuseki-url'] 		= 'https://kg-fuseki.sloppy.zone/';
 $config['fuseki-dataset'] 	= 'test';
 $config['fuseki-user'] 		= 'admin';
 $config['fuseki-password'] 	= 'Tl3O7c5Y6qbFTLk';
 
-/*
-$config['fuseki-url'] 		= 'http://localhost:32768/';
-$config['fuseki-dataset'] 	= 'test';
+// Local Docker
+$config['fuseki-url'] 		= 'http://localhost:32778/';
+$config['fuseki-dataset'] 	= 'ala';
 $config['fuseki-user'] 		= 'admin';
-$config['fuseki-password'] 	= '4R5mAjcSYBV690d';
-*/
+$config['fuseki-password'] 	= 'wk0D71g91bz2yQC';
+
 
 // If password lost in logs get from comamnd line
 // sloppy logs -n 10000 <project> | grep "admin="
@@ -148,6 +149,11 @@ function upload_from_file_chunks($triples_filename, $chunks = 1000, $graph = '')
 			echo $total . "\n";
 			$count = 0;
 			$triples = '';
+			
+			// give server a break
+			$rand = rand(1000000, 3000000);
+			echo '-- sleeping for ' . round(($rand / 1000000),2) . ' seconds' . "\n";
+			usleep($rand);			
 		}
 	}
 	
