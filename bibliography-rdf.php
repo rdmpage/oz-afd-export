@@ -27,27 +27,46 @@ $db->EXECUTE("set names 'utf8'");
 //--------------------------------------------------------------------------------------------------
 function get_pdf_details($pdf)
 {
+	global $db;
+	
 	$obj = null;
 	
-	$url = 'http://bionames.org/bionames-archive/pdfstore?url=' . urlencode($pdf) . '&noredirect&format=json';
-
-	$opts = array(
-	  CURLOPT_URL =>$url,
-	  CURLOPT_FOLLOWLOCATION => TRUE,
-	  CURLOPT_RETURNTRANSFER => TRUE
-	);
+	$sql = "SELECT * FROM sha1 WHERE pdf = " . $db->qstr($pdf) . " LIMIT 1;";
 	
-	$ch = curl_init();
-	curl_setopt_array($ch, $opts);
-	$data = curl_exec($ch);
-	$info = curl_getinfo($ch); 
-	curl_close($ch);
+	$result = $db->Execute($sql);
+	if ($result == false) die("failed [" . __FILE__ . ":" . __LINE__ . "]: " . $sql);
 	
-	if ($data != '')
+	if ($result->NumRows() == 1)
 	{
-		$obj = json_decode($data);
+		$obj = new stdclass;
+		$obj->sha1 = $result->fields['sha1'];
+	}
+	else
+	{
+	
+		$url = 'http://bionames.org/bionames-archive/pdfstore?url=' . urlencode($pdf) . '&noredirect&format=json';
+		//$url = 'http://direct.bionames.org/bionames-archive/pdfstore?url=' . urlencode($pdf) . '&noredirect&format=json';
+
+		$opts = array(
+		  CURLOPT_URL =>$url,
+		  CURLOPT_FOLLOWLOCATION => TRUE,
+		  CURLOPT_RETURNTRANSFER => TRUE
+		);
+	
+		$ch = curl_init();
+		curl_setopt_array($ch, $opts);
+		$data = curl_exec($ch);
+		$info = curl_getinfo($ch); 
+		curl_close($ch);
+	
+		if ($data != '')
+		{
+			$obj = json_decode($data);
+		}
 	}
 	
+	
+		
 	return $obj;
 }
 
@@ -85,6 +104,7 @@ $enhance_metadata 		= true;
 $enhance_identifiers	= true;
 $enhance_pdf			= true;
 $enhance_pdf_as_images	= false;
+$enhance_thumbnails		= true;
 
 
 $use_role				= true;
@@ -119,7 +139,7 @@ while (!$done)
 	
 	//$sql .= ' WHERE PUBLICATION_GUID = "6c225120-a4d8-4784-a920-bb9366a4463c"';
 	
-	$sql .= ' WHERE PUBLICATION_GUID = "0d76aea2-8896-4dae-91e9-4d6f9441dc97"';
+	$sql .= ' WHERE PUBLICATION_GUID = "0059430e-3133-43bf-8a90-a345306db64b"';
 	
 	//$sql .= ' WHERE PUB_AUTHOR LIKE "%Patoleta%"';
 	
@@ -129,7 +149,7 @@ while (!$done)
 	
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE LIKE "%Auckland%"';
 	
-	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Journal of Crustacean Biology"';
+	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Mosquito Systematics"';
 	
 	//$sql .= ' WHERE doi="10.1051/parasite/1968432131"';
 
@@ -358,6 +378,20 @@ while (!$done)
 						$triples[] = $identifier_id . ' <http://schema.org/value> ' . '"' . addcslashes($result->fields['biostor'], '"') . '"' . '.';
 			
 						//$triples[] = $s . ' <http://schema.org/sameAs> ' . '<https://hdl.handle.net/' . $result->fields['handle'] . '> ' . '. ';
+						
+						// BioStor thumbnail
+						if ($enhance_thumbnails)
+						{						
+							$thumbnail = get_biostor_thumbnail($result->fields['biostor']);
+							if ($thumbnail != '')
+							{
+								$image_id = '<' . $subject_id . '#biostorimage' . '>';
+					
+								$triples[] = $s . ' <http://schema.org/image> ' .  $image_id . ' .';						
+								$triples[] = $image_id . ' <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://schema.org/ImageObject> .';
+								$triples[] = $image_id . ' <http://schema.org/thumbnailUrl> ' . '"' . addcslashes($thumbnail, '"') . '"' . ' .';
+							}	
+						}					
 			
 					}	
 		
@@ -374,17 +408,19 @@ while (!$done)
 						//$triples[] = $s . ' <http://schema.org/sameAs> ' . '<https://doi.org/' . $result->fields['doi'] . '> ' . '. ';
 						$triples[] = $s . ' <http://schema.org/sameAs> ' . '"https://doi.org/' . $result->fields['doi'] . '" ' . '. ';
 						
-						$thumbnail = get_doi_thumbnail($result->fields['doi']);
-						if ($thumbnail != '')
-						{
-							// Grab first page image to use as thumbnail
-							$image_id = '<' . $subject_id . '#doiimage' . '>';
+						if ($enhance_thumbnails)
+						{						
+							$thumbnail = get_doi_thumbnail($result->fields['doi']);
+							if ($thumbnail != '')
+							{
+								// Grab first page image to use as thumbnail
+								$image_id = '<' . $subject_id . '#doiimage' . '>';
 					
-							$triples[] = $s . ' <http://schema.org/image> ' .  $image_id . ' .';						
-							$triples[] = $image_id . ' <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://schema.org/ImageObject> .';
-							$triples[] = $image_id . ' <http://schema.org/thumbnailUrl> ' . '"' . addcslashes($thumbnail, '"') . '"' . ' .';
+								$triples[] = $s . ' <http://schema.org/image> ' .  $image_id . ' .';						
+								$triples[] = $image_id . ' <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://schema.org/ImageObject> .';
+								$triples[] = $image_id . ' <http://schema.org/thumbnailUrl> ' . '"' . addcslashes($thumbnail, '"') . '"' . ' .';
+							}
 						}
-			
 					}
 			
 					// Handle
@@ -415,20 +451,19 @@ while (!$done)
 						//$triples[] = $s . ' <http://schema.org/sameAs> ' . '<https://www.jstor.org/stable/' . $result->fields['jstor'] . '> ' . '. ';
 						$triples[] = $s . ' <http://schema.org/sameAs> ' . '"https://www.jstor.org/stable/' . $result->fields['jstor'] . '" ' . '. ';
 						
-						// JSTOR thumbnail
-						
-						$thumbnail = get_jstor_thumbnail($result->fields['jstor']);
-						if ($thumbnail != '')
-						{
-							// Grab first page image to use as thumbnail
-							$image_id = '<' . $subject_id . '#jstorimage' . '>';
+						// JSTOR thumbnail		
+						if ($enhance_thumbnails)
+						{																
+							$thumbnail = get_jstor_thumbnail($result->fields['jstor']);
+							if ($thumbnail != '')
+							{
+								$image_id = '<' . $subject_id . '#jstorimage' . '>';
 					
-							$triples[] = $s . ' <http://schema.org/image> ' .  $image_id . ' .';						
-							$triples[] = $image_id . ' <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://schema.org/ImageObject> .';
-							$triples[] = $image_id . ' <http://schema.org/thumbnailUrl> ' . '"' . addcslashes($thumbnail, '"') . '"' . ' .';
-						}
-						
-			
+								$triples[] = $s . ' <http://schema.org/image> ' .  $image_id . ' .';						
+								$triples[] = $image_id . ' <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://schema.org/ImageObject> .';
+								$triples[] = $image_id . ' <http://schema.org/thumbnailUrl> ' . '"' . addcslashes($thumbnail, '"') . '"' . ' .';
+							}						
+						}		
 					}		
 						
 					// PMID
@@ -539,6 +574,8 @@ while (!$done)
 				$triples[] = $pdf_id . ' <http://schema.org/contentUrl> ' . '"' . addcslashes($result->fields['pdf'], '"') . '"' . '.';
 				$triples[] = $pdf_id . ' <http://schema.org/fileFormat> "application/pdf" .';
 			
+				$obj = null;
+				
 				// SHA1 and page images
 				$sha1 = '';
 				$obj = get_pdf_details($result->fields['pdf']);
@@ -547,16 +584,15 @@ while (!$done)
 				{
 					$sha1 = $obj->sha1;
 					$triples[] = $pdf_id . ' <http://id.loc.gov/vocabulary/preservation/cryptographicHashFunctions/sha1> ' . '"' . addcslashes($obj->sha1, '"') . '"' . ' .';			
-				
-					$images = get_pdf_images($sha1);
-				
-					if ($images)
-					{
+
+					if ($enhance_thumbnails)
+					{						
+						// URL versus embedded copy
 						if (0)
 						{
 							// Grab first page image to use as thumbnail
 							$image_id = '<' . $subject_id . '#image' . '>';
-					
+				
 							$triples[] = $s . ' <http://schema.org/image> ' .  $image_id . ' .';						
 							$triples[] = $image_id . ' <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://schema.org/ImageObject> .';
 							$triples[] = $image_id . ' <http://schema.org/contentUrl> ' . '"' . addcslashes('http://bionames.org/bionames-archive/documentcloud/pages/' . $sha1 . '/1-large', '"') . '"' . ' .';
@@ -566,36 +602,39 @@ while (!$done)
 						{
 							// local static copy
 							$thumbnail = get_bionames_thumbnail($sha1);
+							
 							if ($thumbnail != '')
 							{
 								$image_id = '<' . $subject_id . '#sha1image' . '>';
-					
+				
 								$triples[] = $s . ' <http://schema.org/image> ' .  $image_id . ' .';						
 								$triples[] = $image_id . ' <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://schema.org/ImageObject> .';
 								$triples[] = $image_id . ' <http://schema.org/thumbnailUrl> ' . '"' . addcslashes($thumbnail, '"') . '"' . ' .';
 							}
-						
-						}								
-						if ($enhance_pdf_as_images)
-						{
-							// Include page images in RDF (do we want to do this?)
-							for ($i = 1; $i <= $images->pages; $i++)
-							{
-								// image
-								$image_id = '<' . $subject_id . '/page#' . $i . '>';
-								$triples[] = $image_id . ' <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://schema.org/ImageObject> .';
-
-								// order 
-								$triples[] = $image_id . ' <http://schema.org/position> ' . '"' . addcslashes($i, '"') . '"' . ' .';
-
-								// URLs to images
-								$triples[] = $image_id . ' <http://schema.org/contentUrl> ' . '"' . addcslashes('http://bionames.org/bionames-archive/documentcloud/pages/' . $sha1 . '/' . $i . '-large', '"') . '"' . ' .';
-								$triples[] = $image_id . ' <http://schema.org/thumbnailUrl> ' . '"' . addcslashes('http://bionames.org/bionames-archive/documentcloud/pages/' . $sha1 . '/' . $i . '-small', '"') . '"' . ' .';
-
-								// page image is part of the work
-								$triples[] = $s . ' <http://schema.org/hasPart> ' .  $image_id . ' .';						
 					
-							}
+						}	
+					}							
+					if ($enhance_pdf_as_images)
+					{
+						$images = get_pdf_images($sha1);	
+					
+						// Include page images in RDF (do we want to do this?)
+						for ($i = 1; $i <= $images->pages; $i++)
+						{
+							// image
+							$image_id = '<' . $subject_id . '/page#' . $i . '>';
+							$triples[] = $image_id . ' <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://schema.org/ImageObject> .';
+
+							// order 
+							$triples[] = $image_id . ' <http://schema.org/position> ' . '"' . addcslashes($i, '"') . '"' . ' .';
+
+							// URLs to images
+							$triples[] = $image_id . ' <http://schema.org/contentUrl> ' . '"' . addcslashes('http://bionames.org/bionames-archive/documentcloud/pages/' . $sha1 . '/' . $i . '-large', '"') . '"' . ' .';
+							$triples[] = $image_id . ' <http://schema.org/thumbnailUrl> ' . '"' . addcslashes('http://bionames.org/bionames-archive/documentcloud/pages/' . $sha1 . '/' . $i . '-small', '"') . '"' . ' .';
+
+							// page image is part of the work
+							$triples[] = $s . ' <http://schema.org/hasPart> ' .  $image_id . ' .';						
+				
 						}
 					}
 				}
@@ -695,4 +734,3 @@ while (!$done)
 }
 
 ?>
-
