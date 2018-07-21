@@ -221,7 +221,8 @@ while (!$done)
 
 	//$sql .= ' WHERE biostor IS NOT NULL';	
 	
-	$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Peckhamia" AND pdf IS NOT NULL';		
+	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Peckhamia" AND pdf IS NOT NULL';		
+	$sql .= ' WHERE pdf IS NOT NULL';		
 	
 	//$sql .= ' WHERE updated > "2018-06-16"';
 	//$sql .= ' WHERE updated > "2018-07-16"';
@@ -279,6 +280,12 @@ while (!$done)
 		if (!file_exists($thumbnail_filename))
 		{
 			$extension = 'jpeg';
+			$thumbnail_filename = $base_filename . '.' . $extension;
+		}
+
+		if (!file_exists($thumbnail_filename))
+		{
+			$extension = 'png';
 			$thumbnail_filename = $base_filename . '.' . $extension;
 		}
 	
