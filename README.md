@@ -1,8 +1,23 @@
 # oz-afd-export
 Export AFD data for Elasticsearch, RDF, etc.
 
+## Gotchas
+
+### DOI redirects
+
+DOI https://doi.org/10.11646/zootaxa.3735.3.1 redirects to https://doi.org/10.11646/zootaxa.3745.3.1, so if we map to 3735.3.1 we miss the links to 3745.3.1 :( Looks like at some point Zootaxa decided the DOI was wrong and changed it, but old one kept and resolves to a 301 Moved Permanently
 
 ## RDF
+
+### Blazegraph
+
+Use CURL to upload sets of triples, use script ```blazegraph/load-chunked-rdf``` . Big triples files are chunked into subsets using ```chunk2.php```. Note also the importance of MIME type, triples MUST be sent to blazegraph as ```text/rdf+n3``` to preserve UTF-8 encoding.
+
+To upload triples:
+
+```
+curl http://localhost:9999/blazegraph/sparql -H 'Content-Type: text/rdf+n3' --data-binary '@b.nt'
+```
 
 
 ## CouchDB
@@ -64,3 +79,28 @@ Bitnami has version 6.3.1. Remember to create the index before uploading data. S
 ### Kitematic
 
 Local Docker version is 5.6.9 which doesn’t need authentication.
+
+
+## Zenodo
+
+### Gotchas
+
+Zenodo records can be updated, and looks like Plazi has done this a lot, which means metadata in local CouchDB can be out of date. Need to refresh tis [to do].
+
+### Uploading
+
+Several steps needed to link to Zenodo.
+
+#### Match publication to Zenodo
+
+Use script ```zenodo-match.php``` to match ```[journal,volume,spage]``` triple to Zenodo, using CouchDB version of BLR. This gives us the Zenodo record id for a publication.
+
+#### Get parts (figures) for each Zenodo record
+
+Use script ```zenodo-fetch-parts.php``` to get array of Zenodo record ids for figures for a given Zenodo record id, store these as a JSON array.
+
+#### Resolve Zenodo ids as JSON-LD
+
+Use script ```zenodo-get-figures.php``` to fetch JSON-LD for each part and convert to triples. Upload this to triple store and we can then query for figures.
+
+
