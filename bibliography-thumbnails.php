@@ -220,9 +220,9 @@ while (!$done)
 			
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE LIKE "%Auckland%"';
 	
-	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Journal of Arachnology" AND jstor IS NOT NULL';	
+	$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Papers and Proceedings of the Royal Society of Tasmania" AND pdf IS NOT NULL';	
 	
-	$sql .= ' WHERE issn="0013-9440" AND pdf IS NOT NULL';	
+	//$sql .= ' WHERE issn="0013-9440" AND pdf IS NOT NULL';	
 	
 
 	//$sql .= ' WHERE biostor IS NOT NULL';
@@ -339,23 +339,26 @@ while (!$done)
 					if ($obj)
 					{
 					
-						// By default take thumbnail of first page, but
-						// some repositories insert a cover page, can skip those
-						// by setting $page to the page number (1-offset) where the work starts.
-						$page = 1;
-						
-						switch ($result->fields['PUB_PARENT_JOURNAL_TITLE'])
+						if (isset($obj->sha1))
 						{
-							case 'Publications of the Seto Marine Biological Laboratory':
-								$page = 2;
-								break;
+							// By default take thumbnail of first page, but
+							// some repositories insert a cover page, can skip those
+							// by setting $page to the page number (1-offset) where the work starts.
+							$page = 1;
+						
+							switch ($result->fields['PUB_PARENT_JOURNAL_TITLE'])
+							{
+								case 'Publications of the Seto Marine Biological Laboratory':
+									$page = 2;
+									break;
 								
-							default:
-								$page = 1;
-								break;						
-						}
+								default:
+									$page = 1;
+									break;						
+							}
 					
-						$thumbnail_filename = get_bionames_thumbnail($obj->sha1, $base_filename, $page);			
+							$thumbnail_filename = get_bionames_thumbnail($obj->sha1, $base_filename, $page);			
+						}
 					}
 				}
 			}
