@@ -147,9 +147,8 @@ while (!$done)
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Journal of Arachnology" AND jstor IS NOT NULL';	
 	//$sql .= ' WHERE issn="0013-9440" AND pdf IS NOT NULL';	
 	
-	$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Zoologische Mededelingen (Leiden)" AND thumbnailUrl IS NOT NULL';
+	$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Pacific Insects" AND thumbnailUrl IS NOT NULL';
 
-	
 	//$sql .= ' WHERE PUB_AUTHOR LIKE "%Patoleta%"';
 	
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Copeia" AND jstor IS NOT NULL';
