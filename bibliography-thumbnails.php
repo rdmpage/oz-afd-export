@@ -7,10 +7,42 @@ error_reporting(E_ALL ^ E_DEPRECATED);
 
 require_once (dirname(__FILE__) . '/adodb5/adodb.inc.php');
 
+$thumbnail_width = 100;
+
+//--------------------------------------------------------------------------------------------------
+function get_pdf_details($pdf)
+{
+	$obj = null;
+	
+	$url = 'http://bionames.org/bionames-archive/pdfstore?url=' . urlencode($pdf) . '&noredirect&format=json';
+	//$url = 'http://direct.bionames.org/bionames-archive/pdfstore?url=' . urlencode($pdf) . '&noredirect&format=json';
+
+	$opts = array(
+	  CURLOPT_URL =>$url,
+	  CURLOPT_FOLLOWLOCATION => TRUE,
+	  CURLOPT_RETURNTRANSFER => TRUE
+	);
+
+	$ch = curl_init();
+	curl_setopt_array($ch, $opts);
+	$data = curl_exec($ch);
+	$info = curl_getinfo($ch); 
+	curl_close($ch);
+
+	if ($data != '')
+	{
+		$obj = json_decode($data);
+	}
+		
+	return $obj;
+}
+
 
 //----------------------------------------------------------------------------------------
 function get_jstor_thumbnail($jstor, $base_filename)
 {	
+	global $thumbnail_width;
+	
 	$thumbnail_filename = '';
 	
 	$extension = 'gif';
@@ -39,7 +71,7 @@ function get_jstor_thumbnail($jstor, $base_filename)
 		file_put_contents($thumbnail_filename, $image);
 	
 		// resize
-		$command = 'mogrify -resize 100x ' . $thumbnail_filename;
+		$command = 'mogrify -resize ' . $thumbnail_width . 'x ' . $thumbnail_filename;
 		//echo $command . "\n";
 
 		system($command);
@@ -49,6 +81,98 @@ function get_jstor_thumbnail($jstor, $base_filename)
 
 	return $thumbnail_filename;
 }
+
+//----------------------------------------------------------------------------------------
+function get_biostor_thumbnail($biostor, $base_filename)
+{	
+	global $thumbnail_width;
+	
+	$thumbnail_filename = '';
+	
+	$url = 'http://biostor.org/documentcloud/biostor/' . $biostor . '/pages/1-small';
+
+	$opts = array(
+	  CURLOPT_URL =>$url,
+	  CURLOPT_FOLLOWLOCATION => TRUE,
+	  CURLOPT_RETURNTRANSFER => TRUE
+	);
+
+	$ch = curl_init();
+	curl_setopt_array($ch, $opts);
+	$data = curl_exec($ch);
+	$info = curl_getinfo($ch); 
+	curl_close($ch);
+
+	if ($data != '')
+	{
+		if ($info['http_code'] == 200)
+		{	
+	
+			$thumbnail_filename = $base_filename . '.jpg';
+			file_put_contents($thumbnail_filename, $data);
+		
+			// resize
+			$command = 'mogrify -resize ' . $thumbnail_width . 'x ' . $thumbnail_filename;
+			//echo $command . "\n";
+
+			system($command);
+		}
+		else
+		{
+			echo "HTTP " . $info['http_code'] . "\n";
+			exit();
+		}
+	}
+
+		
+	return $thumbnail_filename;
+}
+
+//----------------------------------------------------------------------------------------
+function get_bionames_thumbnail($sha1, $base_filename)
+{	
+	global $thumbnail_width;
+	
+	$thumbnail_filename = '';
+	
+	$url = 'http://bionames.org/bionames-archive/documentcloud/pages/' . $sha1 . '/1-small';
+	
+	$opts = array(
+	  CURLOPT_URL =>$url,
+	  CURLOPT_FOLLOWLOCATION => TRUE,
+	  CURLOPT_RETURNTRANSFER => TRUE
+	);
+
+	$ch = curl_init();
+	curl_setopt_array($ch, $opts);
+	$data = curl_exec($ch);
+	$info = curl_getinfo($ch); 
+	curl_close($ch);
+
+	if ($data != '')
+	{
+		if ($info['http_code'] == 200)
+		{	
+			$thumbnail_filename = $base_filename . '.png';
+			file_put_contents($thumbnail_filename, $data);
+		
+			// resize
+			$command = 'mogrify -resize ' . $thumbnail_width . 'x ' . $thumbnail_filename;
+			//echo $command . "\n";
+
+			system($command);
+		}
+		else
+		{
+			echo "HTTP " . $info['http_code'] . "\n";
+			exit();
+		}
+	}
+
+		
+	return $thumbnail_filename;
+}
+
 
 //--------------------------------------------------------------------------------------------------
 $db = NewADOConnection('mysql');
@@ -93,7 +217,11 @@ while (!$done)
 			
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE LIKE "%Auckland%"';
 	
-	$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Copeia" AND jstor IS NOT NULL';	
+	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Copeia" AND jstor IS NOT NULL';	
+
+	//$sql .= ' WHERE biostor IS NOT NULL';	
+	
+	$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Peckhamia" AND pdf IS NOT NULL';		
 	
 	//$sql .= ' WHERE updated > "2018-06-16"';
 	//$sql .= ' WHERE updated > "2018-07-16"';
@@ -173,6 +301,31 @@ while (!$done)
 					$thumbnail_filename = get_jstor_thumbnail($result->fields['jstor'], $base_filename);			
 				}
 			}
+			
+			if ($thumbnail_filename == '')
+			{
+				// BioStor
+				if ($result->fields['biostor'] != '')
+				{
+					$thumbnail_filename = get_biostor_thumbnail($result->fields['biostor'], $base_filename);			
+				}
+			}
+			
+			if ($thumbnail_filename == '')
+			{
+				// PDF
+				if ($result->fields['pdf'] != '')
+				{
+					$sha1 = '';
+					$obj = get_pdf_details($result->fields['pdf']);
+				
+					if ($obj)
+					{
+						$thumbnail_filename = get_bionames_thumbnail($obj->sha1, $base_filename);			
+					}
+				}
+			}
+			
 			
 			if ($thumbnail_filename != '')
 			{
