@@ -165,7 +165,7 @@ function get_bionames_thumbnail($sha1, $base_filename)
 		else
 		{
 			echo "HTTP " . $info['http_code'] . " $sha1\n";
-			exit();
+			//exit();
 		}
 	}
 
