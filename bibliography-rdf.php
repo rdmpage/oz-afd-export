@@ -144,8 +144,11 @@ while (!$done)
 	//$sql .= ' WHERE PUBLICATION_GUID = "988dbda3-53c5-4018-9faa-723665cea5cf"'; // PDF
 	
 	//$sql .= ' WHERE PUBLICATION_GUID = "ed3874b2-2148-421c-a7dd-c3ca3847710e"';
-	$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Journal of Arachnology" AND jstor IS NOT NULL';	
+	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Journal of Arachnology" AND jstor IS NOT NULL';	
+	//$sql .= ' WHERE issn="0013-9440" AND pdf IS NOT NULL';	
 	
+	$sql .= ' WHERE thumbnailUrl IS NOT NULL';
+
 	
 	//$sql .= ' WHERE PUB_AUTHOR LIKE "%Patoleta%"';
 	
@@ -576,6 +579,7 @@ while (!$done)
 			if ($result->fields['thumbnailUrl'] != '')
 			{
 				$prefix = 'https://cdn.rawgit.com/rdmpage/oz-afd-export/2dcd904e/thumbnails/';
+				$prefix = 'https://cdn.rawgit.com/rdmpage/oz-afd-export/master/thumbnails/';
 
 				$thumbnailUrl = $prefix . $result->fields['thumbnailUrl'];
 				
