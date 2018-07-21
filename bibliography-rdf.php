@@ -32,7 +32,7 @@ function get_pdf_details($pdf)
 	$obj = null;
 	
 	$sql = "SELECT * FROM sha1 WHERE pdf = " . $db->qstr($pdf) . " LIMIT 1;";
-	
+		
 	$result = $db->Execute($sql);
 	if ($result == false) die("failed [" . __FILE__ . ":" . __LINE__ . "]: " . $sql);
 	
@@ -46,7 +46,7 @@ function get_pdf_details($pdf)
 	
 		$url = 'http://bionames.org/bionames-archive/pdfstore?url=' . urlencode($pdf) . '&noredirect&format=json';
 		//$url = 'http://direct.bionames.org/bionames-archive/pdfstore?url=' . urlencode($pdf) . '&noredirect&format=json';
-
+		
 		$opts = array(
 		  CURLOPT_URL =>$url,
 		  CURLOPT_FOLLOWLOCATION => TRUE,
@@ -147,7 +147,7 @@ while (!$done)
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Journal of Arachnology" AND jstor IS NOT NULL';	
 	//$sql .= ' WHERE issn="0013-9440" AND pdf IS NOT NULL';	
 	
-	$sql .= ' WHERE thumbnailUrl IS NOT NULL';
+	$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Zoologische Mededelingen (Leiden)" AND thumbnailUrl IS NOT NULL';
 
 	
 	//$sql .= ' WHERE PUB_AUTHOR LIKE "%Patoleta%"';
