@@ -206,7 +206,7 @@ while (!$done)
 	
 	//$sql .= ' WHERE PUBLICATION_GUID = "a8447363-5982-472b-b54a-f40476f50f5b"';
 	
-	//$sql .= ' WHERE PUBLICATION_GUID = "48da0d1d-b942-4088-b553-74000d04db19"';
+	//$sql .= ' WHERE PUBLICATION_GUID = "7f6c7ed5-4a35-40d2-aa57-05577e35ec23"';
 
 	// chapter
 	//$sql .= ' WHERE PUBLICATION_GUID = "504be1f6-4dbb-4012-944c-1f7303cb105f"';
@@ -229,7 +229,7 @@ while (!$done)
 	//$sql .= ' WHERE biostor IS NOT NULL';
 	//$sql .= ' WHERE jstor IS NOT NULL';	
 	
-	$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Pacific Insects" AND pdf IS NOT NULL';		
+	$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Odonatologica" AND pdf IS NOT NULL';		
 	
 	//$sql .= ' WHERE PUBLICATION_GUID = "c2d37add-ce58-41ac-aaf7-cbad7d9ae197"';	
 	
