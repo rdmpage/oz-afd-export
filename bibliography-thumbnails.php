@@ -129,13 +129,13 @@ function get_biostor_thumbnail($biostor, $base_filename)
 }
 
 //----------------------------------------------------------------------------------------
-function get_bionames_thumbnail($sha1, $base_filename)
+function get_bionames_thumbnail($sha1, $base_filename, $page = 1)
 {	
 	global $thumbnail_width;
 	
 	$thumbnail_filename = '';
 	
-	$url = 'http://bionames.org/bionames-archive/documentcloud/pages/' . $sha1 . '/1-small';
+	$url = 'http://bionames.org/bionames-archive/documentcloud/pages/' . $sha1 . '/' . $page . '-small';
 	
 	$opts = array(
 	  CURLOPT_URL =>$url,
@@ -193,6 +193,9 @@ $offset = 0;
 
 $done = false;
 
+$force = true;
+//$force = false;
+
 while (!$done)
 {
 	$sql = 'SELECT DISTINCT *
@@ -220,9 +223,9 @@ while (!$done)
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Copeia" AND jstor IS NOT NULL';	
 
 	//$sql .= ' WHERE biostor IS NOT NULL';
-	$sql .= ' WHERE jstor IS NOT NULL';	
+	//$sql .= ' WHERE jstor IS NOT NULL';	
 	
-	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Peckhamia" AND pdf IS NOT NULL';		
+	$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Publications of the Seto Marine Biological Laboratory" AND pdf IS NOT NULL';		
 	//$sql .= ' WHERE pdf IS NOT NULL';		
 	
 	//$sql .= ' WHERE updated > "2018-06-16"';
@@ -290,7 +293,7 @@ while (!$done)
 			$thumbnail_filename = $base_filename . '.' . $extension;
 		}
 	
-		if (file_exists($thumbnail_filename))
+		if (file_exists($thumbnail_filename) && !$force)
 		{
 			echo "-- Done\n";
 			echo 'UPDATE bibliography SET thumbnailUrl="' . str_replace($base_dir . '/', '', $thumbnail_filename) . '" WHERE PUBLICATION_GUID="' . $result->fields['PUBLICATION_GUID'] .'";' . "\n";
@@ -329,7 +332,24 @@ while (!$done)
 				
 					if ($obj)
 					{
-						$thumbnail_filename = get_bionames_thumbnail($obj->sha1, $base_filename);			
+					
+						// By default take thumbnail of first page, but
+						// some repositories insert a cover page, can skip those
+						// by setting $page to the page number (1-offset) where the work starts.
+						$page = 1;
+						
+						switch ($result->fields['PUB_PARENT_JOURNAL_TITLE'])
+						{
+							case 'Publications of the Seto Marine Biological Laboratory':
+								$page = 2;
+								break;
+								
+							default:
+								$page = 1;
+								break;						
+						}
+					
+						$thumbnail_filename = get_bionames_thumbnail($obj->sha1, $base_filename, $page);			
 					}
 				}
 			}
