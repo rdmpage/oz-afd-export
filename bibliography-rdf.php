@@ -104,7 +104,7 @@ $enhance_metadata 		= true;
 $enhance_identifiers	= true;
 $enhance_pdf			= true;
 $enhance_pdf_as_images	= false;
-$enhance_thumbnails		= true;
+$enhance_thumbnails		= false;
 
 
 $use_role				= true;
@@ -139,7 +139,11 @@ while (!$done)
 	
 	//$sql .= ' WHERE PUBLICATION_GUID = "6c225120-a4d8-4784-a920-bb9366a4463c"';
 	
-	$sql .= ' WHERE PUBLICATION_GUID = "0059430e-3133-43bf-8a90-a345306db64b"';
+	//$sql .= ' WHERE PUBLICATION_GUID = "6ac1e238-3c72-48f4-821e-52d4a97f4e49"'; // DOI 10.11646/zootaxa.3735.3.1 returns 301, so replace with 10.11646/zootaxa.3745.3.1
+	
+	//$sql .= ' WHERE PUBLICATION_GUID = "988dbda3-53c5-4018-9faa-723665cea5cf"'; // PDF
+	
+	$sql .= ' WHERE PUBLICATION_GUID = "ed3874b2-2148-421c-a7dd-c3ca3847710e"';
 	
 	//$sql .= ' WHERE PUB_AUTHOR LIKE "%Patoleta%"';
 	
@@ -154,7 +158,7 @@ while (!$done)
 	//$sql .= ' WHERE doi="10.1051/parasite/1968432131"';
 
 	//$sql .= ' WHERE updated > "2018-06-16"';
-	//$sql .= ' WHERE updated > "2018-06-21"';
+	//$sql .= ' WHERE updated > "2018-07-16"';
 	
 	$sql .= ' LIMIT ' . $page . ' OFFSET ' . $offset;
 
@@ -253,6 +257,7 @@ while (!$done)
 			// clean
 			$title = strip_tags($title);
 			
+			$title = preg_replace('/\.$/', '', $title);
 			$title = preg_replace('/\n/', '', $title);
 			$title = preg_replace('/\r/', '', $title);
 		
@@ -476,7 +481,7 @@ while (!$done)
 						$triples[] = $identifier_id . ' <http://schema.org/propertyID> ' . '"pmid"' . '.';
 						$triples[] = $identifier_id . ' <http://schema.org/value> ' . '"' . addcslashes($result->fields['pmid'], '"') . '"' . '.';
 			
-						$triples[] = $s . ' <http://schema.org/sameAs> ' . '<https://www.ncbi.nlm.nih.gov/pubmed/' . $result->fields['pmid'] . '> ' . '. ';
+						$triples[] = $s . ' <http://schema.org/sameAs> "https://www.ncbi.nlm.nih.gov/pubmed/' . $result->fields['pmid'] . '" ' . '. ';
 			
 					}		
 		
@@ -531,7 +536,7 @@ while (!$done)
 						$triples[] = $identifier_id . ' <http://schema.org/value> ' . '"' . $result->fields['zenodo'] . '"' . '.';
 				
 						// sameAs link?
-						//$triples[] = $s . ' <http://schema.org/sameAs> <https://zenodo.org/record/' . $result->fields['zenodo'] . '> .';				
+						$triples[] = $s . ' <http://schema.org/sameAs> "https://zenodo.org/record/' . $result->fields['zenodo'] . '" .';				
 					}	
 					
 					
