@@ -104,7 +104,7 @@ $enhance_metadata 		= true;
 $enhance_identifiers	= true;
 $enhance_pdf			= true;
 $enhance_pdf_as_images	= false;
-$enhance_thumbnails		= false;
+$enhance_thumbnails		= true;
 
 
 $use_role				= true;
@@ -143,7 +143,9 @@ while (!$done)
 	
 	//$sql .= ' WHERE PUBLICATION_GUID = "988dbda3-53c5-4018-9faa-723665cea5cf"'; // PDF
 	
-	$sql .= ' WHERE PUBLICATION_GUID = "ed3874b2-2148-421c-a7dd-c3ca3847710e"';
+	//$sql .= ' WHERE PUBLICATION_GUID = "ed3874b2-2148-421c-a7dd-c3ca3847710e"';
+	$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Journal of Arachnology" AND jstor IS NOT NULL';	
+	
 	
 	//$sql .= ' WHERE PUB_AUTHOR LIKE "%Patoleta%"';
 	
@@ -164,7 +166,6 @@ while (!$done)
 
 	$result = $db->Execute($sql);
 	if ($result == false) die("failed [" . __FILE__ . ":" . __LINE__ . "]: " . $sql);
-
 
 	while (!$result->EOF) 
 	{
@@ -383,21 +384,7 @@ while (!$done)
 						$triples[] = $identifier_id . ' <http://schema.org/value> ' . '"' . addcslashes($result->fields['biostor'], '"') . '"' . '.';
 			
 						//$triples[] = $s . ' <http://schema.org/sameAs> ' . '<https://hdl.handle.net/' . $result->fields['handle'] . '> ' . '. ';
-						
-						// BioStor thumbnail
-						if ($enhance_thumbnails)
-						{						
-							$thumbnail = get_biostor_thumbnail($result->fields['biostor']);
-							if ($thumbnail != '')
-							{
-								$image_id = '<' . $subject_id . '#biostorimage' . '>';
-					
-								$triples[] = $s . ' <http://schema.org/image> ' .  $image_id . ' .';						
-								$triples[] = $image_id . ' <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://schema.org/ImageObject> .';
-								$triples[] = $image_id . ' <http://schema.org/thumbnailUrl> ' . '"' . addcslashes($thumbnail, '"') . '"' . ' .';
-							}	
-						}					
-			
+						$triples[] = $s . ' <http://schema.org/sameAs> ' . '"http://biostor.org/' . $result->fields['biostor'] . '" ' . '. ';
 					}	
 		
 					// DOI
@@ -412,20 +399,6 @@ while (!$done)
 			
 						//$triples[] = $s . ' <http://schema.org/sameAs> ' . '<https://doi.org/' . $result->fields['doi'] . '> ' . '. ';
 						$triples[] = $s . ' <http://schema.org/sameAs> ' . '"https://doi.org/' . $result->fields['doi'] . '" ' . '. ';
-						
-						if ($enhance_thumbnails)
-						{						
-							$thumbnail = get_doi_thumbnail($result->fields['doi']);
-							if ($thumbnail != '')
-							{
-								// Grab first page image to use as thumbnail
-								$image_id = '<' . $subject_id . '#doiimage' . '>';
-					
-								$triples[] = $s . ' <http://schema.org/image> ' .  $image_id . ' .';						
-								$triples[] = $image_id . ' <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://schema.org/ImageObject> .';
-								$triples[] = $image_id . ' <http://schema.org/thumbnailUrl> ' . '"' . addcslashes($thumbnail, '"') . '"' . ' .';
-							}
-						}
 					}
 			
 					// Handle
@@ -439,8 +412,7 @@ while (!$done)
 						$triples[] = $identifier_id . ' <http://schema.org/value> ' . '"' . addcslashes($result->fields['handle'], '"') . '"' . '.';
 			
 						//$triples[] = $s . ' <http://schema.org/sameAs> ' . '<https://hdl.handle.net/' . $result->fields['handle'] . '> ' . '. ';
-						$triples[] = $s . ' <http://schema.org/sameAs> ' . '"https://hdl.handle.net/' . $result->fields['handle'] . '" ' . '. ';
-			
+						$triples[] = $s . ' <http://schema.org/sameAs> ' . '"https://hdl.handle.net/' . $result->fields['handle'] . '" ' . '. ';			
 					}	
 			
 					// JSTOR
@@ -454,21 +426,7 @@ while (!$done)
 						$triples[] = $identifier_id . ' <http://schema.org/value> ' . '"' . addcslashes($result->fields['jstor'], '"') . '"' . '.';
 			
 						//$triples[] = $s . ' <http://schema.org/sameAs> ' . '<https://www.jstor.org/stable/' . $result->fields['jstor'] . '> ' . '. ';
-						$triples[] = $s . ' <http://schema.org/sameAs> ' . '"https://www.jstor.org/stable/' . $result->fields['jstor'] . '" ' . '. ';
-						
-						// JSTOR thumbnail		
-						if ($enhance_thumbnails)
-						{																
-							$thumbnail = get_jstor_thumbnail($result->fields['jstor']);
-							if ($thumbnail != '')
-							{
-								$image_id = '<' . $subject_id . '#jstorimage' . '>';
-					
-								$triples[] = $s . ' <http://schema.org/image> ' .  $image_id . ' .';						
-								$triples[] = $image_id . ' <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://schema.org/ImageObject> .';
-								$triples[] = $image_id . ' <http://schema.org/thumbnailUrl> ' . '"' . addcslashes($thumbnail, '"') . '"' . ' .';
-							}						
-						}		
+						$triples[] = $s . ' <http://schema.org/sameAs> ' . '"https://www.jstor.org/stable/' . $result->fields['jstor'] . '" ' . '. ';						
 					}		
 						
 					// PMID
@@ -481,8 +439,7 @@ while (!$done)
 						$triples[] = $identifier_id . ' <http://schema.org/propertyID> ' . '"pmid"' . '.';
 						$triples[] = $identifier_id . ' <http://schema.org/value> ' . '"' . addcslashes($result->fields['pmid'], '"') . '"' . '.';
 			
-						$triples[] = $s . ' <http://schema.org/sameAs> "https://www.ncbi.nlm.nih.gov/pubmed/' . $result->fields['pmid'] . '" ' . '. ';
-			
+						$triples[] = $s . ' <http://schema.org/sameAs> "https://www.ncbi.nlm.nih.gov/pubmed/' . $result->fields['pmid'] . '" ' . '. ';			
 					}		
 		
 					// SICI-style identifier to help automate citation linking	
@@ -514,8 +471,7 @@ while (!$done)
 							$triples[] = $s . ' <http://schema.org/identifier> ' . $identifier_id . '.';			
 							$triples[] = $identifier_id . ' <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://schema.org/PropertyValue> .';
 							$triples[] = $identifier_id . ' <http://schema.org/propertyID> ' . '"sici"' . '.';
-							$triples[] = $identifier_id . ' <http://schema.org/value> ' . '"' . addcslashes(join('', $sici), '"') . '"' . '.';
-		
+							$triples[] = $identifier_id . ' <http://schema.org/value> ' . '"' . addcslashes(join('', $sici), '"') . '"' . '.';		
 						}
 					}
 		
@@ -557,10 +513,6 @@ while (!$done)
 						$triples[] = $s . ' <http://schema.org/sameAs> "http://zoobank.org/References/' . $result->fields['zoobank'] . '" .';				
 					}	
 					
-					
-					
-					
-					
 					break;
 			}
 		
@@ -590,35 +542,6 @@ while (!$done)
 					$sha1 = $obj->sha1;
 					$triples[] = $pdf_id . ' <http://id.loc.gov/vocabulary/preservation/cryptographicHashFunctions/sha1> ' . '"' . addcslashes($obj->sha1, '"') . '"' . ' .';			
 
-					if ($enhance_thumbnails)
-					{						
-						// URL versus embedded copy
-						if (0)
-						{
-							// Grab first page image to use as thumbnail
-							$image_id = '<' . $subject_id . '#image' . '>';
-				
-							$triples[] = $s . ' <http://schema.org/image> ' .  $image_id . ' .';						
-							$triples[] = $image_id . ' <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://schema.org/ImageObject> .';
-							$triples[] = $image_id . ' <http://schema.org/contentUrl> ' . '"' . addcslashes('http://bionames.org/bionames-archive/documentcloud/pages/' . $sha1 . '/1-large', '"') . '"' . ' .';
-							$triples[] = $image_id . ' <http://schema.org/thumbnailUrl> ' . '"' . addcslashes('http://bionames.org/bionames-archive/documentcloud/pages/' . $sha1 . '/1-small', '"') . '"' . ' .';
-						}
-						else
-						{
-							// local static copy
-							$thumbnail = get_bionames_thumbnail($sha1);
-							
-							if ($thumbnail != '')
-							{
-								$image_id = '<' . $subject_id . '#sha1image' . '>';
-				
-								$triples[] = $s . ' <http://schema.org/image> ' .  $image_id . ' .';						
-								$triples[] = $image_id . ' <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://schema.org/ImageObject> .';
-								$triples[] = $image_id . ' <http://schema.org/thumbnailUrl> ' . '"' . addcslashes($thumbnail, '"') . '"' . ' .';
-							}
-					
-						}	
-					}							
 					if ($enhance_pdf_as_images)
 					{
 						$images = get_pdf_images($sha1);	
@@ -646,6 +569,19 @@ while (!$done)
 			}	
 		}
 		
+		// Thumbnail as URL to GitHub-hosted thumbnail
+		// See https://rawgit.com
+		if ($enhance_thumbnails)
+		{
+			if ($result->fields['thumbnailUrl'] != '')
+			{
+				$prefix = 'https://cdn.rawgit.com/rdmpage/oz-afd-export/2dcd904e/thumbnails/';
+
+				$thumbnailUrl = $prefix . $result->fields['thumbnailUrl'];
+				
+				$triples[] = $s . ' <http://schema.org/thumbnailUrl> "' .  $thumbnailUrl . '" .';				
+			}
+		}		
 	
 		if ($result->fields['PUB_TYPE'] != '')
 		{
