@@ -194,7 +194,7 @@ $offset = 0;
 $done = false;
 
 $force = true;
-//$force = false;
+$force = false;
 
 while (!$done)
 {
@@ -220,12 +220,18 @@ while (!$done)
 			
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE LIKE "%Auckland%"';
 	
-	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Copeia" AND jstor IS NOT NULL';	
+	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Journal of Arachnology" AND jstor IS NOT NULL';	
+	
+	$sql .= ' WHERE issn="0013-9440" AND pdf IS NOT NULL';	
+	
 
 	//$sql .= ' WHERE biostor IS NOT NULL';
 	//$sql .= ' WHERE jstor IS NOT NULL';	
 	
-	$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Publications of the Seto Marine Biological Laboratory" AND pdf IS NOT NULL';		
+	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Publications of the Seto Marine Biological Laboratory" AND pdf IS NOT NULL';		
+	
+	//$sql .= ' WHERE PUBLICATION_GUID = "c2d37add-ce58-41ac-aaf7-cbad7d9ae197"';	
+	
 	//$sql .= ' WHERE pdf IS NOT NULL';		
 	
 	//$sql .= ' WHERE updated > "2018-06-16"';
