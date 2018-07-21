@@ -219,10 +219,11 @@ while (!$done)
 	
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Copeia" AND jstor IS NOT NULL';	
 
-	//$sql .= ' WHERE biostor IS NOT NULL';	
+	//$sql .= ' WHERE biostor IS NOT NULL';
+	$sql .= ' WHERE jstor IS NOT NULL';	
 	
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Peckhamia" AND pdf IS NOT NULL';		
-	$sql .= ' WHERE pdf IS NOT NULL';		
+	//$sql .= ' WHERE pdf IS NOT NULL';		
 	
 	//$sql .= ' WHERE updated > "2018-06-16"';
 	//$sql .= ' WHERE updated > "2018-07-16"';
