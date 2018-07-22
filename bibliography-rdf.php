@@ -148,7 +148,7 @@ while (!$done)
 	//$sql .= ' WHERE issn="0013-9440" AND pdf IS NOT NULL';	
 	
 	//$sql .= ' WHERE jstor is not null AND thumbnailUrl IS NOT NULL';
-	$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Odonatologica" AND pdf IS NOT NULL';		
+	$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Peckhamia" AND pdf IS NOT NULL';		
 
 	//$sql .= ' WHERE PUB_AUTHOR LIKE "%Patoleta%"';
 	
