@@ -119,8 +119,8 @@ function get_biostor_thumbnail($biostor, $base_filename)
 		}
 		else
 		{
-			echo "HTTP " . $info['http_code'] . "\n";
-			exit();
+			echo "-- HTTP " . $info['http_code'] . " $biostor\n";
+			
 		}
 	}
 
