@@ -225,15 +225,15 @@ while (!$done)
 	// $sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Zoologische Mededelingen (Leiden)" AND pdf IS NOT NULL';	
 	//$sql .= ' WHERE issn="0013-9440" AND pdf IS NOT NULL';	
 	
-	$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Journal of Herpetology"';
+	$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Koleopterologische Rundschau. Wien"';
 	//$sql .= ' WHERE biostor IS NOT NULL';
-	$sql .= ' AND jstor IS NOT NULL';	
+	//$sql .= ' AND jstor IS NOT NULL';	
 	
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Proceedings of the Royal Society of Victoria" AND pdf IS NOT NULL';		
 //	$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Papers and Proceedings of the Royal Society of Tasmania" AND pdf IS NOT NULL';
 	//$sql .= ' WHERE PUBLICATION_GUID = "c2d37add-ce58-41ac-aaf7-cbad7d9ae197"';	
 	
-	//$sql .= ' WHERE pdf IS NOT NULL';		
+	$sql .= ' AND pdf IS NOT NULL';		
 	
 	//$sql .= ' WHERE updated > "2018-06-16"';
 	//$sql .= ' WHERE updated > "2018-07-16"';
