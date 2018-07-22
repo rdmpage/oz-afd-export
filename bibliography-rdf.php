@@ -148,7 +148,8 @@ while (!$done)
 	//$sql .= ' WHERE issn="0013-9440" AND pdf IS NOT NULL';	
 	
 	//$sql .= ' WHERE jstor is not null AND thumbnailUrl IS NOT NULL';
-	$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="The Coleopterists Bulletin" AND pdf IS NOT NULL';		
+	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="The Coleopterists Bulletin" AND pdf IS NOT NULL';		
+	$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="The Coleopterists Bulletin" AND jstor IS NOT NULL';		
 
 	//$sql .= ' WHERE PUB_AUTHOR LIKE "%Patoleta%"';
 	
