@@ -162,9 +162,11 @@ while (!$done)
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Mosquito Systematics"';
 	
 	//$sql .= ' WHERE doi="10.1051/parasite/1968432131"';
+	
+	$sql .= ' WHERE issn="0018-0130" AND thumbnailUrl IS NOT NULL';
 
 	//$sql .= ' WHERE updated > "2018-06-16"';
-	$sql .= ' WHERE updated > "2018-07-23"';
+	//$sql .= ' WHERE updated > "2018-07-23"';
 	
 	$sql .= ' LIMIT ' . $page . ' OFFSET ' . $offset;
 
