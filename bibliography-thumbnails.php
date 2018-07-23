@@ -228,10 +228,12 @@ while (!$done)
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Papers and Proceedings of the Royal Society of Tasmania"';
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Journal of Parasitology" AND doi LIKE "10.2307/%"';
 	
-	$sql .= ' WHERE issn="0003-455X"';
+	//$sql .= ' WHERE issn="0003-455X"';
+	
+	$sql .= ' WHERE doi LIKE "10.2307/%" AND thumbnailUrl IS NULL';
 	
 	//$sql .= ' WHERE biostor IS NOT NULL';
-	$sql .= ' AND jstor IS NOT NULL';	
+	//$sql .= ' AND jstor IS NOT NULL';	
 	
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Proceedings of the Royal Society of Victoria" AND pdf IS NOT NULL';		
 //	$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Papers and Proceedings of the Royal Society of Tasmania" AND pdf IS NOT NULL';
