@@ -225,7 +225,8 @@ while (!$done)
 	// $sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Zoologische Mededelingen (Leiden)" AND pdf IS NOT NULL';	
 	//$sql .= ' WHERE issn="0013-9440" AND pdf IS NOT NULL';	
 	
-	$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Koleopterologische Rundschau. Wien"';
+	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Papers and Proceedings of the Royal Society of Tasmania"';
+	$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Journal of Parasitology" AND doi LIKE "10.2307/%"';
 	//$sql .= ' WHERE biostor IS NOT NULL';
 	//$sql .= ' AND jstor IS NOT NULL';	
 	
@@ -233,7 +234,7 @@ while (!$done)
 //	$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Papers and Proceedings of the Royal Society of Tasmania" AND pdf IS NOT NULL';
 	//$sql .= ' WHERE PUBLICATION_GUID = "c2d37add-ce58-41ac-aaf7-cbad7d9ae197"';	
 	
-	$sql .= ' AND pdf IS NOT NULL';		
+	//$sql .= ' AND pdf IS NOT NULL';		
 	
 	//$sql .= ' WHERE updated > "2018-06-16"';
 	//$sql .= ' WHERE updated > "2018-07-16"';
@@ -319,6 +320,19 @@ while (!$done)
 					$thumbnail_filename = get_jstor_thumbnail($result->fields['jstor'], $base_filename);			
 				}
 			}
+			
+			if ($thumbnail_filename == '')
+			{
+				// JSTOR DOI
+				if ($result->fields['doi'] != '')
+				{
+					if (preg_match('/10.2307\/(?<id>\d+)/', $result->fields['doi'], $m))
+					{
+						$thumbnail_filename = get_jstor_thumbnail($m['id'], $base_filename);			
+					}
+				}
+			}
+			
 			
 			if ($thumbnail_filename == '')
 			{

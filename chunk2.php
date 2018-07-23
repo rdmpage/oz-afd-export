@@ -5,8 +5,8 @@
 $triples_filename = 'junk/bibliography.nt';
 $basename = 'bibliography';
 
-$triples_filename = 'tx.nt';
-$basename = 'tx';
+$triples_filename = 'taxa.nt';
+$basename = 'taxa';
 
 //$triples_filename = 'names.nt';
 //$basename = 'names';

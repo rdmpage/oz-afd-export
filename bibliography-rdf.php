@@ -482,7 +482,10 @@ while (!$done)
 					// URL
 					if ($result->fields['url'] != '')
 					{
-						$triples[] = $s . ' <http://schema.org/url> ' . '"' . addcslashes($result->fields['url'], '"') . '"' . '.';
+						$triples[] = $s . ' <http://schema.org/url> ' . '"' . addcslashes($result->fields['url'], '"') . '" .';
+
+						// sameAs link?
+						$triples[] = $s . ' <http://schema.org/sameAs> ' . '"' . addcslashes($result->fields['url'], '"') . '" .';				
 					}	
 		
 					// Zenodo
