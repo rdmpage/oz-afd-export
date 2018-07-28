@@ -218,7 +218,7 @@ while (!$done)
 	
 	//$sql .= ' WHERE PUBLICATION_GUID = "8600f99a-f346-4bd1-80b1-f665b505fef4"'; // JSTOR with thumbnail
 	
-	$sql .= ' WHERE PUBLICATION_GUID = "ff6e5cf7-2ff1-43e7-96ba-63936163890d"'; // Zootaxa PDF thumbnail
+	//$sql .= ' WHERE PUBLICATION_GUID = "ff6e5cf7-2ff1-43e7-96ba-63936163890d"'; // Zootaxa PDF thumbnail
 			
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE LIKE "%Auckland%"';
 	
@@ -236,6 +236,8 @@ while (!$done)
 	
 	//$sql .= ' WHERE biostor IS NOT NULL';
 	//$sql .= ' WHERE jstor IS NOT NULL';	
+	
+	$sql .= ' WHERE zootaxa_thumbnail_pdf IS NOT NULL';	
 	
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Proceedings of the Royal Society of Victoria" AND pdf IS NOT NULL';		
 //	$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Papers and Proceedings of the Royal Society of Tasmania" AND pdf IS NOT NULL';
