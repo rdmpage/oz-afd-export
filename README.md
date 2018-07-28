@@ -16,9 +16,13 @@ Use CURL to upload sets of triples, use script ```blazegraph/load-chunked-rdf```
 To upload triples:
 
 ```
-curl http://localhost:9999/blazegraph/sparql -H 'Content-Type: text/rdf+n3' --data-binary '@b.nt'
+curl http://localhost:9999/blazegraph/sparql -H 'Content-Type: text/rdf+n3' --data-binary '@bibliography.nt'
 ```
 
+To named graph:
+```
+curl http://127.0.0.1:9999/blazegraph/sparql?context-uri=https://biodiversity.org.au/afd/publication -H 'Content-Type: text/rdf+n3' --data-binary ‘@bibliography’
+```
 
 ## CouchDB
 

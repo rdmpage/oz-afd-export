@@ -106,7 +106,7 @@
 	<array>
 		<dict>
 			<key>Date</key>
-			<date>2018-07-22T18:02:46Z</date>
+			<date>2018-07-26T20:08:10Z</date>
 			<key>Location</key>
 			<dict>
 				<key>BookmarkData</key>
@@ -154,7 +154,7 @@
 		</dict>
 		<dict>
 			<key>Date</key>
-			<date>2018-07-22T18:02:46Z</date>
+			<date>2018-07-26T20:08:10Z</date>
 			<key>Location</key>
 			<dict>
 				<key>BookmarkData</key>
@@ -211,6 +211,6 @@
 	<key>ViewSplitterPosition:rpage</key>
 	<real>0.17424893379211426</real>
 	<key>WindowFrame:rpage:displays([(0, 0), (1440, 900)])</key>
-	<string>rect(45,73,896,1238)</string>
+	<string>rect(45,106,896,1271)</string>
 </dict>
 </plist>

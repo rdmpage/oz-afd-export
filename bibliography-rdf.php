@@ -12,7 +12,7 @@ require_once (dirname(__FILE__) . '/parse_authors.php');
 require_once (dirname(__FILE__) . '/thumbnails.php');
 
 
-//--------------------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------
 $db = NewADOConnection('mysql');
 $db->Connect("localhost", 
 	'root' , '' , 'afd');
@@ -23,8 +23,33 @@ $ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
 
 $db->EXECUTE("set names 'utf8'"); 
 
+//----------------------------------------------------------------------------------------
+// http://stackoverflow.com/questions/247678/how-does-mediawiki-compose-the-image-paths
+function sha1_to_path_array($sha1)
+{
+	preg_match('/^(..)(..)(..)/', $sha1, $matches);
+	
+	$sha1_path = array();
+	$sha1_path[] = $matches[1];
+	$sha1_path[] = $matches[2];
+	$sha1_path[] = $matches[3];
 
-//--------------------------------------------------------------------------------------------------
+	return $sha1_path;
+}
+
+//----------------------------------------------------------------------------------------
+// Return path for a sha1
+function sha1_to_path_string($sha1)
+{
+	$sha1_path_parts = sha1_to_path_array($sha1);
+	
+	$sha1_path = '/' . join("/", $sha1_path_parts) . '/' . $sha1;
+
+	return $sha1_path;
+}
+
+
+//----------------------------------------------------------------------------------------
 function get_pdf_details($pdf)
 {
 	global $db;
@@ -143,7 +168,7 @@ while (!$done)
 	
 	//$sql .= ' WHERE PUBLICATION_GUID = "988dbda3-53c5-4018-9faa-723665cea5cf"'; // PDF
 	
-	//$sql .= ' WHERE PUBLICATION_GUID = "3e0c1402-de05-4227-9df3-803e68300623"';
+	$sql .= ' WHERE PUBLICATION_GUID = "3da2e698-2300-4eb2-b0e6-d512c1f87dfc"';
 	
 	//$sql .= ' WHERE PUBLICATION_GUID = "ed3874b2-2148-421c-a7dd-c3ca3847710e"';
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Journal of Arachnology" AND jstor IS NOT NULL';	
@@ -160,15 +185,18 @@ while (!$done)
 	//$sql .= ' WHERE PUB_TITLE LIKE "%Paraulopus%"';
 	
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE LIKE "%Auckland%"';
+	// $sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Memoirs of Museum Victoria"';
 	
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Mosquito Systematics"';
 	
 	//$sql .= ' WHERE doi="10.1051/parasite/1968432131"';
 	
-	$sql .= ' WHERE issn="0814-1827" AND thumbnailUrl IS NOT NULL';
+	//$sql .= ' WHERE doi="10.24199/j.mmv.2010.67.03"';
+	
+	//$sql .= ' WHERE issn="0814-1827" AND thumbnailUrl IS NOT NULL';
 
 	//$sql .= ' WHERE updated > "2018-06-16"';
-	//$sql .= ' WHERE updated > "2018-07-23"';
+	//$sql .= ' WHERE updated > "2018-07-26"';
 	
 	$sql .= ' LIMIT ' . $page . ' OFFSET ' . $offset;
 
@@ -504,8 +532,7 @@ while (!$done)
 				
 						// sameAs link?
 						$triples[] = $s . ' <http://schema.org/sameAs> "https://zenodo.org/record/' . $result->fields['zenodo'] . '" .';				
-					}	
-					
+					}					
 					
 					// Zoobank
 					if ($result->fields['zoobank'] != '')
@@ -537,7 +564,7 @@ while (!$done)
 		
 				$triples[] = $s . ' <http://schema.org/encoding> ' . $pdf_id . ' .';
 
-				// PDF
+				// PDF 
 				$triples[] = $pdf_id . ' <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://schema.org/MediaObject> .';
 				$triples[] = $pdf_id . ' <http://schema.org/contentUrl> ' . '"' . addcslashes($result->fields['pdf'], '"') . '"' . '.';
 				$triples[] = $pdf_id . ' <http://schema.org/fileFormat> "application/pdf" .';
@@ -550,8 +577,23 @@ while (!$done)
 			
 				if ($obj)
 				{
+					// if we have a SHA1 then we have a PDF in the BioNames cache
+					
+					$prefix = 'http://bionames.org/bionames-archive/pdf';
+				
 					$sha1 = $obj->sha1;
+					
+					$pdf_id = '<' . $subject_id . '#sha1>';
+		
+					$triples[] = $s . ' <http://schema.org/encoding> ' . $pdf_id . ' .';
+					
 					$triples[] = $pdf_id . ' <http://id.loc.gov/vocabulary/preservation/cryptographicHashFunctions/sha1> ' . '"' . addcslashes($obj->sha1, '"') . '"' . ' .';			
+
+					$triples[] = $pdf_id . ' <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://schema.org/MediaObject> .';
+					$triples[] = $pdf_id . ' <http://schema.org/contentUrl> ' . '"' . addcslashes($prefix . sha1_to_path_string($sha1) . '/' . $sha1 . '.pdf', '"') . '"' . '.';
+					$triples[] = $pdf_id . ' <http://schema.org/fileFormat> "application/pdf" .';
+
+					// 
 
 					if ($enhance_pdf_as_images)
 					{

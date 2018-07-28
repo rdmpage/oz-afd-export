@@ -217,6 +217,8 @@ while (!$done)
 	//$sql .= ' WHERE PUBLICATION_GUID = "d7630315-e7f2-458b-9028-9223a093fef1"'; // PLos with PDF
 	
 	//$sql .= ' WHERE PUBLICATION_GUID = "8600f99a-f346-4bd1-80b1-f665b505fef4"'; // JSTOR with thumbnail
+	
+	$sql .= ' WHERE PUBLICATION_GUID = "ff6e5cf7-2ff1-43e7-96ba-63936163890d"'; // Zootaxa PDF thumbnail
 			
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE LIKE "%Auckland%"';
 	
@@ -228,18 +230,19 @@ while (!$done)
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Papers and Proceedings of the Royal Society of Tasmania"';
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Journal of Parasitology" AND doi LIKE "10.2307/%"';
 	
-	$sql .= ' WHERE issn="0067-1975"';
+	//$sql .= ' WHERE issn="0067-1975"';
 	
 	//$sql .= ' WHERE doi LIKE "10.2307/%" AND thumbnailUrl IS NULL';
 	
 	//$sql .= ' WHERE biostor IS NOT NULL';
-	//$sql .= ' AND jstor IS NOT NULL';	
+	//$sql .= ' WHERE jstor IS NOT NULL';	
 	
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Proceedings of the Royal Society of Victoria" AND pdf IS NOT NULL';		
 //	$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Papers and Proceedings of the Royal Society of Tasmania" AND pdf IS NOT NULL';
 	//$sql .= ' WHERE PUBLICATION_GUID = "c2d37add-ce58-41ac-aaf7-cbad7d9ae197"';	
 	
-	$sql .= ' AND pdf IS NOT NULL';		
+	//$sql .= ' AND pdf IS NOT NULL';		
+	$sql .= ' AND thumbnailUrl IS NULL';		
 	
 	//$sql .= ' WHERE updated > "2018-06-16"';
 	//$sql .= ' WHERE updated > "2018-07-16"';
@@ -347,6 +350,31 @@ while (!$done)
 					$thumbnail_filename = get_biostor_thumbnail($result->fields['biostor'], $base_filename);			
 				}
 			}
+			
+			// Zootaxa-specific code to handle factvwe may have PDF preview that we can use
+			if ($thumbnail_filename == '')
+			{
+				// PDF
+				if ($result->fields['zootaxa_thumbnail_pdf'] != '')
+				{
+					$sha1 = '';
+					$obj = get_pdf_details($result->fields['zootaxa_thumbnail_pdf']);
+				
+					if ($obj)
+					{
+					
+						if (isset($obj->sha1))
+						{
+							// By default take thumbnail of first page, but
+							// some repositories insert a cover page, can skip those
+							// by setting $page to the page number (1-offset) where the work starts.
+							$page = 1;
+											
+							$thumbnail_filename = get_bionames_thumbnail($obj->sha1, $base_filename, $page);			
+						}
+					}
+				}
+			}			
 			
 			if ($thumbnail_filename == '')
 			{
