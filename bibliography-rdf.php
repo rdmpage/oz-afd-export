@@ -168,7 +168,7 @@ while (!$done)
 	
 	//$sql .= ' WHERE PUBLICATION_GUID = "988dbda3-53c5-4018-9faa-723665cea5cf"'; // PDF
 	
-	$sql .= ' WHERE PUBLICATION_GUID = "ff6e5cf7-2ff1-43e7-96ba-63936163890d"';
+	// $sql .= ' WHERE PUBLICATION_GUID = "ff6e5cf7-2ff1-43e7-96ba-63936163890d"';
 	
 	//$sql .= ' WHERE PUBLICATION_GUID = "ed3874b2-2148-421c-a7dd-c3ca3847710e"';
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Journal of Arachnology" AND jstor IS NOT NULL';	
@@ -196,7 +196,7 @@ while (!$done)
 	//$sql .= ' WHERE issn="0814-1827" AND thumbnailUrl IS NOT NULL';
 
 	//$sql .= ' WHERE updated > "2018-06-16"';
-	//$sql .= ' WHERE updated > "2018-07-26"';
+	$sql .= ' WHERE updated > "2018-07-28"';
 	
 	$sql .= ' LIMIT ' . $page . ' OFFSET ' . $offset;
 
