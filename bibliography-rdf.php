@@ -170,7 +170,7 @@ while (!$done)
 	
 	// $sql .= ' WHERE PUBLICATION_GUID = "ff6e5cf7-2ff1-43e7-96ba-63936163890d"';
 	
-	//$sql .= ' WHERE PUBLICATION_GUID = "ed3874b2-2148-421c-a7dd-c3ca3847710e"';
+	//$sql .= " WHERE PUBLICATION_GUID IN ('4f4e5892-5baf-4f49-a07e-af3f01ce6eda','5b997eac-195e-4445-8f18-842b55983b64','85d0cba2-85d1-4ba9-8d66-6fe2e705c722','a84d9ff1-33e0-46e0-880a-674eb17851e6','ad79edeb-4c47-4124-a7ea-9bcbbce0efa4','b2ef785b-998b-4e3e-9757-01d9bcf94349','bb563eed-d2dc-405a-90b5-9dc866890601','017c900b-d35d-42d6-bc80-77f6859f0cf9')";
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Journal of Arachnology" AND jstor IS NOT NULL';	
 	//$sql .= ' WHERE issn="0013-9440" AND pdf IS NOT NULL';	
 	
@@ -178,7 +178,7 @@ while (!$done)
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Koleopterologische Rundschau. Wien" AND thumbnailUrl IS NOT NULL';		
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="The Coleopterists Bulletin" AND jstor IS NOT NULL';		
 
-	//$sql .= ' WHERE PUB_AUTHOR LIKE "%Patoleta%"';
+	//$sql .= ' WHERE PUB_AUTHOR LIKE "%Lambkin%"';
 	
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Copeia" AND jstor IS NOT NULL';
 	
@@ -188,6 +188,7 @@ while (!$done)
 	// $sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Memoirs of Museum Victoria"';
 	
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Mosquito Systematics"';
+	$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Zootaxa"';
 	
 	//$sql .= ' WHERE doi="10.1051/parasite/1968432131"';
 	
@@ -196,7 +197,7 @@ while (!$done)
 	//$sql .= ' WHERE issn="0814-1827" AND thumbnailUrl IS NOT NULL';
 
 	//$sql .= ' WHERE updated > "2018-06-16"';
-	$sql .= ' WHERE updated > "2018-07-28"';
+	//$sql .= ' WHERE updated > "2018-07-28"';
 	
 	$sql .= ' LIMIT ' . $page . ' OFFSET ' . $offset;
 
