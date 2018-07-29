@@ -2,7 +2,8 @@
 
 error_reporting(E_ALL ^ E_DEPRECATED);
 
-// For each Zenodo-linked record in AFD, get list of parts (i.e., figures)
+// For each Zenodo-linked record in AFD, get list of parts (i.e., figures) from local
+// BLR CouchDB
 
 require_once (dirname(__FILE__) . '/adodb5/adodb.inc.php');
 
@@ -70,9 +71,9 @@ while (!$done)
 	
 	// A specific journal or publication, otherwise we are getting everything
 	
-	$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE = "' . $journal . '"';
+	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE = "' . $journal . '"';
 	
-	//$sql .= ' WHERE PUBLICATION_GUID = "fb217158-a228-4dbf-8098-0dd62ffd8073"';
+	$sql .= ' WHERE PUBLICATION_GUID = "3e3d5933-9ba7-4828-83ca-019feb9905fe"';
 	
 	$sql .= ' AND zenodo IS NOT NULL';
 	
@@ -104,9 +105,6 @@ while (!$done)
 		$result->MoveNext();
 
 	}
-	
-	
-	
 	
 	if ($result->NumRows() < $page)
 	{

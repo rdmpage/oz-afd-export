@@ -2,7 +2,7 @@
 
 error_reporting(E_ALL ^ E_DEPRECATED);
 
-// Get JSON-LD for figures for AFD records with Zenodo parts
+// Get JSON-LD or triplets for figures for AFD records with Zenodo parts
 
 require_once (dirname(__FILE__) . '/adodb5/adodb.inc.php');
 
@@ -124,9 +124,9 @@ while (!$done)
 	
 	// $sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE = "' . $journal . '"';
 	
-	//$sql .= ' WHERE PUBLICATION_GUID = "45b40323-4325-41c5-acbf-10340e7ba6ca"';
+	$sql .= ' WHERE PUBLICATION_GUID = "3e3d5933-9ba7-4828-83ca-019feb9905fe"';
 	
-	$sql .= ' WHERE zenodo_parts IS NOT NULL';
+	//$sql .= ' WHERE zenodo_parts IS NOT NULL';
 	
 	$sql .= ' LIMIT ' . $page . ' OFFSET ' . $offset;
 
