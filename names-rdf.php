@@ -24,7 +24,7 @@ $done = false;
 while (!$done)
 {
 //	$sql = 'SELECT * FROM afd WHERE NAME_GUID IS NOT NULL AND PUBLICATION_GUID IS NOT NULL';
-	$sql = 'SELECT * FROM afd WHERE NAME_GUID IS NOT NULL';
+	//$sql = 'SELECT * FROM afd WHERE NAME_GUID IS NOT NULL';
 
 	//$sql = 'SELECT * FROM afd WHERE TAXON_GUID="124ab9d1-5ed7-46c3-aecf-76e70a04e209"';
 
@@ -39,11 +39,13 @@ while (!$done)
 
 
 	//$sql = 'SELECT * FROM afd WHERE GENUS="Manestella"';
+	
+	$sql = 'SELECT * FROM afd WHERE NAME_GUID IS NOT NULL AND PUB_PUB_PARENT_JOURNAL_TITLE="Zootaxa"';
 
 	$sql .= ' LIMIT ' . $page . ' OFFSET ' . $offset;
 		
 	$result = $db->Execute($sql);
-	if ($result == false) die("failed [" . __FILE__ . ":" . __LINE__ . "]: " . $sql);
+	if ($result == false) die("failed [" . __FILE__ . ":" . __LINE__ . "]: " . $db->ErrorMsg());
 
 	while (!$result->EOF) 
 	{
