@@ -4,22 +4,38 @@
 
 $graph_uri = '';
 
+/*
 $triples_filename = 'junk/bibliography.nt';
 $basename = 'bibliography';
 
+// Taxa
 $triples_filename = 'taxa.nt';
 $basename = 'taxa';
+*/
 
-$triples_filename = 'junk/names.nt';
-$basename = 'names';
-$graph_uri = 'https://biodiversity.org.au/afd/publication';
+if (1)
+{
+	// Publications
+	$triples_filename = 'biblio.nt';
+	$basename = 'biblio';
+	$graph_uri = 'https://biodiversity.org.au/afd/publication';
+}
+
+if (0)
+{
+	// Simplified names
+	$triples_filename = 'name-simple.nt';
+	$basename = 'names';
+	$graph_uri = 'https://biodiversity.org.au/afd/publication';
+}
 
 $count = 0;
 $total = 0;
 $triples = '';
 
-$chunks= 10000;
+$chunks= 500000;
 
+$delay = 5;
 
 $handle = null;
 $output_filename = '';
@@ -68,10 +84,11 @@ foreach ($chunk_files as $filename)
 		$url .= '?context-uri=' . $graph_uri;
 	}
 	
-	$curl .= "curl $url -H 'Content-Type: text/rdf+n3' --data-binary '@$filename'\n";
+	$curl .= "curl $url -H 'Content-Type: text/rdf+n3' --data-binary '@$filename'  --progress-bar | tee /dev/null\n";
 	$curl .= "echo ''\n";
-	$curl .= "sleep 10\n";
+	$curl .= "sleep $delay\n";
 }
+
 file_put_contents(dirname(__FILE__) . '/upload.sh', $curl);
 
 
