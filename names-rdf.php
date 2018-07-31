@@ -15,6 +15,9 @@ $ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
 
 $db->EXECUTE("set names 'utf8'"); 
 
+$enhance_name 		= true;
+$enhance_name 		= false; /* if false we don't output TDWG LSID triples tp keep things small */
+
 	
 $page = 1000;
 $offset = 0;
@@ -24,7 +27,7 @@ $done = false;
 while (!$done)
 {
 //	$sql = 'SELECT * FROM afd WHERE NAME_GUID IS NOT NULL AND PUBLICATION_GUID IS NOT NULL';
-	//$sql = 'SELECT * FROM afd WHERE NAME_GUID IS NOT NULL';
+	$sql = 'SELECT * FROM afd WHERE NAME_GUID IS NOT NULL';
 
 	//$sql = 'SELECT * FROM afd WHERE TAXON_GUID="124ab9d1-5ed7-46c3-aecf-76e70a04e209"';
 
@@ -40,7 +43,7 @@ while (!$done)
 
 	//$sql = 'SELECT * FROM afd WHERE GENUS="Manestella"';
 	
-	$sql = 'SELECT * FROM afd WHERE NAME_GUID IS NOT NULL AND PUB_PUB_PARENT_JOURNAL_TITLE="Zootaxa"';
+	//$sql = 'SELECT * FROM afd WHERE NAME_GUID IS NOT NULL AND PUB_PUB_PARENT_JOURNAL_TITLE="Zootaxa"';
 
 	$sql .= ' LIMIT ' . $page . ' OFFSET ' . $offset;
 		
@@ -117,74 +120,77 @@ while (!$done)
 			// scientific 
 			$triples[] = $name . ' <http://schema.org/name> ' . '"' . addcslashes($result->fields['SCIENTIFIC_NAME'], '"') . '" . ';			
 		
-			$name_parts = array();
-		
-			if ($result->fields['FAMILY'] != '')
+			if ($enhance_name)
 			{
-				if ($result->fields['RANK'] == 'Family')
+				$name_parts = array();		
+				if ($result->fields['FAMILY'] != '')
 				{
-					$triples[] = $name . ' <http://rs.tdwg.org/ontology/voc/TaxonName#uninomial> ' . '"' . addcslashes(strtolower($result->fields['FAMILY']), '"') . '" . ';
-					$name_parts[] = $result->fields['FAMILY'];
-				}				
-			}			
+					if ($result->fields['RANK'] == 'Family')
+					{
+						$triples[] = $name . ' <http://rs.tdwg.org/ontology/voc/TaxonName#uninomial> ' . '"' . addcslashes(strtolower($result->fields['FAMILY']), '"') . '" . ';
+						$name_parts[] = $result->fields['FAMILY'];
+					}				
+				}			
 					
-			if ($result->fields['GENUS'] != '')
-			{
-				if ($result->fields['RANK'] == 'Genus')
+				if ($result->fields['GENUS'] != '')
 				{
-					$triples[] = $name . ' <http://rs.tdwg.org/ontology/voc/TaxonName#uninomial> ' . '"' . addcslashes($result->fields['GENUS'], '"') . '" . ';
+					if ($result->fields['RANK'] == 'Genus')
+					{
+						$triples[] = $name . ' <http://rs.tdwg.org/ontology/voc/TaxonName#uninomial> ' . '"' . addcslashes($result->fields['GENUS'], '"') . '" . ';
+					}
+					else
+					{
+						$triples[] = $name . ' <http://rs.tdwg.org/ontology/voc/TaxonName#genusPart> ' . '"' . addcslashes($result->fields['GENUS'], '"') . '" . ';
+					}
+					$name_parts[] = $result->fields['GENUS'];
+				}						
+		
+				if ($result->fields['SUBGENUS'] != '')
+				{
+					$triples[] = $name . ' <http://rs.tdwg.org/ontology/voc/TaxonName#infragenericEpithet> ' . '"' . addcslashes($result->fields['SUBGENUS'], '"') . '" . ';
+					$name_parts[] = '(' . $result->fields['SUBGENUS'] . ')';
+				}			
+		
+				if ($result->fields['SPECIES'] != '')
+				{
+					$triples[] = $name . ' <http://rs.tdwg.org/ontology/voc/TaxonName#specificEpithet> ' . '"' . addcslashes($result->fields['SPECIES'], '"') . '" . ';
+					$name_parts[] = $result->fields['SPECIES'];
+				}
+
+				if ($result->fields['SUBSPECIES'] != '')
+				{
+					$triples[] = $name . ' <http://rs.tdwg.org/ontology/voc/TaxonName#infraspecificEpithet> ' . '"' . addcslashes($result->fields['SUBGENUS'], '"') . '" . ';
+					$name_parts[] = $result->fields['SUBSPECIES'];
+				}		
+					
+				$nameComplete = join(' ', $name_parts);
+				if ($nameComplete == '')
+				{
+					$nameComplete = $result->fields['SCIENTIFIC_NAME'];
+				
+					$authorship = '';
+					if ($result->fields['AUTHOR'] != '')
+					{
+						$authorship = $result->fields['AUTHOR'];
+					}
+					if ($result->fields['YEAR'] != '')
+					{
+						$authorship .= ', ' . $result->fields['YEAR'];
+					}
+				
+					$pattern = '\s+\(?' . preg_quote($authorship, '/') . '\)?';
+				
+					$nameComplete = preg_replace('/' . $pattern . '/u', '', $nameComplete);
+								
+					$triples[] = $name . ' <http://rs.tdwg.org/ontology/voc/TaxonName#nameComplete> ' . '"' . addcslashes($nameComplete, '"') . '" . ';						
 				}
 				else
 				{
-					$triples[] = $name . ' <http://rs.tdwg.org/ontology/voc/TaxonName#genusPart> ' . '"' . addcslashes($result->fields['GENUS'], '"') . '" . ';
+					$triples[] = $name . ' <http://rs.tdwg.org/ontology/voc/TaxonName#nameComplete> ' . '"' . $nameComplete . '" . ';						
 				}
-				$name_parts[] = $result->fields['GENUS'];
-			}						
-		
-			if ($result->fields['SUBGENUS'] != '')
-			{
-				$triples[] = $name . ' <http://rs.tdwg.org/ontology/voc/TaxonName#infragenericEpithet> ' . '"' . addcslashes($result->fields['SUBGENUS'], '"') . '" . ';
-				$name_parts[] = '(' . $result->fields['SUBGENUS'] . ')';
-			}			
-		
-			if ($result->fields['SPECIES'] != '')
-			{
-				$triples[] = $name . ' <http://rs.tdwg.org/ontology/voc/TaxonName#specificEpithet> ' . '"' . addcslashes($result->fields['SPECIES'], '"') . '" . ';
-				$name_parts[] = $result->fields['SPECIES'];
-			}
-
-			if ($result->fields['SUBSPECIES'] != '')
-			{
-				$triples[] = $name . ' <http://rs.tdwg.org/ontology/voc/TaxonName#infraspecificEpithet> ' . '"' . addcslashes($result->fields['SUBGENUS'], '"') . '" . ';
-				$name_parts[] = $result->fields['SUBSPECIES'];
-			}		
-					
-			$nameComplete = join(' ', $name_parts);
-			if ($nameComplete == '')
-			{
-				$nameComplete = $result->fields['SCIENTIFIC_NAME'];
-				
-				$authorship = '';
-				if ($result->fields['AUTHOR'] != '')
-				{
-					$authorship = $result->fields['AUTHOR'];
-				}
-				if ($result->fields['YEAR'] != '')
-				{
-					$authorship .= ', ' . $result->fields['YEAR'];
-				}
-				
-				$pattern = '\s+\(?' . preg_quote($authorship, '/') . '\)?';
-				
-				$nameComplete = preg_replace('/' . $pattern . '/u', '', $nameComplete);
-								
-				$triples[] = $name . ' <http://rs.tdwg.org/ontology/voc/TaxonName#nameComplete> ' . '"' . addcslashes($nameComplete, '"') . '" . ';						
-			}
-			else
-			{
-				$triples[] = $name . ' <http://rs.tdwg.org/ontology/voc/TaxonName#nameComplete> ' . '"' . $nameComplete . '" . ';						
 			}
 			
+						
 			// Comments
 			if ($result->fields['QUALIFICATION'] != '')
 			{
@@ -291,21 +297,29 @@ while (!$done)
 			}				
 		}
 	
-				
-		if (($result->fields['AUTHOR'] != '') && ($result->fields['YEAR'] != ''))
-		{
-			// TDWG
-			$triples[] = $name . ' <http://rs.tdwg.org/ontology/voc/TaxonName#authorship> ' . '"' . addcslashes($result->fields['AUTHOR'] . ', ' . $result->fields['YEAR'], '"') . '" . ';										
+		if ($enhance_name)
+		{				
+			if (($result->fields['AUTHOR'] != '') && ($result->fields['YEAR'] != ''))
+			{
+				// TDWG
+				$triples[] = $name . ' <http://rs.tdwg.org/ontology/voc/TaxonName#authorship> ' . '"' . addcslashes($result->fields['AUTHOR'] . ', ' . $result->fields['YEAR'], '"') . '" . ';										
 
-			// TAXREF 
-			$triples[] = $name . ' <http://taxref.mnhn.fr/lod/property/hasAuthority> ' . '"' . addcslashes($result->fields['AUTHOR'] . ', ' . $result->fields['YEAR'], '"') . '" . ';										
-		}
+				// TAXREF 
+				$triples[] = $name . ' <http://taxref.mnhn.fr/lod/property/hasAuthority> ' . '"' . addcslashes($result->fields['AUTHOR'] . ', ' . $result->fields['YEAR'], '"') . '" . ';										
+			}
 		
-		if ($result->fields['YEAR'] != '')
-		{
-			// TDWG
-			$triples[] = $name . ' <http://rs.tdwg.org/ontology/voc/TaxonName#year> ' . '"' . $result->fields['YEAR'] . '" . ';										
-		}
+			if ($result->fields['YEAR'] != '')
+			{
+				// TDWG
+				$triples[] = $name . ' <http://rs.tdwg.org/ontology/voc/TaxonName#year> ' . '"' . $result->fields['YEAR'] . '" . ';										
+			}
+			
+			// rank 
+			if ($result->fields['RANK'] != '')
+			{
+				$triples[] = $name . ' <http://rs.tdwg.org/ontology/voc/TaxonName#rankString> ' . '"' . addcslashes(strtolower($result->fields['RANK']), '"') . '" . ';
+			}
+		}			
 										
 		// publication (if we have a publication we always have a GUID)
 		if ($result->fields['PUBLICATION_GUID'] != '')
@@ -313,11 +327,6 @@ while (!$done)
 			$triples[] = $name . ' <http://rs.tdwg.org/ontology/voc/Common#publishedInCitation> ' . '<https://biodiversity.org.au/afd/publication/' . $result->fields['PUBLICATION_GUID'] . '> . ';
 		}
 
-		// rank 
-		if ($result->fields['RANK'] != '')
-		{
-			$triples[] = $name . ' <http://rs.tdwg.org/ontology/voc/TaxonName#rankString> ' . '"' . addcslashes(strtolower($result->fields['RANK']), '"') . '" . ';
-		}
 							
 		$t = join("\n", $triples) . "\n\n";
 		
