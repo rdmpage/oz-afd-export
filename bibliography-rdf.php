@@ -200,6 +200,8 @@ while (!$done)
 	//$sql .= ' WHERE doi="10.24199/j.mmv.2010.67.03"';
 	
 	//$sql .= ' WHERE issn="0814-1827" AND thumbnailUrl IS NOT NULL';
+	
+	$sql .= ' WHERE issn="0007-4977"';
 
 	//$sql .= ' WHERE updated > "2018-06-16"';
 	//$sql .= ' WHERE updated > "2018-07-28"';
