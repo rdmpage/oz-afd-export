@@ -68,25 +68,28 @@ function get_pdf_details($pdf)
 	}
 	else
 	{
-	
-		$url = 'http://bionames.org/bionames-archive/pdfstore?url=' . urlencode($pdf) . '&noredirect&format=json';
-		//$url = 'http://direct.bionames.org/bionames-archive/pdfstore?url=' . urlencode($pdf) . '&noredirect&format=json';
-		
-		$opts = array(
-		  CURLOPT_URL =>$url,
-		  CURLOPT_FOLLOWLOCATION => TRUE,
-		  CURLOPT_RETURNTRANSFER => TRUE
-		);
-	
-		$ch = curl_init();
-		curl_setopt_array($ch, $opts);
-		$data = curl_exec($ch);
-		$info = curl_getinfo($ch); 
-		curl_close($ch);
-	
-		if ($data != '')
+		if (0)
 		{
-			$obj = json_decode($data);
+			// Look up
+			$url = 'http://bionames.org/bionames-archive/pdfstore?url=' . urlencode($pdf) . '&noredirect&format=json';
+			//$url = 'http://direct.bionames.org/bionames-archive/pdfstore?url=' . urlencode($pdf) . '&noredirect&format=json';
+		
+			$opts = array(
+			  CURLOPT_URL =>$url,
+			  CURLOPT_FOLLOWLOCATION => TRUE,
+			  CURLOPT_RETURNTRANSFER => TRUE
+			);
+	
+			$ch = curl_init();
+			curl_setopt_array($ch, $opts);
+			$data = curl_exec($ch);
+			$info = curl_getinfo($ch); 
+			curl_close($ch);
+	
+			if ($data != '')
+			{
+				$obj = json_decode($data);
+			}
 		}
 	}
 	
@@ -188,7 +191,9 @@ while (!$done)
 	// $sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Memoirs of Museum Victoria"';
 	
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Mosquito Systematics"';
-	$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Zootaxa"';
+	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Zootaxa"';
+	//$sql .= ' WHERE issn="0007-4977" AND thumbnailUrl IS NOT NULL';
+
 	
 	//$sql .= ' WHERE doi="10.1051/parasite/1968432131"';
 	
