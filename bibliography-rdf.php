@@ -201,7 +201,7 @@ while (!$done)
 	
 	//$sql .= ' WHERE issn="0814-1827" AND thumbnailUrl IS NOT NULL';
 	
-	$sql .= ' WHERE issn="0007-4977"';
+	$sql .= ' WHERE issn="0028-7199"';
 
 	//$sql .= ' WHERE updated > "2018-06-16"';
 	//$sql .= ' WHERE updated > "2018-07-28"';
