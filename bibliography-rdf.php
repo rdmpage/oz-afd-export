@@ -201,7 +201,8 @@ while (!$done)
 	
 	//$sql .= ' WHERE issn="0814-1827" AND thumbnailUrl IS NOT NULL';
 	
-	$sql .= ' WHERE issn="0028-7199"';
+	//$sql .= ' WHERE issn="0028-7199"';
+	$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Journal of the Australian Entomological Society"';
 
 	//$sql .= ' WHERE updated > "2018-06-16"';
 	//$sql .= ' WHERE updated > "2018-07-28"';
