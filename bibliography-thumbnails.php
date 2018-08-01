@@ -295,12 +295,13 @@ while (!$done)
 	
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Records of the Australian Museum"';
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Journal of Parasitology" AND doi LIKE "10.2307/%"';
+	$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Systematic Parasitology"';
 	
 	//$sql .= ' WHERE issn="0024-1652"';
 	
 	//$sql .= ' WHERE doi LIKE "10.2307/%" AND thumbnailUrl IS NULL';
 	
-	$sql .= ' WHERE biostor IS NOT NULL';
+	//$sql .= ' WHERE biostor IS NOT NULL';
 	//$sql .= ' WHERE jstor IS NOT NULL';	
 	
 	//$sql .= ' WHERE zootaxa_thumbnail_pdf IS NOT NULL';	
