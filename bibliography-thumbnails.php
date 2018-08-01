@@ -174,6 +174,68 @@ function get_bionames_thumbnail($sha1, $base_filename, $page = 1)
 }
 
 
+//----------------------------------------------------------------------------------------
+function get_doi_thumbnail($doi, $base_filename)
+{
+	global $db;
+	
+	global $thumbnail_width;
+	
+	$thumbnail_filename = '';
+
+	$sql = "SELECT * FROM doi_thumbnails WHERE doi = " . $db->qstr($doi) . " LIMIT 1;";
+	
+	$result = $db->Execute($sql);
+	if ($result == false) die("failed [" . __FILE__ . ":" . __LINE__ . "]: " . $sql);
+	
+	if ($result->NumRows() == 1)
+	{
+		$thumbnail = $result->fields['path'];
+		
+		$filename = '/Users/rpage/Dropbox/BibScrapper/thumbnails/thumbnails/' . $thumbnail;
+		
+		$image_type = exif_imagetype($filename);
+		switch ($image_type)
+		{
+			case IMAGETYPE_GIF:
+				$mime_type = 'image/gif';
+				$extension = 'gif';
+				break;
+			case IMAGETYPE_JPEG:
+				$mime_type = 'image/jpg';
+				$extension = 'jpg';
+				break;
+			case IMAGETYPE_PNG:
+				$mime_type = 'image/png';
+				$extension = 'png';
+				break;
+			case IMAGETYPE_TIFF_II:
+			case IMAGETYPE_TIFF_MM:
+				$mime_type = 'image/tif';
+				$extension = 'tif';
+				break;
+			default:
+				$mime_type = 'image/gif';
+				$extension = 'gif';
+				break;
+		}
+
+		$image = file_get_contents($filename);
+		$thumbnail_filename = $base_filename . '.' . $extension;
+	
+		file_put_contents($thumbnail_filename, $image);
+	
+		// resize
+		$command = 'mogrify -resize ' . $thumbnail_width . 'x ' . $thumbnail_filename;
+		//echo $command . "\n";
+
+		system($command);
+	}
+		
+	return $thumbnail_filename;		
+}
+
+
 //--------------------------------------------------------------------------------------------------
 $db = NewADOConnection('mysql');
 $db->Connect("localhost", 
@@ -194,7 +256,7 @@ $offset = 0;
 $done = false;
 
 $force = true;
-//$force = false;
+$force = false;
 
 while (!$done)
 {
@@ -227,7 +289,10 @@ while (!$done)
 	// $sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Zoologische Mededelingen (Leiden)" AND pdf IS NOT NULL';	
 	//$sql .= ' WHERE issn="0013-9440" AND pdf IS NOT NULL';	
 	
-	$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Acarologia"';
+	$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Annals and Magazine of Natural History"';
+	
+	$sql .= ' AND series=13'
+	
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Records of the Australian Museum"';
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Journal of Parasitology" AND doi LIKE "10.2307/%"';
 	
@@ -344,6 +409,14 @@ while (!$done)
 				}
 			}
 			
+			// DOI thumbnails from BioNames
+			if ($thumbnail_filename == '')
+			{
+				if ($result->fields['doi'] != '')
+				{
+					$thumbnail_filename = get_doi_thumbnail($result->fields['biostor'], $base_filename);			
+				}
+			}
 			
 			if ($thumbnail_filename == '')
 			{

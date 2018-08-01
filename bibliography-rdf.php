@@ -202,7 +202,7 @@ while (!$done)
 	//$sql .= ' WHERE issn="0814-1827" AND thumbnailUrl IS NOT NULL';
 	
 	//$sql .= ' WHERE issn="0028-7199"';
-	$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Proceedings of the Royal Entomological Society of London (B)"';
+	$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Acarologia"';
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Records of the Australian Museum"';
 
 	//$sql .= ' WHERE updated > "2018-06-16"';

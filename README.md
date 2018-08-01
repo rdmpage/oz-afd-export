@@ -9,7 +9,19 @@ DOI https://doi.org/10.11646/zootaxa.3735.3.1 redirects to https://doi.org/10.11
 
 ## PDFs
 
-Display PDFs if they are “free” or explicitly open access, otherwise just thumbnails.
+Display PDFs if they are “free” or explicitly open access, otherwise just thumbnails. Could use http://schema.org/isAccessibleForFree to flag status of PDF, note that this is a boolean value, so in JSON-LD looks like this:
+
+```
+{
+   "isAccessibleForFree": false
+}
+```
+
+but in triples like this:
+
+```
+_:b0 <http://schema.org/isAccessibleForFree> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
+```
 
 ```
 UPDATE bibliography SET `free`='Y' WHERE `PUB_PARENT_JOURNAL_TITLE` = 'Linzer Biologische Beiträge' AND `pdf` IS NOT NULL;
