@@ -291,7 +291,7 @@ while (!$done)
 	
 	$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Annals and Magazine of Natural History"';
 	
-	$sql .= ' AND series=13'
+	//$sql .= ' AND series=13';
 	
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Records of the Australian Museum"';
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Journal of Parasitology" AND doi LIKE "10.2307/%"';
@@ -316,6 +316,8 @@ while (!$done)
 	//$sql .= ' WHERE updated > "2018-07-16"';
 	
 	$sql .= ' LIMIT ' . $page . ' OFFSET ' . $offset;
+	
+	//echo $sql . "\n";
 
 	$result = $db->Execute($sql);
 	if ($result == false) die("failed [" . __FILE__ . ":" . __LINE__ . "]: " . $sql);
@@ -414,7 +416,7 @@ while (!$done)
 			{
 				if ($result->fields['doi'] != '')
 				{
-					$thumbnail_filename = get_doi_thumbnail($result->fields['biostor'], $base_filename);			
+					$thumbnail_filename = get_doi_thumbnail($result->fields['doi'], $base_filename);			
 				}
 			}
 			
