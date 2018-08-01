@@ -34,6 +34,11 @@ To named graph:
 curl http://127.0.0.1:9999/blazegraph/sparql?context-uri=https://biodiversity.org.au/afd/publication -H 'Content-Type: text/rdf+n3' --data-binary ‘@bibliography’
 ```
 
+To names graph and progress bar:
+```
+curl http://130.209.46.63/blazegraph/sparql?context-uri=https://biodiversity.org.au/afd/publication -H 'Content-Type: text/rdf+n3' --data-binary '@thumbnail.nt'  --progress-bar | tee /dev/null
+```
+
 ## CouchDB
 
 Use CouchDB to cache data, and also post-process to generate triples, etc.
@@ -116,5 +121,14 @@ Use script ```zenodo-fetch-parts.php``` to get array of Zenodo record ids for fi
 #### Resolve Zenodo ids as JSON-LD
 
 Use script ```zenodo-get-figures.php``` to fetch JSON-LD for each part and convert to triples. Upload this to triple store and we can then query for figures.
+
+#### Upload to triple store
+
+Use named graph:
+
+```
+curl http://130.209.46.63/blazegraph/sparql?context-uri=https://zenodo.org -H 'Content-Type: text/rdf+n3' --data-binary '@junk/z.nt'  --progress-bar | tee /dev/null
+```
+
 
 

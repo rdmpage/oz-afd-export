@@ -194,7 +194,7 @@ $offset = 0;
 $done = false;
 
 $force = true;
-$force = false;
+//$force = false;
 
 while (!$done)
 {
@@ -227,7 +227,7 @@ while (!$done)
 	// $sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Zoologische Mededelingen (Leiden)" AND pdf IS NOT NULL';	
 	//$sql .= ' WHERE issn="0013-9440" AND pdf IS NOT NULL';	
 	
-	$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Proceedings of the Royal Entomological Society of London (B)"';
+	$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Acarologia"';
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Records of the Australian Museum"';
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Journal of Parasitology" AND doi LIKE "10.2307/%"';
 	
@@ -399,6 +399,7 @@ while (!$done)
 						
 							switch ($result->fields['PUB_PARENT_JOURNAL_TITLE'])
 							{
+								case 'Acarologia':
 								case 'Publications of the Seto Marine Biological Laboratory':
 								//case 'Records of the Australian Museum':
 									$page = 2;
