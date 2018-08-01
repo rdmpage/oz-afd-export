@@ -289,7 +289,7 @@ while (!$done)
 	// $sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Zoologische Mededelingen (Leiden)" AND pdf IS NOT NULL';	
 	//$sql .= ' WHERE issn="0013-9440" AND pdf IS NOT NULL';	
 	
-	$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Annals and Magazine of Natural History"';
+	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Annals and Magazine of Natural History"';
 	
 	//$sql .= ' AND series=13';
 	
@@ -300,7 +300,7 @@ while (!$done)
 	
 	//$sql .= ' WHERE doi LIKE "10.2307/%" AND thumbnailUrl IS NULL';
 	
-	//$sql .= ' WHERE biostor IS NOT NULL';
+	$sql .= ' WHERE biostor IS NOT NULL';
 	//$sql .= ' WHERE jstor IS NOT NULL';	
 	
 	//$sql .= ' WHERE zootaxa_thumbnail_pdf IS NOT NULL';	
@@ -310,7 +310,7 @@ while (!$done)
 	//$sql .= ' WHERE PUBLICATION_GUID = "c2d37add-ce58-41ac-aaf7-cbad7d9ae197"';	
 	
 	//$sql .= ' AND pdf IS NOT NULL';		
-	//$sql .= ' AND thumbnailUrl IS NULL';		
+	$sql .= ' AND thumbnailUrl IS NULL';		
 	
 	//$sql .= ' WHERE updated > "2018-06-16"';
 	//$sql .= ' WHERE updated > "2018-07-16"';
