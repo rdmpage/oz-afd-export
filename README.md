@@ -7,6 +7,16 @@ Export AFD data for Elasticsearch, RDF, etc.
 
 DOI https://doi.org/10.11646/zootaxa.3735.3.1 redirects to https://doi.org/10.11646/zootaxa.3745.3.1, so if we map to 3735.3.1 we miss the links to 3745.3.1 :( Looks like at some point Zootaxa decided the DOI was wrong and changed it, but old one kept and resolves to a 301 Moved Permanently
 
+## PDFs
+
+Display PDFs if they are “free” or explicitly open access, otherwise just thumbnails.
+
+```
+UPDATE bibliography SET `free`='Y' WHERE `PUB_PARENT_JOURNAL_TITLE` = 'Linzer Biologische Beiträge' AND `pdf` IS NOT NULL;
+```
+
+
+
 ## RDF
 
 ### Blazegraph

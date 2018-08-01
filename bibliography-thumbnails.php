@@ -227,7 +227,7 @@ while (!$done)
 	// $sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Zoologische Mededelingen (Leiden)" AND pdf IS NOT NULL';	
 	//$sql .= ' WHERE issn="0013-9440" AND pdf IS NOT NULL';	
 	
-	$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Linzer Biologische Beiträge"';
+	$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="International Journal of Entomology"';
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Journal of Parasitology" AND doi LIKE "10.2307/%"';
 	
 	//$sql .= ' WHERE issn="0024-1652"';
