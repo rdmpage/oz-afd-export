@@ -125,6 +125,35 @@ function get_pdf_images($sha1)
 	return $obj;
 }
 
+//----------------------------------------------------------------------------------------
+function get_biostor_details($biostor)
+{
+	$obj = null;
+	
+	$url = 'https://biostor.org/api.php?id=biostor/' . $biostor;
+
+	$opts = array(
+	  CURLOPT_URL =>$url,
+	  CURLOPT_FOLLOWLOCATION => TRUE,
+	  CURLOPT_RETURNTRANSFER => TRUE,
+	  CURLOPT_HTTPHEADER => array("Accept: application/ld+json")
+	);
+
+	$ch = curl_init();
+	curl_setopt_array($ch, $opts);
+	$data = curl_exec($ch);
+	$info = curl_getinfo($ch); 
+	curl_close($ch);
+
+	if ($data != '')
+	{
+		$obj = json_decode($data);
+	}
+	
+	return $obj;
+}
+
+
 
 
 $enhance_authors 		= true;
@@ -133,6 +162,8 @@ $enhance_identifiers	= true;
 $enhance_pdf			= true;
 $enhance_pdf_as_images	= false;
 $enhance_thumbnails		= true;
+
+$enhance_biostor		= true;
 
 
 $use_role				= true;
@@ -153,7 +184,7 @@ while (!$done)
 	
 	//$sql .= ' WHERE PUBLICATION_GUID = "a8447363-5982-472b-b54a-f40476f50f5b"';
 	
-	//$sql .= ' WHERE PUBLICATION_GUID = "48da0d1d-b942-4088-b553-74000d04db19"';
+	// $sql .= ' WHERE PUBLICATION_GUID = "79e2f672-016f-4450-a814-aefaa52ec493"';
 
 	// chapter
 	//$sql .= ' WHERE PUBLICATION_GUID = "504be1f6-4dbb-4012-944c-1f7303cb105f"';
@@ -202,7 +233,12 @@ while (!$done)
 	//$sql .= ' WHERE issn="0814-1827" AND thumbnailUrl IS NOT NULL';
 	
 	//$sql .= ' WHERE issn="0028-7199"';
-	$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Zoological Science (Tokyo)"';
+	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Zoological Science (Tokyo)"';
+	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Proceedings of the Linnean Society of New South Wales"';
+	
+	$sql .= ' WHERE PUBLICATION_GUID = "287fcdee-5568-406c-8dd3-e4ab997fb939"'; // BioStor
+	
+	
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Records of the Australian Museum"';
 
 	//$sql .= ' WHERE updated > "2018-06-16"';
@@ -279,11 +315,8 @@ while (!$done)
 						// Author is creator
 						$triples[] = $s . ' <http://schema.org/creator> ' .  $author_id . ' .';						
 					}
-					
-					
-				}
-			
-				
+										
+				}				
 		
 			}
 			else
@@ -431,6 +464,48 @@ while (!$done)
 			
 						//$triples[] = $s . ' <http://schema.org/sameAs> ' . '<https://hdl.handle.net/' . $result->fields['handle'] . '> ' . '. ';
 						$triples[] = $s . ' <http://schema.org/sameAs> ' . '"http://biostor.org/' . $result->fields['biostor'] . '" ' . '. ';
+						
+						
+						if ($enhance_biostor)
+						{
+							// scanned images
+							// need to think of best way to link images to encoding to work
+							$obj = get_biostor_details($result->fields['biostor']);
+							
+							$encoding_id = '<' . $subject_id . '#images' . '>';
+							
+							$triples[] = $s . ' <http://schema.org/encoding> ' . $encoding_id . ' .';
+				
+							$count = 1;
+							foreach($obj->bhl_pages as $page_name => $PageID)
+							{
+								// image
+								$image_id = '<https://biodiversitylibrary.org/page/' . $PageID . '>';
+								
+								// ImageObject
+								$triples[] = $image_id . ' <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://schema.org/ImageObject> .';
+								$triples[] = $image_id . ' <http://schema.org/fileFormat> "image/jpeg" .';
+
+								// order 
+								$triples[] = $image_id . ' <http://schema.org/position> ' . '"' . addcslashes($count, '"') . '"' . ' .';
+
+								// URLs to images
+								$triples[] = $image_id . ' <http://schema.org/contentUrl> ' . '"' . addcslashes('https://www.biodiversitylibrary.org/pagethumb/' . $PageID . ',700,1000', '"') . '"' . ' .';
+								$triples[] = $image_id . ' <http://schema.org/thumbnailUrl> ' . '"' . addcslashes('https://www.biodiversitylibrary.org/pagethumb/' . $PageID . ',100,150', '"') . '"' . ' .';
+								
+								// page name
+								$triples[] = $image_id . ' <http://schema.org/name> ' . '"' . addcslashes($page_name, '"') . '"' . ' .';
+								
+								// page image is part of the encoding
+								$triples[] = $encoding_id . ' <http://schema.org/hasPart> ' .  $image_id . ' .';	
+								
+								$count++;				
+							}
+						
+						}
+						
+						
+						
 					}	
 		
 					// DOI
@@ -607,7 +682,7 @@ while (!$done)
 					$triples[] = $pdf_id . ' <http://schema.org/fileFormat> "application/pdf" .';
 
 					// 
-
+					/*
 					if ($enhance_pdf_as_images)
 					{
 						$images = get_pdf_images($sha1);	
@@ -631,6 +706,7 @@ while (!$done)
 				
 						}
 					}
+					*/
 				}
 			}	
 		}

@@ -281,6 +281,8 @@ while (!$done)
 	//$sql .= ' WHERE PUBLICATION_GUID = "8600f99a-f346-4bd1-80b1-f665b505fef4"'; // JSTOR with thumbnail
 	
 	//$sql .= ' WHERE PUBLICATION_GUID = "ff6e5cf7-2ff1-43e7-96ba-63936163890d"'; // Zootaxa PDF thumbnail
+	
+	//$sql .= ' WHERE PUBLICATION_GUID = "79e2f672-016f-4450-a814-aefaa52ec493"'; // BioStor
 			
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE LIKE "%Auckland%"';
 	
@@ -295,7 +297,7 @@ while (!$done)
 	
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Records of the Australian Museum"';
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Journal of Parasitology" AND doi LIKE "10.2307/%"';
-	$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Systematic Parasitology"';
+	$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Proceedings of the Linnean Society of New South Wales"';
 	
 	//$sql .= ' WHERE issn="0024-1652"';
 	
@@ -311,7 +313,7 @@ while (!$done)
 	//$sql .= ' WHERE PUBLICATION_GUID = "c2d37add-ce58-41ac-aaf7-cbad7d9ae197"';	
 	
 	//$sql .= ' AND pdf IS NOT NULL';		
-	$sql .= ' AND thumbnailUrl IS NULL';		
+	//$sql .= ' AND thumbnailUrl IS NULL';		
 	
 	//$sql .= ' WHERE updated > "2018-06-16"';
 	//$sql .= ' WHERE updated > "2018-07-16"';
