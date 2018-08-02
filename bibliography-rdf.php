@@ -126,31 +126,57 @@ function get_pdf_images($sha1)
 }
 
 //----------------------------------------------------------------------------------------
+// Maybe cached
 function get_biostor_details($biostor)
 {
-	$obj = null;
+	global $db;
 	
-	$url = 'https://biostor.org/api.php?id=biostor/' . $biostor;
+	$bhl_pages = null;
 
-	$opts = array(
-	  CURLOPT_URL =>$url,
-	  CURLOPT_FOLLOWLOCATION => TRUE,
-	  CURLOPT_RETURNTRANSFER => TRUE,
-	  CURLOPT_HTTPHEADER => array("Accept: application/ld+json")
-	);
-
-	$ch = curl_init();
-	curl_setopt_array($ch, $opts);
-	$data = curl_exec($ch);
-	$info = curl_getinfo($ch); 
-	curl_close($ch);
-
-	if ($data != '')
+	$sql = "SELECT * FROM bibliography WHERE biostor = " . $db->qstr($biostor) . " AND biostor_bhl_pages IS NOT NULL LIMIT 1;";
+	
+	//echo $sql . "\n";
+		
+	$result = $db->Execute($sql);
+	if ($result == false) die("failed [" . __FILE__ . ":" . __LINE__ . "]: " . $sql);
+	
+	if ($result->NumRows() == 1)
 	{
-		$obj = json_decode($data);
+		$bhl_pages = json_decode($result->fields['biostor_bhl_pages']);
 	}
+	else
+	{
+		$url = 'https://biostor.org/api.php?id=biostor/' . $biostor;
+
+		$opts = array(
+		  CURLOPT_URL =>$url,
+		  CURLOPT_FOLLOWLOCATION => TRUE,
+		  CURLOPT_RETURNTRANSFER => TRUE
+		);
+
+		$ch = curl_init();
+		curl_setopt_array($ch, $opts);
+		$data = curl_exec($ch);
+		$info = curl_getinfo($ch); 
+		curl_close($ch);
+
+		if ($data != '')
+		{
+			$obj = json_decode($data);
+			
+			$bhl_pages = $obj->bhl_pages;
+			
+			$sql = 'UPDATE bibliography SET biostor_bhl_pages=' . $db->qstr(json_encode($bhl_pages)) . '  WHERE biostor = ' . $db->qstr($biostor);
+			$result = $db->Execute($sql);
+			if ($result == false) die("failed [" . __FILE__ . ":" . __LINE__ . "]: " . $sql);
+			
+		}
+	}	
 	
-	return $obj;
+	//print_r($bhl_pages);
+	//exit();
+	
+	return $bhl_pages;
 }
 
 
@@ -235,8 +261,12 @@ while (!$done)
 	//$sql .= ' WHERE issn="0028-7199"';
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Zoological Science (Tokyo)"';
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Proceedings of the Linnean Society of New South Wales"';
+	//$sql .= ' AND biostor is not null';
 	
-	$sql .= ' WHERE PUBLICATION_GUID = "287fcdee-5568-406c-8dd3-e4ab997fb939"'; // BioStor
+	$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Nachrichten des Entomologischen Vereins Apollo (N.F.)"';
+	
+	//$sql .= ' AND volume >= 120';
+	//$sql .= ' WHERE PUBLICATION_GUID = "b99fe346-b5b4-47dd-9270-4343dd3643cb"'; // BioStor
 	
 	
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Records of the Australian Museum"';
@@ -462,22 +492,24 @@ while (!$done)
 						$triples[] = $identifier_id . ' <http://schema.org/propertyID> ' . '"biostor"' . '.';
 						$triples[] = $identifier_id . ' <http://schema.org/value> ' . '"' . addcslashes($result->fields['biostor'], '"') . '"' . '.';
 			
-						//$triples[] = $s . ' <http://schema.org/sameAs> ' . '<https://hdl.handle.net/' . $result->fields['handle'] . '> ' . '. ';
-						$triples[] = $s . ' <http://schema.org/sameAs> ' . '"http://biostor.org/' . $result->fields['biostor'] . '" ' . '. ';
-						
-						
+						$triples[] = $s . ' <http://schema.org/sameAs> ' . '"https://biostor.org/reference/' . $result->fields['biostor'] . '" ' . '. ';
+									
 						if ($enhance_biostor)
 						{
 							// scanned images
 							// need to think of best way to link images to encoding to work
-							$obj = get_biostor_details($result->fields['biostor']);
 							
-							$encoding_id = '<' . $subject_id . '#images' . '>';
+							// treat BioStor like Zenodo, it is a work, and we link to 
+							// it in the same way (via "sameAs")
+							// So, here we "cheat" by making a kini BioStor record, we should
+							// really just import this direct from BioStor (to do)
+							$bhl_pages = get_biostor_details($result->fields['biostor']);
 							
-							$triples[] = $s . ' <http://schema.org/encoding> ' . $encoding_id . ' .';
+							$biostor_id = '<https://biostor.org/reference/' . $result->fields['biostor'] . '>';							
+							$triples[] = $biostor_id . ' <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://schema.org/CreativeWork> .';
 				
 							$count = 1;
-							foreach($obj->bhl_pages as $page_name => $PageID)
+							foreach($bhl_pages as $page_name => $PageID)
 							{
 								// image
 								$image_id = '<https://biodiversitylibrary.org/page/' . $PageID . '>';
@@ -497,7 +529,7 @@ while (!$done)
 								$triples[] = $image_id . ' <http://schema.org/name> ' . '"' . addcslashes($page_name, '"') . '"' . ' .';
 								
 								// page image is part of the encoding
-								$triples[] = $encoding_id . ' <http://schema.org/hasPart> ' .  $image_id . ' .';	
+								$triples[] = $biostor_id . ' <http://schema.org/hasPart> ' .  $image_id . ' .';	
 								
 								$count++;				
 							}
