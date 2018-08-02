@@ -68,7 +68,7 @@ function get_pdf_details($pdf)
 	}
 	else
 	{
-		if (0)
+		if (1)
 		{
 			// Look up
 			$url = 'http://bionames.org/bionames-archive/pdfstore?url=' . urlencode($pdf) . '&noredirect&format=json';
@@ -164,11 +164,13 @@ function get_biostor_details($biostor)
 		{
 			$obj = json_decode($data);
 			
-			$bhl_pages = $obj->bhl_pages;
-			
-			$sql = 'UPDATE bibliography SET biostor_bhl_pages=' . $db->qstr(json_encode($bhl_pages)) . '  WHERE biostor = ' . $db->qstr($biostor);
-			$result = $db->Execute($sql);
-			if ($result == false) die("failed [" . __FILE__ . ":" . __LINE__ . "]: " . $sql);
+			if (isset($obj->bhl_pages))
+			{
+				$bhl_pages = $obj->bhl_pages;				
+				$sql = 'UPDATE bibliography SET biostor_bhl_pages=' . $db->qstr(json_encode($bhl_pages)) . '  WHERE biostor = ' . $db->qstr($biostor);
+				$result = $db->Execute($sql);
+				if ($result == false) die("failed [" . __FILE__ . ":" . __LINE__ . "]: " . $sql);
+			}
 			
 		}
 	}	
@@ -260,10 +262,10 @@ while (!$done)
 	
 	//$sql .= ' WHERE issn="0028-7199"';
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Zoological Science (Tokyo)"';
-	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Proceedings of the Linnean Society of New South Wales"';
-	//$sql .= ' AND biostor is not null';
+	$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Proceedings of the Linnean Society of New South Wales"';
+	$sql .= ' AND biostor is not null';
 	
-	$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Nachrichten des Entomologischen Vereins Apollo (N.F.)"';
+	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Nachrichten des Entomologischen Vereins Apollo (N.F.)"';
 	
 	//$sql .= ' AND volume >= 120';
 	//$sql .= ' WHERE PUBLICATION_GUID = "b99fe346-b5b4-47dd-9270-4343dd3643cb"'; // BioStor
@@ -505,35 +507,38 @@ while (!$done)
 							// really just import this direct from BioStor (to do)
 							$bhl_pages = get_biostor_details($result->fields['biostor']);
 							
-							$biostor_id = '<https://biostor.org/reference/' . $result->fields['biostor'] . '>';							
-							$triples[] = $biostor_id . ' <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://schema.org/CreativeWork> .';
-				
-							$count = 1;
-							foreach($bhl_pages as $page_name => $PageID)
+							if (isset($bhl_pages))
 							{
-								// image
-								$image_id = '<https://biodiversitylibrary.org/page/' . $PageID . '>';
+							
+								$biostor_id = '<https://biostor.org/reference/' . $result->fields['biostor'] . '>';							
+								$triples[] = $biostor_id . ' <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://schema.org/CreativeWork> .';
+				
+								$count = 1;
+								foreach($bhl_pages as $page_name => $PageID)
+								{
+									// image
+									$image_id = '<https://biodiversitylibrary.org/page/' . $PageID . '>';
 								
-								// ImageObject
-								$triples[] = $image_id . ' <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://schema.org/ImageObject> .';
-								$triples[] = $image_id . ' <http://schema.org/fileFormat> "image/jpeg" .';
+									// ImageObject
+									$triples[] = $image_id . ' <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://schema.org/ImageObject> .';
+									$triples[] = $image_id . ' <http://schema.org/fileFormat> "image/jpeg" .';
 
-								// order 
-								$triples[] = $image_id . ' <http://schema.org/position> ' . '"' . addcslashes($count, '"') . '"' . ' .';
+									// order 
+									$triples[] = $image_id . ' <http://schema.org/position> ' . '"' . addcslashes($count, '"') . '"' . ' .';
 
-								// URLs to images
-								$triples[] = $image_id . ' <http://schema.org/contentUrl> ' . '"' . addcslashes('https://www.biodiversitylibrary.org/pagethumb/' . $PageID . ',700,1000', '"') . '"' . ' .';
-								$triples[] = $image_id . ' <http://schema.org/thumbnailUrl> ' . '"' . addcslashes('https://www.biodiversitylibrary.org/pagethumb/' . $PageID . ',100,150', '"') . '"' . ' .';
+									// URLs to images
+									$triples[] = $image_id . ' <http://schema.org/contentUrl> ' . '"' . addcslashes('https://www.biodiversitylibrary.org/pagethumb/' . $PageID . ',700,1000', '"') . '"' . ' .';
+									$triples[] = $image_id . ' <http://schema.org/thumbnailUrl> ' . '"' . addcslashes('https://www.biodiversitylibrary.org/pagethumb/' . $PageID . ',100,150', '"') . '"' . ' .';
 								
-								// page name
-								$triples[] = $image_id . ' <http://schema.org/name> ' . '"' . addcslashes($page_name, '"') . '"' . ' .';
+									// page name
+									$triples[] = $image_id . ' <http://schema.org/name> ' . '"' . addcslashes($page_name, '"') . '"' . ' .';
 								
-								// page image is part of the encoding
-								$triples[] = $biostor_id . ' <http://schema.org/hasPart> ' .  $image_id . ' .';	
+									// page image is part of the encoding
+									$triples[] = $biostor_id . ' <http://schema.org/hasPart> ' .  $image_id . ' .';	
 								
-								$count++;				
-							}
-						
+									$count++;				
+								}
+							}						
 						}
 						
 						

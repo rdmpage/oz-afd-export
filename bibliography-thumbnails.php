@@ -299,7 +299,7 @@ while (!$done)
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Journal of Parasitology" AND doi LIKE "10.2307/%"';
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Proceedings of the Linnean Society of New South Wales"';
 	
-	$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Nachrichten des Entomologischen Vereins Apollo (N.F.)"';
+	$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Memoirs of the Queensland Museum"';
 	
 	
 	//$sql .= ' WHERE issn="0024-1652"';
