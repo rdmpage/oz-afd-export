@@ -299,7 +299,8 @@ while (!$done)
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Journal of Parasitology" AND doi LIKE "10.2307/%"';
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Proceedings of the Linnean Society of New South Wales"';
 	
-	$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Bulletin of the British Arachnological Society"';
+	$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Records of the South Australian Museum (Adelaide)"';
+	$sql .= ' AND biostor IS NOT NULL';
 	
 	
 	//$sql .= ' WHERE issn="0024-1652"';

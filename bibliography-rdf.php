@@ -262,8 +262,8 @@ while (!$done)
 	
 	//$sql .= ' WHERE issn="0028-7199"';
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Zoological Science (Tokyo)"';
-	$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Memoirs of the Queensland Museum"';
-	$sql .= ' AND biostor is not null';
+	$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Bulletin of the British Arachnological Society"';
+	//$sql .= ' AND biostor is not null';
 	
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Nachrichten des Entomologischen Vereins Apollo (N.F.)"';
 	
