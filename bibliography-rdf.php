@@ -92,8 +92,6 @@ function get_pdf_details($pdf)
 			}
 		}
 	}
-	
-	
 		
 	return $obj;
 }
@@ -703,6 +701,7 @@ while (!$done)
 				// SHA1 and page images
 				$sha1 = '';
 				$obj = get_pdf_details($result->fields['pdf']);
+				
 			
 				if ($obj 
 					&& ($result->fields['free'] == 'Y')
