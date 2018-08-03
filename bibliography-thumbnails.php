@@ -295,7 +295,7 @@ while (!$done)
 	
 	//$sql .= ' AND series=13';
 	
-	$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Memoirs of the National Museum of Victoria, Melbourne"';
+	$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Australian Journal of Entomology"';
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Journal of Parasitology" AND doi LIKE "10.2307/%"';
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Proceedings of the Linnean Society of New South Wales"';
 	
