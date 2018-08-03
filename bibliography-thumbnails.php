@@ -9,34 +9,52 @@ require_once (dirname(__FILE__) . '/adodb5/adodb.inc.php');
 
 $thumbnail_width = 100;
 
-//--------------------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------
 function get_pdf_details($pdf)
 {
+	global $db;
+	
 	$obj = null;
 	
-	$url = 'http://bionames.org/bionames-archive/pdfstore?url=' . urlencode($pdf) . '&noredirect&format=json';
-	//$url = 'http://direct.bionames.org/bionames-archive/pdfstore?url=' . urlencode($pdf) . '&noredirect&format=json';
-
-	$opts = array(
-	  CURLOPT_URL =>$url,
-	  CURLOPT_FOLLOWLOCATION => TRUE,
-	  CURLOPT_RETURNTRANSFER => TRUE
-	);
-
-	$ch = curl_init();
-	curl_setopt_array($ch, $opts);
-	$data = curl_exec($ch);
-	$info = curl_getinfo($ch); 
-	curl_close($ch);
-
-	if ($data != '')
+	$sql = "SELECT * FROM sha1 WHERE pdf = " . $db->qstr($pdf) . " LIMIT 1;";
+		
+	$result = $db->Execute($sql);
+	if ($result == false) die("failed [" . __FILE__ . ":" . __LINE__ . "]: " . $sql);
+	
+	if ($result->NumRows() == 1)
 	{
-		$obj = json_decode($data);
+		$obj = new stdclass;
+		$obj->sha1 = $result->fields['sha1'];
+	}
+	else
+	{
+		if (0)
+		{
+			// Look up
+			$url = 'http://bionames.org/bionames-archive/pdfstore?url=' . urlencode($pdf) . '&noredirect&format=json';
+			//$url = 'http://direct.bionames.org/bionames-archive/pdfstore?url=' . urlencode($pdf) . '&noredirect&format=json';
+		
+			$opts = array(
+			  CURLOPT_URL =>$url,
+			  CURLOPT_FOLLOWLOCATION => TRUE,
+			  CURLOPT_RETURNTRANSFER => TRUE
+			);
+	
+			$ch = curl_init();
+			curl_setopt_array($ch, $opts);
+			$data = curl_exec($ch);
+			$info = curl_getinfo($ch); 
+			curl_close($ch);
+	
+			if ($data != '')
+			{
+				$obj = json_decode($data);
+			}
+		}
 	}
 		
 	return $obj;
 }
-
 
 //----------------------------------------------------------------------------------------
 function get_jstor_thumbnail($jstor, $base_filename)
@@ -295,7 +313,7 @@ while (!$done)
 	
 	//$sql .= ' AND series=13';
 	
-	$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Australian Journal of Entomology"';
+	$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Records of the Western Australian Museum"';
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Journal of Parasitology" AND doi LIKE "10.2307/%"';
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Proceedings of the Linnean Society of New South Wales"';
 	
