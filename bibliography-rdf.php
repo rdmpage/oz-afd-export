@@ -265,8 +265,10 @@ while (!$done)
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Bulletin of the British Arachnological Society"';
 	//$sql .= ' AND biostor is not null';
 	
-	$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Transactions of the Royal Society of South Australia"';
+	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Transactions of the Royal Society of South Australia"';
+	$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Memoirs of the Queensland Museum"';
 	$sql .= ' AND biostor IS NOT NULL';
+	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Koleopterologische Rundschau. Wien"';
 	
 	
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Nachrichten des Entomologischen Vereins Apollo (N.F.)"';
