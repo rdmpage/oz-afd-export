@@ -295,13 +295,13 @@ while (!$done)
 	
 	//$sql .= ' AND series=13';
 	
-	$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="The Australian Zoologist"';
+	$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Papers and Proceedings of the Royal Society of Tasmania"';
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Journal of Parasitology" AND doi LIKE "10.2307/%"';
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Proceedings of the Linnean Society of New South Wales"';
 	
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Transactions of the Royal Society of South Australia"';
-	$sql .= ' AND biostor IS NOT NULL';
-	//$sql .= ' AND pdf IS NOT NULL';
+	//$sql .= ' AND biostor IS NOT NULL';
+	$sql .= ' AND pdf IS NOT NULL';
 	
 	
 	//$sql .= ' WHERE issn="0024-1652"';
@@ -428,14 +428,6 @@ while (!$done)
 				}
 			}
 			
-			if ($thumbnail_filename == '')
-			{
-				// BioStor
-				if ($result->fields['biostor'] != '')
-				{
-					$thumbnail_filename = get_biostor_thumbnail($result->fields['biostor'], $base_filename);			
-				}
-			}
 			
 			// Zootaxa-specific code to handle factvwe may have PDF preview that we can use
 			if ($thumbnail_filename == '')
@@ -498,6 +490,16 @@ while (!$done)
 					}
 				}
 			}
+			
+			if ($thumbnail_filename == '')
+			{
+				// BioStor
+				if ($result->fields['biostor'] != '')
+				{
+					$thumbnail_filename = get_biostor_thumbnail($result->fields['biostor'], $base_filename);			
+				}
+			}
+			
 			
 			
 			if ($thumbnail_filename != '')
