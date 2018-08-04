@@ -274,7 +274,7 @@ $offset = 0;
 $done = false;
 
 $force = true;
-$force = false;
+//$force = false;
 
 while (!$done)
 {
@@ -301,6 +301,8 @@ while (!$done)
 	//$sql .= ' WHERE PUBLICATION_GUID = "ff6e5cf7-2ff1-43e7-96ba-63936163890d"'; // Zootaxa PDF thumbnail
 	
 	//$sql .= ' WHERE PUBLICATION_GUID = "79e2f672-016f-4450-a814-aefaa52ec493"'; // BioStor
+	
+	$sql .= ' WHERE PUBLICATION_GUID = "617908ee-5531-42e5-a667-ef6f113a3749"';
 			
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE LIKE "%Auckland%"';
 	
@@ -313,13 +315,13 @@ while (!$done)
 	
 	//$sql .= ' AND series=13';
 	
-	$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Records of the Western Australian Museum"';
+	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Records of the Western Australian Museum"';
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Journal of Parasitology" AND doi LIKE "10.2307/%"';
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Proceedings of the Linnean Society of New South Wales"';
 	
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Transactions of the Royal Society of South Australia"';
 	//$sql .= ' AND biostor IS NOT NULL';
-	$sql .= ' AND pdf IS NOT NULL';
+	//$sql .= ' AND pdf IS NOT NULL';
 	
 	
 	//$sql .= ' WHERE issn="0024-1652"';
