@@ -265,9 +265,9 @@ while (!$done)
 	
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Transactions of the Royal Society of South Australia"';
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Journal of Herpetology"';
-	$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Smithsonian Contributions to Zoology"';
+	$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Zoosystema"';
 	//$sql .= ' AND biostor IS NOT NULL';
-	$sql .= ' AND pdf IS NOT NULL';
+	//$sql .= ' AND pdf IS NOT NULL';
 	//$sql .= ' AND pdf IS NOT NULL';
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Koleopterologische Rundschau. Wien"';
 	

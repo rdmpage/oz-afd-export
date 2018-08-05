@@ -320,7 +320,7 @@ while (!$done)
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Proceedings of the Linnean Society of New South Wales"';
 	
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="International Scholarly Research Network Zoology"';
-	$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Zoosystema"';
+	$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Pacific Science"';
 
 	//$sql .= ' AND biostor IS NOT NULL';
 	//$sql .= ' AND pdf IS NOT NULL';
