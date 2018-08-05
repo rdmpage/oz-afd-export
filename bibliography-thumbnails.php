@@ -274,7 +274,7 @@ $offset = 0;
 $done = false;
 
 $force = true;
-//$force = false;
+$force = false;
 
 while (!$done)
 {
@@ -319,7 +319,7 @@ while (!$done)
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Journal of Parasitology" AND doi LIKE "10.2307/%"';
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Proceedings of the Linnean Society of New South Wales"';
 	
-	$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Smithsonian Contributions to Zoology"';
+	$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="International Scholarly Research Network Zoology"';
 	//$sql .= ' AND biostor IS NOT NULL';
 	$sql .= ' AND pdf IS NOT NULL';
 	
