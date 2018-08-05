@@ -319,9 +319,9 @@ while (!$done)
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Journal of Parasitology" AND doi LIKE "10.2307/%"';
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Proceedings of the Linnean Society of New South Wales"';
 	
-	$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Proceedings of the Biological Society of Washington"';
-	$sql .= ' AND biostor IS NOT NULL';
-	//$sql .= ' AND pdf IS NOT NULL';
+	$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Smithsonian Contributions to Zoology"';
+	//$sql .= ' AND biostor IS NOT NULL';
+	$sql .= ' AND pdf IS NOT NULL';
 	
 	
 	//$sql .= ' WHERE issn="0024-1652"';
