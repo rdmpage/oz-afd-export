@@ -265,7 +265,10 @@ while (!$done)
 	
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Transactions of the Royal Society of South Australia"';
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Journal of Herpetology"';
-	$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Zoologische Verhandelingen (Leiden)"';
+	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Zoologische Verhandelingen (Leiden)"';
+	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE LIKE "%Beagle%"';
+	$sql .= ' WHERE PUBLICATION_GUID = "3845aaab-e4bd-4c07-b398-c6ea4532f3d2"';	
+
 	//$sql .= ' AND biostor IS NOT NULL';
 	//$sql .= ' AND pdf IS NOT NULL';
 	//$sql .= ' AND pdf IS NOT NULL';
