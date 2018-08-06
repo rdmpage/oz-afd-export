@@ -320,9 +320,10 @@ while (!$done)
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Proceedings of the Linnean Society of New South Wales"';
 	
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="International Scholarly Research Network Zoology"';
-	$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Pacific Science"';
+	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Pacific Science"';
+	$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE LIKE "%Beagle%"';
 
-	//$sql .= ' AND biostor IS NOT NULL';
+	$sql .= ' AND biostor IS NOT NULL';
 	//$sql .= ' AND pdf IS NOT NULL';
 	
 	
@@ -339,7 +340,7 @@ while (!$done)
 //	$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Papers and Proceedings of the Royal Society of Tasmania" AND pdf IS NOT NULL';
 	//$sql .= ' WHERE PUBLICATION_GUID = "c2d37add-ce58-41ac-aaf7-cbad7d9ae197"';	
 	
-	$sql .= ' AND pdf IS NOT NULL';		
+	//$sql .= ' AND pdf IS NOT NULL';		
 	$sql .= ' AND thumbnailUrl IS NULL';		
 	
 	//$sql .= ' WHERE updated > "2018-06-16"';
