@@ -108,6 +108,7 @@ function fetch_zenodo($id)
 
 
 $journal = 'Zootaxa';
+$journal = 'Zookeys';
 //$journal = 'Revue Suisse de Zoologie';
 
 $page = 1000;
@@ -122,9 +123,9 @@ while (!$done)
 	
 	// A specific journal or publication, otherwise we are getting everything
 	
-	// $sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE = "' . $journal . '"';
+	$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE = "' . $journal . '"';
 	
-	$sql .= ' WHERE PUBLICATION_GUID = "3e3d5933-9ba7-4828-83ca-019feb9905fe"';
+	//$sql .= ' WHERE PUBLICATION_GUID = "3e3d5933-9ba7-4828-83ca-019feb9905fe"';
 	
 	//$sql .= ' WHERE zenodo_parts IS NOT NULL';
 	
