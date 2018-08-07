@@ -123,9 +123,9 @@ while (!$done)
 	
 	// A specific journal or publication, otherwise we are getting everything
 	
-	$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE = "' . $journal . '"';
+	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE = "' . $journal . '"';
 	
-	//$sql .= ' WHERE PUBLICATION_GUID = "3e3d5933-9ba7-4828-83ca-019feb9905fe"';
+	$sql .= ' WHERE PUBLICATION_GUID = "4201139d-441f-4ef0-86f6-5ec9dcd168a6"';
 	
 	//$sql .= ' WHERE zenodo_parts IS NOT NULL';
 	
@@ -139,11 +139,14 @@ while (!$done)
 	{
 		$parts = json_decode($result->fields['zenodo_parts']);
 		
-		foreach ($parts as $id)
+		if (isset($parts))
 		{
-			fetch_zenodo($id);	
+			foreach ($parts as $id)
+			{
+				fetch_zenodo($id);	
+			}
 		}
-		
+				
 		$result->MoveNext();
 
 	}
