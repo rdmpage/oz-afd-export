@@ -319,13 +319,13 @@ while (!$done)
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Journal of Parasitology" AND doi LIKE "10.2307/%"';
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Proceedings of the Linnean Society of New South Wales"';
 	
-	$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Journal of the Kansas Entomological Society"';
+	$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Records of the South Australian Museum (Adelaide)"';
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Pacific Science"';
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE LIKE "%Beagle%"';
 
-	//$sql .= ' AND biostor IS NOT NULL';
+	$sql .= ' AND biostor IS NOT NULL';
 	//$sql .= ' AND pdf IS NOT NULL';
-	$sql .= ' AND jstor IS NOT NULL';
+	//$sql .= ' AND jstor IS NOT NULL';
 	
 	
 	//$sql .= ' WHERE issn="0024-1652"';
