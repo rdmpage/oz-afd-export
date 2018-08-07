@@ -270,9 +270,10 @@ while (!$done)
 	//$sql .= ' WHERE PUBLICATION_GUID = "3845aaab-e4bd-4c07-b398-c6ea4532f3d2"';	
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Transactions of the Royal Society of South Australia"';
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Zookeys"';
-	$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Records of the South Australian Museum (Adelaide)"';
+	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Records of the South Australian Museum (Adelaide)"';
+	$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Revue Suisse de Zoologie"';
 
-	//$sql .= ' AND biostor IS NOT NULL';
+	$sql .= ' AND biostor IS NOT NULL';
 	//$sql .= ' AND pdf IS NOT NULL';
 	//$sql .= ' AND pdf IS NOT NULL';
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Koleopterologische Rundschau. Wien"';
