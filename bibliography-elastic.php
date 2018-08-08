@@ -57,6 +57,17 @@ function taxa_in_work($guid)
 //----------------------------------------------------------------------------------------
 
 
+$filename = 'bibliography.jsonl';
+$basename = 'bibliography';
+
+$count = 0;
+$total = 0;
+
+$chunksize = 10000;
+
+$rows = array();
+
+
 $page = 1000;
 $offset = 0;
 
@@ -78,7 +89,7 @@ while (!$done)
 	
 	//$sql .= ' WHERE updated > "2018-06-01"';
 	//$sql .= ' WHERE updated > "2018-06-26"';
-	$sql .= ' WHERE updated > "2018-07-08"';
+	//$sql .= ' WHERE updated > "2018-08-08"';
 	
 	$sql .= ' LIMIT ' . $page . ' OFFSET ' . $offset;
 
@@ -91,7 +102,6 @@ while (!$done)
 		// Elastic
 		
 		$doc = new stdclass;
-		$doc->type = "work";
 
 		$doc->search_result_data = new stdclass;
 		
@@ -106,7 +116,7 @@ while (!$done)
 		$fulltext = array();
 		$fulltext_boosted = array();
 		
-		$doc->id = 'https://biodiversity.org.au/afd/publication/' . $result->fields['PUBLICATION_GUID'];
+		$doc->search_result_data->id = 'https://biodiversity.org.au/afd/publication/' . $result->fields['PUBLICATION_GUID'];
 		
 		if ($result->fields['PUB_TITLE'] .= '')
 		{
@@ -147,7 +157,8 @@ while (!$done)
 				
 				// For search
 				$doc->search_data->creator[] =  $author->name;					
-				$fulltext[] = $author->name;
+				$fulltext[] 		= $author->name;
+				$fulltext_boosted[] = $author->name;
 			}
 		}
 					
@@ -274,12 +285,15 @@ while (!$done)
 		}		
 		
 		//--------------------------------------------------------------------------------
+		// Add names?
+		/*
 		$names = taxa_in_work($result->fields['PUBLICATION_GUID']);
 		
 		foreach ($names as $name)
 		{
 			$fulltext[] = $name;
 		}
+		*/
 		
 		// Summarise		
 		$doc->search_result_data->description = join(' ', $description);
@@ -293,16 +307,44 @@ while (!$done)
 		// ID is GUID	
 		$id = $result->fields['PUBLICATION_GUID'];
 		
-		$elastic_doc = new stdclass;
-		$elastic_doc->doc = $doc;
-		$elastic_doc->doc_as_upsert = true;
-
-		print_r($elastic_doc);
-
-		// PUT for first time, POST for update
-		$elastic->send('PUT', '_doc/' . urlencode($id), json_encode($elastic_doc));				
-		//$elastic->send('POST',  '_doc/' . urlencode($id) . '/_update', json_encode($elastic_doc));	
-
+		// Action
+		$meta = new stdclass;
+		$meta->index = new stdclass;
+		$meta->index->_index = 'ala';	
+		$meta->index->_id = $id;
+		
+		// v. 6		
+		$meta->index->_type = '_doc';
+		
+		// Earlier versions
+		//$meta->index->_type = 'thing';
+		
+		// Request				
+		$rows[] = json_encode($meta);
+		$rows[] = json_encode($doc);
+		
+		$count++;
+		$total++;
+	
+		if ($count % $chunksize == 0)
+		{
+			$output_filename = $basename . '-' . $total . '.json';
+		
+			$chunk_files[] = $output_filename;
+		
+			file_put_contents($output_filename, join("\n", $rows) . "\n");
+		
+			$count = 0;
+			$rows = array();
+		
+			
+			if ($total > 5000)
+			{
+				//$done = true;
+			}
+			
+		}		
+				
 		$result->MoveNext();
 	}
 	
@@ -318,6 +360,39 @@ while (!$done)
 	}	
 
 }
+
+// Left over?
+if (count($rows) > 0)
+{
+	$output_filename = $basename . '-' . $total . '.json';
+	
+	$chunk_files[] = $output_filename;
+	
+	file_put_contents($output_filename, join("\n", $rows) . "\n");
+}
+
+echo "--- curl upload.sh ---\n";
+$curl = "#!/bin/sh\n\n";
+foreach ($chunk_files as $filename)
+{
+	$curl .= "echo '$filename'\n";
+	
+	$url = 'http://130.209.46.63/_bulk';	
+
+	$url = 'http://user:7WbQZedlAvzQ@35.204.73.93/elasticsearch/ala/_bulk';
+	
+	// old
+	//$curl .= "curl $url -XPOST --data-binary '@$filename'  --progress-bar | tee /dev/null\n";
+	
+	// 6
+	$curl .= "curl $url -H 'Content-Type: application/x-ndjson' -XPOST --data-binary '@$filename'  --progress-bar | tee /dev/null\n";
+		
+
+	$curl .= "echo ''\n";
+}
+
+file_put_contents(dirname(__FILE__) . '/upload-elastic.sh', $curl);
+
 
 ?>
 

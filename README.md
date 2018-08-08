@@ -57,7 +57,7 @@ Use CouchDB to cache data, and also post-process to generate triples, etc.
 
 ### Lists
 
-Lists are a feature of CocuhDB we can use to dump all the triples in a view. It is faster than querying the view itself as we avoid paging through the rows, which is slow.
+Lists are a feature of CouchDB we can use to dump all the triples in a view. It is faster than querying the view itself as we avoid paging through the rows, which is slow.
 
 Here is a simple list to output triples:
 ```
@@ -110,6 +110,10 @@ Bitnami has version 6.3.1. Remember to create the index before uploading data. S
 ### Kitematic
 
 Local Docker version is 5.6.9 which doesn’t need authentication.
+
+### Bulk upload
+
+Use _bulk endpoint to upload many records at once.
 
 
 ## Zenodo
