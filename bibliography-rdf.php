@@ -228,7 +228,8 @@ while (!$done)
 	
 	//$sql .= ' WHERE PUBLICATION_GUID = "988dbda3-53c5-4018-9faa-723665cea5cf"'; // PDF
 	
-	// $sql .= ' WHERE PUBLICATION_GUID = "ff6e5cf7-2ff1-43e7-96ba-63936163890d"';
+	// website
+	$sql .= ' WHERE PUBLICATION_GUID = "98c32e95-2e9e-44be-a3d1-51de9fbf7014"';
 	
 	//$sql .= " WHERE PUBLICATION_GUID IN ('4f4e5892-5baf-4f49-a07e-af3f01ce6eda','5b997eac-195e-4445-8f18-842b55983b64','85d0cba2-85d1-4ba9-8d66-6fe2e705c722','a84d9ff1-33e0-46e0-880a-674eb17851e6','ad79edeb-4c47-4124-a7ea-9bcbbce0efa4','b2ef785b-998b-4e3e-9757-01d9bcf94349','bb563eed-d2dc-405a-90b5-9dc866890601','017c900b-d35d-42d6-bc80-77f6859f0cf9')";
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Journal of Arachnology" AND jstor IS NOT NULL';	
@@ -274,11 +275,11 @@ while (!$done)
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Revue Suisse de Zoologie"';
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Records of the Western Australian Museum, Supplement"';
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Victorian Naturalist"';
-	$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Journal of the Royal Society of Western Australia"';
+	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Journal of the Royal Society of Western Australia"';
 	//$sql .= ' AND biostor IS NOT NULL';
 	//$sql .= ' AND pdf IS NOT NULL';
 	//$sql .= ' AND pdf IS NOT NULL';
-	$sql .= ' AND thumbnailUrl IS NOT NULL';
+	//$sql .= ' AND thumbnailUrl IS NOT NULL';
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Koleopterologische Rundschau. Wien"';
 	
 	
@@ -456,7 +457,17 @@ while (!$done)
 		{
 			$triples[] = $s . ' <http://schema.org/publisher> ' . '"' . addcslashes($result->fields['PUB_PUBLISHER'], '"') . '" .';
 		}
-	
+		
+		// Websites
+		if ($result->fields['PUB_TYPE'] == 'URL')
+		{
+			$html = $result->fields['PUB_FORMATTED'] ;
+			if (preg_match('/<a href=(?<url>https?:\/\/[^>]+)>/', $html, $m))
+			{
+				$triples[] = $s . ' <http://schema.org/url> ' . '"' . addcslashes($m['url'], '"') . '" .';				
+			}
+		}
+		
 		if ($enhance_metadata)
 		{
 			switch ($result->fields['PUB_TYPE'])
@@ -819,6 +830,8 @@ while (!$done)
 			}
 			$triples[] = $s . ' <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ' . $type . ' .';
 		}
+		
+		
 	
 		//print_r($triples);
 	
