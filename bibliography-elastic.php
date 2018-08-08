@@ -263,6 +263,16 @@ while (!$done)
 			$doc->search_data->type = array($type);
 		}
 		
+		// thumbnail
+		if ($result->fields['thumbnailUrl'] != '')
+		{
+			$prefix = 'https://cdn.rawgit.com/rdmpage/oz-afd-export/master/thumbnails/';
+
+			$thumbnailUrl = $prefix . $result->fields['thumbnailUrl'];
+			
+			$doc->search_result_data->thumbnailUrl = $thumbnailUrl;
+		}		
+		
 		//--------------------------------------------------------------------------------
 		$names = taxa_in_work($result->fields['PUBLICATION_GUID']);
 		

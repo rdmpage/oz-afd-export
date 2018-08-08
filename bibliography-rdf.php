@@ -273,7 +273,8 @@ while (!$done)
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Records of the South Australian Museum (Adelaide)"';
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Revue Suisse de Zoologie"';
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Records of the Western Australian Museum, Supplement"';
-	$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Victorian Naturalist"';
+	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Victorian Naturalist"';
+	$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Journal of the Royal Society of Western Australia"';
 	//$sql .= ' AND biostor IS NOT NULL';
 	//$sql .= ' AND pdf IS NOT NULL';
 	//$sql .= ' AND pdf IS NOT NULL';
