@@ -321,10 +321,10 @@ while (!$done)
 	
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Revue Suisse de Zoologie"';
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Bulletin of the British Museum (Natural History) Zoology"';
-	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Pacific Science"';
+	$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Malacologia"';
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE LIKE "%Beagle%"';
 
-	//$sql .= ' AND biostor IS NOT NULL';
+	$sql .= ' AND biostor IS NOT NULL';
 	//$sql .= ' AND pdf IS NOT NULL';
 	//$sql .= ' AND jstor IS NOT NULL';
 	
@@ -336,7 +336,7 @@ while (!$done)
 	//$sql .= ' WHERE biostor IS NOT NULL';
 	//$sql .= ' WHERE jstor IS NOT NULL';	
 	
-	$sql .= ' WHERE zootaxa_thumbnail_pdf IS NOT NULL';	
+	//$sql .= ' WHERE zootaxa_thumbnail_pdf IS NOT NULL';	
 	
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Proceedings of the Royal Society of Victoria" AND pdf IS NOT NULL';		
 //	$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Papers and Proceedings of the Royal Society of Tasmania" AND pdf IS NOT NULL';
