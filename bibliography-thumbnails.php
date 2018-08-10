@@ -274,7 +274,7 @@ $offset = 0;
 $done = false;
 
 $force = true;
-$force = false;
+//$force = false;
 
 while (!$done)
 {
@@ -321,7 +321,7 @@ while (!$done)
 	
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Revue Suisse de Zoologie"';
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Bulletin of the British Museum (Natural History) Zoology"';
-	$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Stapfia"';
+	$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Japanese Journal of Ichthyology"';
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE LIKE "%Beagle%"';
 
 	//$sql .= ' AND biostor IS NOT NULL';
@@ -343,7 +343,7 @@ while (!$done)
 //	$sql .= ' WHERE PUBLICATION_GUID = "3845aaab-e4bd-4c07-b398-c6ea4532f3d2"';	
 	
 	//$sql .= ' AND pdf IS NOT NULL';		
-	$sql .= ' AND thumbnailUrl IS NULL';		
+	//$sql .= ' AND thumbnailUrl IS NULL';		
 	
 	//$sql .= ' WHERE updated > "2018-06-16"';
 	//$sql .= ' WHERE updated > "2018-07-16"';
@@ -358,7 +358,7 @@ while (!$done)
 
 	while (!$result->EOF) 
 	{
-		// Can we get a thumbnail?		
+		// Can we get a thumbnail?	
 		
 		// 1. Thumbnail id and folders to hold image
 		
@@ -386,6 +386,8 @@ while (!$done)
 
 		$base_filename = $dir . '/' . $uuid;
 		$thumbnail_filename = $base_filename;
+		
+		//echo $thumbnail_filename . "\n";
 		
 		// 2. do we have this thumbnail already?
 		$extension = 'gif';

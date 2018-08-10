@@ -284,7 +284,7 @@ while (!$done)
 	//$sql .= ' AND pdf IS NOT NULL';
 	//$sql .= ' AND thumbnailUrl IS NOT NULL';
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Koleopterologische Rundschau. Wien"';
-	$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Malacologia"';
+	$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Japanese Journal of Ichthyology"';
 	
 	
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Nachrichten des Entomologischen Vereins Apollo (N.F.)"';
