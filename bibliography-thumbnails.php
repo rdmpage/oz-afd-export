@@ -321,7 +321,7 @@ while (!$done)
 	
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Revue Suisse de Zoologie"';
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Bulletin of the British Museum (Natural History) Zoology"';
-	$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Tijdschrift voor Entomologie"';
+	$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Proceedings of the Entomological Society of Washington"';
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE LIKE "%Beagle%"';
 
 	$sql .= ' AND biostor IS NOT NULL';
