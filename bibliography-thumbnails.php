@@ -274,7 +274,7 @@ $offset = 0;
 $done = false;
 
 $force = true;
-$force = false;
+//$force = false;
 
 while (!$done)
 {
@@ -322,11 +322,11 @@ while (!$done)
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Revue Suisse de Zoologie"';
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Bulletin of the British Museum (Natural History) Zoology"';
 
-	$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Pan-Pacific Entomologist"';
+	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Pan-Pacific Entomologist"';
 
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE LIKE "%Beagle%"';
 
-	$sql .= ' AND biostor IS NOT NULL';
+	//$sql .= ' AND biostor IS NOT NULL';
 	//$sql .= ' AND pdf IS NOT NULL';
 	//$sql .= ' AND jstor IS NOT NULL';
 	
@@ -343,6 +343,8 @@ while (!$done)
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Proceedings of the Royal Society of Victoria" AND pdf IS NOT NULL';		
 //	$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Papers and Proceedings of the Royal Society of Tasmania" AND pdf IS NOT NULL';
 //	$sql .= ' WHERE PUBLICATION_GUID = "3845aaab-e4bd-4c07-b398-c6ea4532f3d2"';	
+
+$sql .= ' WHERE PUBLICATION_GUID IN ("8617135b-f4b5-4c55-a566-ea679581394a","e86914e6-24ff-4efd-b7ba-490dae099190")';
 	
 	//$sql .= ' AND pdf IS NOT NULL';		
 	//$sql .= ' AND thumbnailUrl IS NULL';		
