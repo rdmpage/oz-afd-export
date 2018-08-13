@@ -285,12 +285,12 @@ while (!$done)
 	//$sql .= ' AND thumbnailUrl IS NOT NULL';
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Koleopterologische Rundschau. Wien"';
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Venus"';
-	$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Pan-Pacific Entomologist"';
+	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Pan-Pacific Entomologist"';
 	
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Nachrichten des Entomologischen Vereins Apollo (N.F.)"';
 	
 	//$sql .= ' AND volume >= 120';
-	//$sql .= ' WHERE PUBLICATION_GUID = "b99fe346-b5b4-47dd-9270-4343dd3643cb"'; // BioStor
+	$sql .= ' WHERE PUBLICATION_GUID = "cdef2189-b41b-4426-b039-55e8cb2a0b9e"'; 
 	
 	
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Records of the Australian Museum"';
