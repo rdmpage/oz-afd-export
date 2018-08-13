@@ -285,7 +285,9 @@ while (!$done)
 	//$sql .= ' AND thumbnailUrl IS NOT NULL';
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Koleopterologische Rundschau. Wien"';
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Venus"';
-	$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Proceedings of the Hawaiian Entomological Society"';
+	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Proceedings of the Hawaiian Entomological Society"';
+	
+	$sql .= ' WHERE issn="0521-4726"';
 	
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Nachrichten des Entomologischen Vereins Apollo (N.F.)"';
 	

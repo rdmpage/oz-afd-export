@@ -348,7 +348,7 @@ while (!$done)
 	
 	$sql .= ' WHERE issn="0521-4726"';
 	$sql .= ' AND pdf IS NOT NULL';		
-	//$sql .= ' AND thumbnailUrl IS NULL';		
+	$sql .= ' AND thumbnailUrl IS NULL';		
 	
 	//$sql .= ' WHERE updated > "2018-06-16"';
 	//$sql .= ' WHERE updated > "2018-07-16"';
