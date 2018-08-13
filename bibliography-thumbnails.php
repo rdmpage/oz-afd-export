@@ -346,7 +346,7 @@ while (!$done)
 
 //$sql .= ' WHERE PUBLICATION_GUID IN ("0d76aea2-8896-4dae-91e9-4d6f9441dc97")';
 	
-	$sql .= ' WHERE issn="0521-4726"';
+	$sql .= ' WHERE issn="0166-6584"';
 	$sql .= ' AND pdf IS NOT NULL';		
 	$sql .= ' AND thumbnailUrl IS NULL';		
 	
