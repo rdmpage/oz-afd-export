@@ -341,12 +341,13 @@ while (!$done)
 	//$sql .= ' WHERE zootaxa_thumbnail_pdf IS NOT NULL';	
 	
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Proceedings of the Royal Society of Victoria" AND pdf IS NOT NULL';		
-$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Proceedings of the Hawaiian Entomological Society" AND pdf IS NOT NULL';
+//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Proceedings of the Hawaiian Entomological Society" AND pdf IS NOT NULL';
 //	$sql .= ' WHERE PUBLICATION_GUID = "3845aaab-e4bd-4c07-b398-c6ea4532f3d2"';	
 
 //$sql .= ' WHERE PUBLICATION_GUID IN ("0d76aea2-8896-4dae-91e9-4d6f9441dc97")';
 	
-	//$sql .= ' AND pdf IS NOT NULL';		
+	$sql .= ' WHERE issn="0521-4726"';
+	$sql .= ' AND pdf IS NOT NULL';		
 	//$sql .= ' AND thumbnailUrl IS NULL';		
 	
 	//$sql .= ' WHERE updated > "2018-06-16"';
