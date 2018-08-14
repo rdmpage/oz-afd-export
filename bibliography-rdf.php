@@ -285,14 +285,14 @@ while (!$done)
 	//$sql .= ' AND thumbnailUrl IS NOT NULL';
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Koleopterologische Rundschau. Wien"';
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Venus"';
-	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Proceedings of the Hawaiian Entomological Society"';
+	$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Insecta Matsumurana"';
 	
 	//$sql .= ' WHERE issn="0166-6584"';
 	
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Nachrichten des Entomologischen Vereins Apollo (N.F.)"';
 	
 	//$sql .= ' AND volume >= 120';
-	$sql .= ' WHERE PUBLICATION_GUID = "a004a450-47b2-4cc4-a42c-32dd38d61523"'; 
+	//$sql .= ' WHERE PUBLICATION_GUID = "a004a450-47b2-4cc4-a42c-32dd38d61523"'; 
 	
 	
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Records of the Australian Museum"';

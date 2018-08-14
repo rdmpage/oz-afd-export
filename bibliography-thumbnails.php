@@ -274,7 +274,7 @@ $offset = 0;
 $done = false;
 
 $force = true;
-$force = false;
+//$force = false;
 
 while (!$done)
 {
@@ -322,7 +322,7 @@ while (!$done)
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Revue Suisse de Zoologie"';
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Bulletin of the British Museum (Natural History) Zoology"';
 
-	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Pan-Pacific Entomologist"';
+	$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Insecta Matsumurana"';
 
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE LIKE "%Beagle%"';
 
@@ -344,10 +344,10 @@ while (!$done)
 //$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Proceedings of the Hawaiian Entomological Society" AND pdf IS NOT NULL';
 //	$sql .= ' WHERE PUBLICATION_GUID = "3845aaab-e4bd-4c07-b398-c6ea4532f3d2"';	
 
-	$sql .= ' WHERE PUBLICATION_GUID IN ("a004a450-47b2-4cc4-a42c-32dd38d61523")';
+	//$sql .= ' WHERE PUBLICATION_GUID IN ("a004a450-47b2-4cc4-a42c-32dd38d61523")';
 	
 	//$sql .= ' WHERE issn="0166-6584"';
-	//$sql .= ' AND pdf IS NOT NULL';		
+	$sql .= ' AND pdf IS NOT NULL';		
 	//$sql .= ' AND thumbnailUrl IS NULL';		
 	
 	//$sql .= ' WHERE updated > "2018-06-16"';
@@ -506,6 +506,7 @@ while (!$done)
 							switch ($result->fields['PUB_PARENT_JOURNAL_TITLE'])
 							{
 								case 'Acarologia':
+								case 'Insecta Matsumurana':
 								case 'Publications of the Seto Marine Biological Laboratory':
 								//case 'Records of the Australian Museum':
 									$page = 2;
