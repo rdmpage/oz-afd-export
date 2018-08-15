@@ -285,14 +285,14 @@ while (!$done)
 	//$sql .= ' AND thumbnailUrl IS NOT NULL';
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Koleopterologische Rundschau. Wien"';
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Venus"';
-	$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Insecta Matsumurana"';
+	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Insecta Matsumurana"';
 	
 	//$sql .= ' WHERE issn="0166-6584"';
 	
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Nachrichten des Entomologischen Vereins Apollo (N.F.)"';
 	
 	//$sql .= ' AND volume >= 120';
-	//$sql .= ' WHERE PUBLICATION_GUID = "a004a450-47b2-4cc4-a42c-32dd38d61523"'; 
+	$sql .= ' WHERE PUBLICATION_GUID = "73330f4e-cdb7-47dc-89d0-1e8af524a2bf"'; 
 	
 	
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Records of the Australian Museum"';
@@ -674,6 +674,59 @@ while (!$done)
 
 						// sameAs link?
 						$triples[] = $s . ' <http://schema.org/sameAs> ' . '"' . addcslashes($result->fields['url'], '"') . '" .';				
+												
+						// Gallica
+						if (preg_match('/gallica.bnf.fr\/(.*)\/f(?<id>\d+)/', $result->fields['url'], $m))
+						{
+							$start = $m['id'];
+							
+							$spage = 0;
+							$epage = 0;
+							
+							if ($result->fields['spage'] != '')
+							{
+								$spage = $result->fields['spage'];
+								$epage = $spage;
+							}
+							if ($result->fields['epage'] != '')
+							{
+								$epage = $result->fields['epage'];
+							}
+							
+							if ($spage != 0)
+							{
+								$num_pages = $epage - $spage + 1;
+								
+								$gallica_id = '<' . $result->fields['url'] . '>';							
+								$triples[] = $gallica_id . ' <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://schema.org/CreativeWork> .';
+			
+								$gallica_base_url = $result->fields['url'];
+								$gallica_base_url = preg_replace('/f\d+$/', 'f', $gallica_base_url);
+							
+								for ($i = 0; $i < $num_pages; $i++)
+								{							
+									// image
+									$image_id = '<' . $gallica_base_url . ($start + $i) . '.image>';
+							
+									// ImageObject
+									$triples[] = $image_id . ' <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://schema.org/ImageObject> .';
+									$triples[] = $image_id . ' <http://schema.org/fileFormat> "image/jpeg" .';
+
+									// order 
+									$triples[] = $image_id . ' <http://schema.org/position> ' . '"' . addcslashes(($i + 1), '"') . '"' . ' .';
+
+									// URLs to images
+									$triples[] = $image_id . ' <http://schema.org/contentUrl> ' . '"' . addcslashes($gallica_base_url . ($start + $i) . '.highres', '"') . '"' . ' .';
+									$triples[] = $image_id . ' <http://schema.org/thumbnailUrl> ' . '"' . addcslashes($gallica_base_url . ($start + $i) . '.thumbnail', '"') . '"' . ' .';
+							
+									// page name
+									$triples[] = $image_id . ' <http://schema.org/name> ' . '"' . addcslashes(($spage + $i), '"') . '"' . ' .';
+							
+									// page image is part of the encoding
+									$triples[] = $gallica_id . ' <http://schema.org/hasPart> ' .  $image_id . ' .';	
+								}
+							}
+						}
 					}	
 		
 					// Zenodo

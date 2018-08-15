@@ -27,7 +27,9 @@ $done = false;
 while (!$done)
 {
 //	$sql = 'SELECT * FROM afd WHERE NAME_GUID IS NOT NULL AND PUBLICATION_GUID IS NOT NULL';
-	$sql = 'SELECT * FROM afd WHERE NAME_GUID IS NOT NULL';
+	//$sql = 'SELECT * FROM afd WHERE NAME_GUID IS NOT NULL';
+	
+	$sql = 'SELECT * FROM afd WHERE PUBLICATION_GUID="dee77aeb-e878-4827-8be0-707a508eddb4"';
 
 	//$sql = 'SELECT * FROM afd WHERE TAXON_GUID="124ab9d1-5ed7-46c3-aecf-76e70a04e209"';
 

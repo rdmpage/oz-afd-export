@@ -147,6 +147,53 @@ function get_biostor_thumbnail($biostor, $base_filename)
 }
 
 //----------------------------------------------------------------------------------------
+function get_gallica_thumbnail($url, $base_filename)
+{	
+	global $thumbnail_width;
+	
+	$thumbnail_filename = '';
+	
+	$url = $url . '.thumbnail';
+	$url = 'https://ozymandias-demo.herokuapp.com/image_proxy.php?url=' . urlencode($url);
+	
+	$opts = array(
+	  CURLOPT_URL =>$url,
+	  CURLOPT_FOLLOWLOCATION => TRUE,
+	  CURLOPT_RETURNTRANSFER => TRUE,
+	  CURLOPT_USERAGENT => 'Mozilla/5.0 (iPad; U; CPU OS 3_2_1 like Mac OS X; en-us) AppleWebKit/531.21.10 (KHTML, like Gecko) Mobile/7B405'	  
+	);
+
+	$ch = curl_init();
+	curl_setopt_array($ch, $opts);
+	$data = curl_exec($ch);
+	$info = curl_getinfo($ch); 
+	curl_close($ch);
+
+	if ($data != '')
+	{
+		if ($info['http_code'] == 200)
+		{		
+			$thumbnail_filename = $base_filename . '.jpg';
+			file_put_contents($thumbnail_filename, $data);
+		
+			// resize
+			$command = 'mogrify -resize ' . $thumbnail_width . 'x ' . $thumbnail_filename;
+			//echo $command . "\n";
+
+			system($command);
+		}
+		else
+		{
+			echo "-- HTTP " . $info['http_code'] . " $biostor\n";
+			
+		}
+	}
+
+		
+	return $thumbnail_filename;
+}
+
+//----------------------------------------------------------------------------------------
 function get_bionames_thumbnail($sha1, $base_filename, $page = 1)
 {	
 	global $thumbnail_width;
@@ -322,7 +369,7 @@ while (!$done)
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Revue Suisse de Zoologie"';
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Bulletin of the British Museum (Natural History) Zoology"';
 
-	$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Insecta Matsumurana"';
+	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Insecta Matsumurana"';
 
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE LIKE "%Beagle%"';
 
@@ -344,10 +391,12 @@ while (!$done)
 //$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Proceedings of the Hawaiian Entomological Society" AND pdf IS NOT NULL';
 //	$sql .= ' WHERE PUBLICATION_GUID = "3845aaab-e4bd-4c07-b398-c6ea4532f3d2"';	
 
-	//$sql .= ' WHERE PUBLICATION_GUID IN ("a004a450-47b2-4cc4-a42c-32dd38d61523")';
+	$sql .= ' WHERE PUBLICATION_GUID IN ("73330f4e-cdb7-47dc-89d0-1e8af524a2bf")';
+	$sql .= ' AND url IS NOT NULL';	
 	
 	//$sql .= ' WHERE issn="0166-6584"';
-	$sql .= ' AND pdf IS NOT NULL';		
+	//$sql .= ' AND pdf IS NOT NULL';		
+		
 	//$sql .= ' AND thumbnailUrl IS NULL';		
 	
 	//$sql .= ' WHERE updated > "2018-06-16"';
@@ -428,6 +477,19 @@ while (!$done)
 		{
 			// Go fetch
 			$thumbnail_filename = '';
+			
+			// Gallica
+			if ($thumbnail_filename == '')
+			{
+				if ($result->fields['url'] != '')
+				{
+					if (preg_match('/gallica.bnf.fr/', $result->fields['url']))
+					{
+						$thumbnail_filename = get_gallica_thumbnail($result->fields['url'], $base_filename);
+					}
+				}
+			}
+
 			
 			if ($thumbnail_filename == '')
 			{
