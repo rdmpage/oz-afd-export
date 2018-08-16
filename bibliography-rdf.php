@@ -285,7 +285,7 @@ while (!$done)
 	//$sql .= ' AND thumbnailUrl IS NOT NULL';
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Koleopterologische Rundschau. Wien"';
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Venus"';
-	$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Proceedings of the Royal Entomological Society of London"';
+	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Proceedings of the Royal Entomological Society of London"';
 	
 	//$sql .= ' WHERE issn="0166-6584"';
 	
@@ -293,9 +293,10 @@ while (!$done)
 	
 	//$sql .= ' AND volume >= 120';
 	//$sql .= ' WHERE PUBLICATION_GUID = "73330f4e-cdb7-47dc-89d0-1e8af524a2bf"'; 
+	//$sql .= ' WHERE PUBLICATION_GUID IN ("2d0fa005-9431-4e1f-bdb6-b7e697b3e847")';
 	
 	
-	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Records of the Australian Museum"';
+	$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="The Raffles Bulletin of Zoology"';
 
 	//$sql .= ' WHERE updated > "2018-06-16"';
 	//$sql .= ' WHERE updated > "2018-07-28"';

@@ -321,7 +321,7 @@ $offset = 0;
 $done = false;
 
 $force = true;
-//$force = false;
+$force = false;
 
 while (!$done)
 {
@@ -388,11 +388,11 @@ while (!$done)
 	//$sql .= ' WHERE zootaxa_thumbnail_pdf IS NOT NULL';	
 	
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Proceedings of the Royal Society of Victoria" AND pdf IS NOT NULL';		
-//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Proceedings of the Hawaiian Entomological Society" AND pdf IS NOT NULL';
+$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="The Raffles Bulletin of Zoology" AND pdf IS NOT NULL';
 //	$sql .= ' WHERE PUBLICATION_GUID = "3845aaab-e4bd-4c07-b398-c6ea4532f3d2"';	
 
 	// Gallica
-	$sql .= ' WHERE PUBLICATION_GUID IN ("2d0fa005-9431-4e1f-bdb6-b7e697b3e847")';
+	//$sql .= ' WHERE PUBLICATION_GUID IN ("2d0fa005-9431-4e1f-bdb6-b7e697b3e847")';
 	//$sql .= ' AND url IS NOT NULL';	
 	
 	//$sql .= ' WHERE issn="0166-6584"';
