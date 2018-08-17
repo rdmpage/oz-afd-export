@@ -296,7 +296,7 @@ while (!$done)
 	//$sql .= ' WHERE PUBLICATION_GUID IN ("2d0fa005-9431-4e1f-bdb6-b7e697b3e847")';
 	
 	
-	$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="The Raffles Bulletin of Zoology"';
+	$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Species Diversity"';
 
 	//$sql .= ' WHERE updated > "2018-06-16"';
 	//$sql .= ' WHERE updated > "2018-07-28"';

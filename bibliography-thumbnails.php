@@ -388,7 +388,7 @@ while (!$done)
 	//$sql .= ' WHERE zootaxa_thumbnail_pdf IS NOT NULL';	
 	
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Proceedings of the Royal Society of Victoria" AND pdf IS NOT NULL';		
-$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="The Raffles Bulletin of Zoology" AND pdf IS NOT NULL';
+$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Species Diversity" AND pdf IS NOT NULL';
 //	$sql .= ' WHERE PUBLICATION_GUID = "3845aaab-e4bd-4c07-b398-c6ea4532f3d2"';	
 
 	// Gallica
