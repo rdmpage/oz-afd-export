@@ -369,7 +369,7 @@ while (!$done)
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Revue Suisse de Zoologie"';
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Bulletin of the British Museum (Natural History) Zoology"';
 
-	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Insecta Matsumurana"';
+	$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Memoirs of the Queensland Museum - Nature"';
 
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE LIKE "%Beagle%"';
 
@@ -388,7 +388,7 @@ while (!$done)
 	//$sql .= ' WHERE zootaxa_thumbnail_pdf IS NOT NULL';	
 	
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Proceedings of the Royal Society of Victoria" AND pdf IS NOT NULL';		
-$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Bulletin of the Raffles Museum" AND pdf IS NOT NULL';
+//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Bulletin of the Raffles Museum" AND pdf IS NOT NULL';
 //	$sql .= ' WHERE PUBLICATION_GUID = "3845aaab-e4bd-4c07-b398-c6ea4532f3d2"';	
 
 	// Gallica
@@ -398,7 +398,7 @@ $sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Bulletin of the Raffles Museum" AND pd
 	//$sql .= ' WHERE issn="0166-6584"';
 	//$sql .= ' AND pdf IS NOT NULL';		
 		
-	//$sql .= ' AND thumbnailUrl IS NULL';		
+	$sql .= ' AND thumbnailUrl IS NULL';		
 	
 	//$sql .= ' WHERE updated > "2018-06-16"';
 	//$sql .= ' WHERE updated > "2018-07-16"';
