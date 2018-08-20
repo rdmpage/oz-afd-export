@@ -369,7 +369,7 @@ while (!$done)
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Revue Suisse de Zoologie"';
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Bulletin of the British Museum (Natural History) Zoology"';
 
-	$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Memoirs of the Queensland Museum - Nature"';
+	$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Occasional Papers of the Northern Territory Museum of Arts and Sciences"';
 
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE LIKE "%Beagle%"';
 
