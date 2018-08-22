@@ -369,7 +369,7 @@ while (!$done)
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Revue Suisse de Zoologie"';
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Bulletin of the British Museum (Natural History) Zoology"';
 
-	$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Occasional Papers of the Northern Territory Museum of Arts and Sciences"';
+	$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Bulletin of the American Museum of Natural History"';
 
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE LIKE "%Beagle%"';
 
@@ -396,9 +396,9 @@ while (!$done)
 	//$sql .= ' AND url IS NOT NULL';	
 	
 	//$sql .= ' WHERE issn="0166-6584"';
-	//$sql .= ' AND pdf IS NOT NULL';		
+	$sql .= ' AND pdf IS NOT NULL';		
 		
-	$sql .= ' AND thumbnailUrl IS NULL';		
+	//$sql .= ' AND thumbnailUrl IS NULL';		
 	
 	//$sql .= ' WHERE updated > "2018-06-16"';
 	//$sql .= ' WHERE updated > "2018-07-16"';
