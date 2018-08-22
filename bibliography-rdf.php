@@ -296,8 +296,11 @@ while (!$done)
 	//$sql .= ' WHERE PUBLICATION_GUID IN ("2d0fa005-9431-4e1f-bdb6-b7e697b3e847")';
 	
 	
-	$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Systematic Entomology"';
-	$sql .= ' AND pdf IS NOT NULL';		
+	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Systematic Entomology"';
+	//$sql .= ' AND pdf IS NOT NULL';		
+	
+	$sql .= ' WHERE PUBLICATION_GUID = "70f67d1d-4435-4444-bb92-64305928d9dd"';	
+
 
 	//$sql .= ' WHERE updated > "2018-06-16"';
 	//$sql .= ' WHERE updated > "2018-07-28"';
