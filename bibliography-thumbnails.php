@@ -369,13 +369,13 @@ while (!$done)
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Revue Suisse de Zoologie"';
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Bulletin of the British Museum (Natural History) Zoology"';
 
-	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Systematic Entomology"';
+	$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Transactions of the American Entomological Society"';
 
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE LIKE "%Beagle%"';
 
 	//$sql .= ' AND biostor IS NOT NULL';
 	//$sql .= ' AND pdf IS NOT NULL';
-	//$sql .= ' AND jstor IS NOT NULL';
+	$sql .= ' AND jstor IS NOT NULL';
 	
 	
 	//$sql .= ' WHERE issn="0024-1652"';
@@ -389,7 +389,7 @@ while (!$done)
 	
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Proceedings of the Royal Society of Victoria" AND pdf IS NOT NULL';		
 //$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Bulletin of the Raffles Museum" AND pdf IS NOT NULL';
-	$sql .= ' WHERE PUBLICATION_GUID = "70f67d1d-4435-4444-bb92-64305928d9dd"';	
+	//$sql .= ' WHERE PUBLICATION_GUID = "70f67d1d-4435-4444-bb92-64305928d9dd"';	
 
 	// Gallica
 	//$sql .= ' WHERE PUBLICATION_GUID IN ("2d0fa005-9431-4e1f-bdb6-b7e697b3e847")';
