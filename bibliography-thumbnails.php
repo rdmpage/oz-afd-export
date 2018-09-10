@@ -369,7 +369,9 @@ while (!$done)
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Revue Suisse de Zoologie"';
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Bulletin of the British Museum (Natural History) Zoology"';
 
-	$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Turkish Journal of Zoology"';
+	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Turkish Journal of Zoology"';
+	
+	$sql .= ' WHERE PUB_AUTHOR LIKE "%salle%"';
 
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE LIKE "%Beagle%"';
 
