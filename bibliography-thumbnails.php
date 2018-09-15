@@ -370,18 +370,18 @@ while (!$done)
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Bulletin of the British Museum (Natural History) Zoology"';
 
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Turkish Journal of Zoology"';
-	$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Zoosystema"';
+	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Zoosystema"';
 	
 	//$sql .= ' WHERE PUB_AUTHOR LIKE "%salle%"';
 
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE LIKE "%Beagle%"';
 
 	//$sql .= ' AND biostor IS NOT NULL';
-	$sql .= ' AND pdf IS NOT NULL';
+	//$sql .= ' AND pdf IS NOT NULL';
 	//$sql .= ' AND jstor IS NOT NULL';
 	
 	
-	//$sql .= ' WHERE issn="0024-1652"';
+	$sql .= ' WHERE issn="0013-8819"';
 	
 	//$sql .= ' WHERE doi LIKE "10.2307/%" AND thumbnailUrl IS NULL';
 	
