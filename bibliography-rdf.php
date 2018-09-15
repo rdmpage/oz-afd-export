@@ -284,7 +284,7 @@ while (!$done)
 	//$sql .= ' AND pdf IS NOT NULL';
 	//$sql .= ' AND thumbnailUrl IS NOT NULL';
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Koleopterologische Rundschau. Wien"';
-	$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Zoosystema"';
+	// $sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Zoosystema"';
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Proceedings of the Royal Entomological Society of London"';
 	
 	//$sql .= ' WHERE issn="0166-6584"';
@@ -308,6 +308,12 @@ while (!$done)
 	//$sql .= ' WHERE updated > "2018-06-16"';
 	//$sql .= ' WHERE updated > "2018-09-14"';
 	//$sql .= ' WHERE updated > "2018-09-14"';
+	
+	//$sql .= ' WHERE issn="0013-8819"';
+	
+	$sql .= ' WHERE issn="0867-1710"';
+	$sql .= ' AND pdf IS NOT NULL';
+	
 	
 	$sql .= ' LIMIT ' . $page . ' OFFSET ' . $offset;
 

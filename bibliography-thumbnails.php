@@ -381,7 +381,8 @@ while (!$done)
 	//$sql .= ' AND jstor IS NOT NULL';
 	
 	
-	$sql .= ' WHERE issn="0013-8819"';
+	$sql .= ' WHERE issn="0867-1710"';
+	$sql .= ' AND pdf IS NOT NULL';
 	
 	//$sql .= ' WHERE doi LIKE "10.2307/%" AND thumbnailUrl IS NULL';
 	
