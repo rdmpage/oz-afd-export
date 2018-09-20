@@ -300,7 +300,8 @@ while (!$done)
 	//$sql .= ' AND pdf IS NOT NULL';		
 	
 	//$sql .= ' WHERE PUBLICATION_GUID = "70f67d1d-4435-4444-bb92-64305928d9dd"';	
-	$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="African Entomology"';
+	$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Proceedings of the Royal Society of Queensland"';
+	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Proceedings of the Royal Society of Victoria"';
 	//$sql .= ' WHERE PUB_AUTHOR LIKE "%salle%"';
 	//$sql .= ' AND pdf IS NOT NULL';
 
