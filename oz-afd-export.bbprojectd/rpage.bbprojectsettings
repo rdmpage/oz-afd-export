@@ -4,8 +4,8 @@
 <dict>
 	<key>EmbeddedEditorHidden:rpage</key>
 	<false/>
-	<key>ExpandedEditorWidth:rpage:displays([(0, 0), (1440, 900)])</key>
-	<integer>962</integer>
+	<key>ExpandedEditorWidth:rpage:displays([(0, 0), (1920, 1080)]:[(0, 0), (1920, 1080)])</key>
+	<integer>821</integer>
 	<key>ExpandedItems:rpage</key>
 	<array/>
 	<key>FileFilterMode:rpage</key>
@@ -93,11 +93,51 @@
 			<key>Version</key>
 			<integer>1</integer>
 		</dict>
+		<dict>
+			<key>BookmarkData</key>
+			<data>
+			Ym9vawwEAAAAAAQQMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+			AAAAAAAAAAAA5AIAAAUAAAABAQAAVXNlcnMAAAAFAAAAAQEAAHJw
+			YWdlAAAACwAAAAEBAABEZXZlbG9wbWVudAANAAAAAQEAAG96LWFm
+			ZC1leHBvcnQAAAAJAAAAAQEAAFJFQURNRS5tZAAAABQAAAABBgAA
+			BAAAABQAAAAkAAAAOAAAAFAAAAAIAAAABAMAABBnAgAAAAAACAAA
+			AAQDAACFdA0AAAAAAAgAAAAEAwAAI1gOAAAAAAAIAAAABAMAAP97
+			xAEAAAAACAAAAAQDAADPEucBAAAAABQAAAABBgAAgAAAAJAAAACg
+			AAAAsAAAAMAAAAAIAAAAAAQAAEHAd9TlAAAAGAAAAAECAAABAAAA
+			AAAAAA8AAAAAAAAAAAAAAAAAAAAAAAAAAQUAAAQAAAADAwAAAQAA
+			AAgAAAAEAwAAAwAAAAAAAAAEAAAAAwMAAPUBAAAIAAAAAQkAAGZp
+			bGU6Ly8vDAAAAAEBAABNYWNpbnRvc2ggSEQIAAAABAMAAAAAsgFp
+			AAAACAAAAAAEAABBvt1dYgAAACQAAAABAQAAMjVFNDI4NkQtNzEy
+			Qy0zODk5LUI0M0YtNUQzRjZBOEJEMTIxGAAAAAECAACBAAAAAQAA
+			AO8TAAABAAAAAAAAAAAAAAABAAAAAQEAAC8AAAAaAAAAAQEAAE5T
+			VVJMRG9jdW1lbnRJZGVudGlmaWVyS2V5AAAEAAAAAwMAAKwxAADB
+			AAAAAQIAADVjZjRhZTc3NWE1MmEwNGQ5MDEyMjYzNDI5YzRhNDk3
+			MzlmM2Q2NDA7MDAwMDAwMDA7MDAwMDAwMDA7MDAwMDAwMDAwMDAw
+			MDAyMDtjb20uYXBwbGUuYXBwLXNhbmRib3gucmVhZC13cml0ZTsw
+			MDAwMDAwMTswMTAwMDAwNTswMDAwMDAwMDAxZTcxMmNmOy91c2Vy
+			cy9ycGFnZS9kZXZlbG9wbWVudC9vei1hZmQtZXhwb3J0L3JlYWRt
+			ZS5tZAAAAADwAAAA/v///wEAAAAAAAAAEwAAAAQQAABkAAAAAAAA
+			AAUQAADQAAAAAAAAABAQAAD8AAAAAAAAAEAQAADsAAAAAAAAAFUQ
+			AAAkAQAAAAAAAFYQAAAcAQAAAAAAAAIgAADcAQAAAAAAAAUgAABM
+			AQAAAAAAABAgAABcAQAAAAAAABEgAACQAQAAAAAAABIgAABwAQAA
+			AAAAABMgAACAAQAAAAAAACAgAAC8AQAAAAAAADAgAAAcAQAAAAAA
+			AAHAAAAwAQAAAAAAABHAAAAUAAAAAAAAABLAAABAAQAAAAAAAIDw
+			AAAYAgAAAAAAAOgBAIAMAgAAAAAAAA==
+			</data>
+			<key>FileURL</key>
+			<string>file:///Users/rpage/Development/oz-afd-export/README.md</string>
+			<key>RelativePath</key>
+			<string>./README.md</string>
+			<key>TypeID</key>
+			<string>_CFileLocator</string>
+			<key>Version</key>
+			<integer>1</integer>
+		</dict>
 	</array>
 	<key>OpenDocumentsExpanded</key>
-	<false/>
+	<true/>
 	<key>OpenDocumentsSplitterProportion</key>
-	<real>0.90129259694477082</real>
+	<real>0.57579972183588324</real>
 	<key>ProjectItemsExpanded</key>
 	<true/>
 	<key>ProjectViewVisible</key>
@@ -106,7 +146,54 @@
 	<array>
 		<dict>
 			<key>Date</key>
-			<date>2018-09-09T08:27:27Z</date>
+			<date>2018-09-29T16:47:30Z</date>
+			<key>Location</key>
+			<dict>
+				<key>BookmarkData</key>
+				<data>
+				Ym9va+gDAAAAAAQQMAAAAAAAAAAAAAAAAAAAAAAAAAAA
+				AAAAAAAAAAAAAAAAAAAA2AIAAAUAAAABAQAAVXNlcnMA
+				AAAFAAAAAQEAAHJwYWdlAAAACwAAAAEBAABEZXZlbG9w
+				bWVudAANAAAAAQEAAG96LWFmZC1leHBvcnQAAAAJAAAA
+				AQEAAFJFQURNRS5tZAAAABQAAAABBgAABAAAABQAAAAk
+				AAAAOAAAAFAAAAAIAAAABAMAABBnAgAAAAAACAAAAAQD
+				AACFdA0AAAAAAAgAAAAEAwAAI1gOAAAAAAAIAAAABAMA
+				AP97xAEAAAAACAAAAAQDAADPEucBAAAAABQAAAABBgAA
+				gAAAAJAAAACgAAAAsAAAAMAAAAAIAAAAAAQAAEHAd9Tl
+				AAAAGAAAAAECAAABAAAAAAAAAA8AAAAAAAAAAAAAAAAA
+				AAAIAAAABAMAAAMAAAAAAAAABAAAAAMDAAD1AQAACAAA
+				AAEJAABmaWxlOi8vLwwAAAABAQAATWFjaW50b3NoIEhE
+				CAAAAAQDAAAAALIBaQAAAAgAAAAABAAAQb7dXWIAAAAk
+				AAAAAQEAADI1RTQyODZELTcxMkMtMzg5OS1CNDNGLTVE
+				M0Y2QThCRDEyMRgAAAABAgAAgQAAAAEAAADvEwAAAQAA
+				AAAAAAAAAAAAAQAAAAEBAAAvAAAAAAAAAAEFAAAaAAAA
+				AQEAAE5TVVJMRG9jdW1lbnRJZGVudGlmaWVyS2V5AAAE
+				AAAAAwMAAKwxAADBAAAAAQIAADVjZjRhZTc3NWE1MmEw
+				NGQ5MDEyMjYzNDI5YzRhNDk3MzlmM2Q2NDA7MDAwMDAw
+				MDA7MDAwMDAwMDA7MDAwMDAwMDAwMDAwMDAyMDtjb20u
+				YXBwbGUuYXBwLXNhbmRib3gucmVhZC13cml0ZTswMDAw
+				MDAwMTswMTAwMDAwNTswMDAwMDAwMDAxZTcxMmNmOy91
+				c2Vycy9ycGFnZS9kZXZlbG9wbWVudC9vei1hZmQtZXhw
+				b3J0L3JlYWRtZS5tZAAAAADYAAAA/v///wEAAAAAAAAA
+				EQAAAAQQAABkAAAAAAAAAAUQAADQAAAAAAAAABAQAAD8
+				AAAAAAAAAEAQAADsAAAAAAAAAAIgAADIAQAAAAAAAAUg
+				AAA4AQAAAAAAABAgAABIAQAAAAAAABEgAAB8AQAAAAAA
+				ABIgAABcAQAAAAAAABMgAABsAQAAAAAAACAgAACoAQAA
+				AAAAADAgAADUAQAAAAAAAAHAAAAcAQAAAAAAABHAAAAU
+				AAAAAAAAABLAAAAsAQAAAAAAAIDwAAAMAgAAAAAAANwB
+				AIAAAgAAAAAAAA==
+				</data>
+				<key>FileURL</key>
+				<string>file:///Users/rpage/Development/oz-afd-export/README.md</string>
+				<key>TypeID</key>
+				<string>_CFileLocator</string>
+				<key>Version</key>
+				<integer>1</integer>
+			</dict>
+		</dict>
+		<dict>
+			<key>Date</key>
+			<date>2018-09-29T16:47:30Z</date>
 			<key>Location</key>
 			<dict>
 				<key>BookmarkData</key>
@@ -153,7 +240,7 @@
 		</dict>
 		<dict>
 			<key>Date</key>
-			<date>2018-09-09T08:27:27Z</date>
+			<date>2018-09-29T16:47:30Z</date>
 			<key>Location</key>
 			<dict>
 				<key>BookmarkData</key>
@@ -201,7 +288,7 @@
 		</dict>
 		<dict>
 			<key>Date</key>
-			<date>2018-09-09T08:27:27Z</date>
+			<date>2018-09-29T16:47:30Z</date>
 			<key>Location</key>
 			<dict>
 				<key>BookmarkData</key>
@@ -256,8 +343,8 @@
 	<key>ToolbarVisible:rpage</key>
 	<false/>
 	<key>ViewSplitterPosition:rpage</key>
-	<real>0.17424893379211426</real>
-	<key>WindowFrame:rpage:displays([(0, 0), (1440, 900)])</key>
-	<string>rect(45,168,896,1333)</string>
+	<real>0.1982421875</real>
+	<key>WindowFrame:rpage:displays([(0, 0), (1920, 1080)]:[(0, 0), (1920, 1080)])</key>
+	<string>rect(45,0,764,1024)</string>
 </dict>
 </plist>

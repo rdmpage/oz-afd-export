@@ -321,7 +321,7 @@ $offset = 0;
 $done = false;
 
 $force = true;
-$force = false;
+//$force = false;
 
 while (!$done)
 {
@@ -370,7 +370,7 @@ while (!$done)
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Bulletin of the British Museum (Natural History) Zoology"';
 
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Turkish Journal of Zoology"';
-	$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Proceedings of the Royal Society of Queensland"';
+	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Proceedings of the Royal Society of Queensland"';
 	
 	//$sql .= ' WHERE PUB_AUTHOR LIKE "%salle%"';
 
@@ -393,7 +393,7 @@ while (!$done)
 	
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Proceedings of the Royal Society of Victoria" AND pdf IS NOT NULL';		
 //$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Bulletin of the Raffles Museum" AND pdf IS NOT NULL';
-	//$sql .= ' WHERE PUBLICATION_GUID = "70f67d1d-4435-4444-bb92-64305928d9dd"';	
+	$sql .= ' WHERE PUBLICATION_GUID = "9f1b85dc-5f7e-4703-bb1a-3df91f3f493f"';	
 
 	// Gallica
 	//$sql .= ' WHERE PUBLICATION_GUID IN ("2d0fa005-9431-4e1f-bdb6-b7e697b3e847")';
