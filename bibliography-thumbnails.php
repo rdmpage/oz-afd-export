@@ -321,7 +321,7 @@ $offset = 0;
 $done = false;
 
 $force = true;
-//$force = false;
+$force = false;
 
 while (!$done)
 {

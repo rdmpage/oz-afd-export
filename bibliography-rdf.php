@@ -13,7 +13,7 @@ require_once (dirname(__FILE__) . '/thumbnails.php');
 
 
 //----------------------------------------------------------------------------------------
-$db = NewADOConnection('mysql');
+$db = NewADOConnection('mysqli');
 $db->Connect("localhost", 
 	'root' , '' , 'afd');
 
@@ -206,7 +206,7 @@ while (!$done)
 	FROM bibliography';
 	
 	// A specific journal or publication, otherwise we are getting everything
-	//$sql .= ' WHERE PUBLICATION_GUID = "30bc1c51-6b67-40d1-8419-045b3a13fa71"';
+	//$sql .= ' WHERE PUBLICATION_GUID = "1177fe8d-d8cb-45b8-a40c-704cb3564fd7"';
 	
 	//$sql .= ' WHERE PUBLICATION_GUID = "a8447363-5982-472b-b54a-f40476f50f5b"';
 	
@@ -255,6 +255,8 @@ while (!$done)
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Zootaxa"';
 	//$sql .= ' WHERE issn="0007-4977" AND thumbnailUrl IS NOT NULL';
 
+
+	$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Journal of the Malacological Society of Australia"';
 	
 	//$sql .= ' WHERE doi="10.1051/parasite/1968432131"';
 	
@@ -299,7 +301,7 @@ while (!$done)
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Systematic Entomology"';
 	//$sql .= ' AND pdf IS NOT NULL';		
 	
-	$sql .= ' WHERE PUBLICATION_GUID = "9f1b85dc-5f7e-4703-bb1a-3df91f3f493f"';	
+	//$sql .= ' WHERE PUBLICATION_GUID = "9f1b85dc-5f7e-4703-bb1a-3df91f3f493f"';	
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Proceedings of the Royal Society of Queensland"';
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Proceedings of the Royal Society of Victoria"';
 	//$sql .= ' WHERE PUB_AUTHOR LIKE "%salle%"';

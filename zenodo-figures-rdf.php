@@ -125,9 +125,9 @@ while (!$done)
 	
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE = "' . $journal . '"';
 	
-	$sql .= ' WHERE PUBLICATION_GUID = "4201139d-441f-4ef0-86f6-5ec9dcd168a6"';
+	//$sql .= ' WHERE PUBLICATION_GUID = "4201139d-441f-4ef0-86f6-5ec9dcd168a6"';
 	
-	//$sql .= ' WHERE zenodo_parts IS NOT NULL';
+	$sql .= ' WHERE zenodo_parts IS NOT NULL';
 	
 	$sql .= ' LIMIT ' . $page . ' OFFSET ' . $offset;
 
