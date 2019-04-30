@@ -13,7 +13,7 @@ $triples_filename = 'taxa.nt';
 $basename = 'taxa';
 */
 
-if (1)
+if (0)
 {
 	// Publications
 	$triples_filename = 'biblio.nt';
@@ -26,6 +26,14 @@ if (0)
 	// Simplified names
 	$triples_filename = 'name-simple.nt';
 	$basename = 'names';
+	$graph_uri = 'https://biodiversity.org.au/afd/publication';
+}
+
+if (1)
+{
+	// Name extras
+	$triples_filename = 'hasName.nt';
+	$basename = 'hasName';
 	$graph_uri = 'https://biodiversity.org.au/afd/publication';
 }
 

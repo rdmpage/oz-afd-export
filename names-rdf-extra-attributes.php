@@ -7,7 +7,7 @@ require_once('php-json-ld/jsonld.php');
 
 
 //--------------------------------------------------------------------------------------------------
-$db = NewADOConnection('mysql');
+$db = NewADOConnection('mysqli');
 $db->Connect("localhost", 
 	'root' , '' , 'afd');
 
@@ -41,7 +41,7 @@ while (!$done)
 		// AFD doesn't have a resolver for names, so use UUID
 		$name = '<urn:uuid:' . $result->fields['NAME_GUID'] . '>';
 
-		
+		/*
 		if ($result->fields['YEAR'] != '')
 		{
 			// TDWG
@@ -53,39 +53,64 @@ while (!$done)
 		{
 			$triples[] = $name . ' <http://rs.tdwg.org/ontology/voc/TaxonName#rankString> ' . '"' . addcslashes(strtolower($result->fields['RANK']), '"') . '" . ';
 		}
-
-							
-		$t = join("\n", $triples) . "\n";
+		*/
 		
-		//print_r($t);
-		
-		if (1)
+		// Fix bug https://github.com/rdmpage/oz-afd-export/issues/1
+		if ($result->fields['taxon_guid_ala'] != '')
 		{
-			echo $t . "\n";
+			$taxon = '<https://bie.ala.org.au/species/urn:lsid:biodiversity.org.au:afd.taxon:' . $result->fields['taxon_guid_ala'] . '>';
 		}
 		else
 		{
-	
-			$doc = jsonld_from_rdf($t, array('format' => 'application/nquads'));
-	
-			$context = (object)array(
-				'@vocab' => 'http://schema.org/',
-				'tcommon' => 'http://rs.tdwg.org/ontology/voc/Common#',
-				'tc' => 'http://rs.tdwg.org/ontology/voc/TaxonConcept#',
-				'tn' => 'http://rs.tdwg.org/ontology/voc/TaxonName#',	
-				'taxrefprop' => 'http://taxref.mnhn.fr/lod/property/',			
-				'dwc' => 'http://rs.tdwg.org/dwc/terms/',
-//				'gbif_ns' => 'http://rs.gbif.org/vocabulary/gbif/nomenclatural_status/',
-//				'gbif_ts' => 'http://rs.gbif.org/vocabulary/gbif/taxonomicStatus/'
-			);
-	
-			$compacted = jsonld_compact($doc, $context);
+			$taxon = '<https://bie.ala.org.au/species/urn:lsid:biodiversity.org.au:afd.taxon:' . $result->fields['TAXON_GUID'] . '>';
+		}
 
-			echo json_encode($compacted, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
-	
-			echo "\n";
+		switch ($result->fields['NAME_TYPE'])
+		{
+			case 'Valid Name':
+				// TDWG LSID links taxon to accepted name 
+				$triples[] = $taxon . ' <http://rs.tdwg.org/ontology/voc/TaxonConcept#hasName> ' . $name . ' . ';						
+				break;
+				
+			default:
+				break;
 		}
 		
+		if (count($triples) > 0)
+		{
+
+							
+			$t = join("\n", $triples) . "\n";
+		
+			//print_r($t);
+		
+			if (1)
+			{
+				echo $t . "\n";
+			}
+			else
+			{
+	
+				$doc = jsonld_from_rdf($t, array('format' => 'application/nquads'));
+	
+				$context = (object)array(
+					'@vocab' => 'http://schema.org/',
+					'tcommon' => 'http://rs.tdwg.org/ontology/voc/Common#',
+					'tc' => 'http://rs.tdwg.org/ontology/voc/TaxonConcept#',
+					'tn' => 'http://rs.tdwg.org/ontology/voc/TaxonName#',	
+					'taxrefprop' => 'http://taxref.mnhn.fr/lod/property/',			
+					'dwc' => 'http://rs.tdwg.org/dwc/terms/',
+	//				'gbif_ns' => 'http://rs.gbif.org/vocabulary/gbif/nomenclatural_status/',
+	//				'gbif_ts' => 'http://rs.gbif.org/vocabulary/gbif/taxonomicStatus/'
+				);
+	
+				$compacted = jsonld_compact($doc, $context);
+
+				echo json_encode($compacted, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
+	
+				echo "\n";
+			}
+		}		
 
 		$result->MoveNext();
 
