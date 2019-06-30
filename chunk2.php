@@ -1,5 +1,8 @@
 <?php
 
+$config['blazegraph-url'] 	= 'http://kg-blazegraph.sloppy.zone';	
+$config['sparql_endpoint']	= $config['blazegraph-url'] . '/blazegraph/sparql'; 
+
 // Break a big triples file into arbitrary sized chunks for easier uplaoding.
 
 $graph_uri = '';
@@ -13,23 +16,23 @@ $triples_filename = 'taxa.nt';
 $basename = 'taxa';
 */
 
-if (0)
+if (1)
 {
 	// Publications
-	$triples_filename = 'biblio.nt';
-	$basename = 'biblio';
+	$triples_filename = 'bibliography.nt';
+	$basename = 'bibliography';
 	$graph_uri = 'https://biodiversity.org.au/afd/publication';
 }
 
 if (0)
 {
 	// Simplified names
-	$triples_filename = 'name-simple.nt';
+	$triples_filename = 'names.nt';
 	$basename = 'names';
 	$graph_uri = 'https://biodiversity.org.au/afd/publication';
 }
 
-if (1)
+if (0)
 {
 	// Name extras
 	$triples_filename = 'hasName.nt';
@@ -85,7 +88,9 @@ foreach ($chunk_files as $filename)
 {
 	$curl .= "echo '$filename'\n";
 	
-	$url = 'http://130.209.46.63/blazegraph/sparql';
+	//$url = 'http://130.209.46.63/blazegraph/sparql';
+	
+	$url = $config['sparql_endpoint'];
 	
 	if ($graph_uri != '')
 	{
