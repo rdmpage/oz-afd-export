@@ -5,7 +5,7 @@ require_once('php-json-ld/jsonld.php');
 
 
 //--------------------------------------------------------------------------------------------------
-$db = NewADOConnection('mysql');
+$db = NewADOConnection('mysqli');
 $db->Connect("localhost", 
 	'root' , '' , 'afd');
 
@@ -27,11 +27,11 @@ $done = false;
 while (!$done)
 {
 //	$sql = 'SELECT * FROM afd WHERE NAME_GUID IS NOT NULL AND PUBLICATION_GUID IS NOT NULL';
-	//$sql = 'SELECT * FROM afd WHERE NAME_GUID IS NOT NULL';
+	$sql = 'SELECT * FROM afd WHERE NAME_GUID IS NOT NULL';
 	
 	//$sql = 'SELECT * FROM afd WHERE PUBLICATION_GUID="dee77aeb-e878-4827-8be0-707a508eddb4"';
 	
-	$sql = 'SELECT * FROM afd WHERE NAME_GUID IS NOT NULL AND PUBLICATION_GUID IS NOT NULL AND taxon_guid_ala IS NOT NULL';
+	//$sql = 'SELECT * FROM afd WHERE NAME_GUID IS NOT NULL AND PUBLICATION_GUID IS NOT NULL AND taxon_guid_ala IS NOT NULL';
 
 	//$sql = 'SELECT * FROM afd WHERE TAXON_GUID="124ab9d1-5ed7-46c3-aecf-76e70a04e209"';
 
@@ -84,7 +84,7 @@ while (!$done)
 		{
 			case 'Valid Name':
 				// TDWG LSID links taxon to accepted name 
-				$triples[] = $taxon . ' <http://rs.tdwg.org/ontology/voc/hasName> ' . $name . ' . ';		
+				$triples[] = $taxon . ' <http://rs.tdwg.org/ontology/voc/TaxonConcept#hasName> ' . $name . ' . ';		
 				
 				// TAXREF 
 				$triples[] = $taxon . ' <http://taxref.mnhn.fr/lod/property/hasReferenceName> ' . $name . ' . ';
