@@ -11,7 +11,7 @@ require_once('php-json-ld/jsonld.php');
 
 
 //--------------------------------------------------------------------------------------------------
-$db = NewADOConnection('mysql');
+$db = NewADOConnection('mysqli');
 $db->Connect("localhost", 
 	'root' , '' , 'afd');
 
@@ -128,6 +128,12 @@ while (!$done)
 	//$sql .= ' WHERE PUBLICATION_GUID = "4201139d-441f-4ef0-86f6-5ec9dcd168a6"';
 	
 	$sql .= ' WHERE zenodo_parts IS NOT NULL';
+	
+	//$sql .= ' AND PUBLICATION_GUID="33cf35fc-047e-4c43-ad14-7f69287417c5"';
+	
+	//$sql .= ' AND zenodo=577150';
+	
+	$sql .= ' ORDER BY zenodo';
 	
 	$sql .= ' LIMIT ' . $page . ' OFFSET ' . $offset;
 
