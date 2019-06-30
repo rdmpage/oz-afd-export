@@ -206,7 +206,13 @@ while (!$done)
 	FROM bibliography';
 	
 	// A specific journal or publication, otherwise we are getting everything
-	//$sql .= ' WHERE PUBLICATION_GUID = "1177fe8d-d8cb-45b8-a40c-704cb3564fd7"';
+	//$sql .= ' WHERE PUBLICATION_GUID = "bd037a86-690c-46ea-b7d8-24fc52f6971e"';
+	
+	
+	$sql .= ' WHERE biostor IN (68348, 59978, 5734, 59963)';
+	
+	//$sql .= ' WHERE PUBLICATION_GUID = "bd037a86-690c-46ea-b7d8-24fc52f6971e"';
+	
 	
 	//$sql .= ' WHERE PUBLICATION_GUID = "a8447363-5982-472b-b54a-f40476f50f5b"';
 	
@@ -293,7 +299,7 @@ while (!$done)
 	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="Nachrichten des Entomologischen Vereins Apollo (N.F.)"';
 	
 	//$sql .= ' AND volume >= 120';
-	$sql .= ' WHERE PUBLICATION_GUID = "d90530a0-abf9-4de0-8e38-eba4c5adc162"'; 
+	//$sql .= ' WHERE PUBLICATION_GUID = "d90530a0-abf9-4de0-8e38-eba4c5adc162"'; 
 	//$sql .= ' WHERE PUBLICATION_GUID IN ("2d0fa005-9431-4e1f-bdb6-b7e697b3e847")';
 	
 	

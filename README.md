@@ -153,5 +153,10 @@ Use named graph:
 curl http://130.209.46.63/blazegraph/sparql?context-uri=https://zenodo.org -H 'Content-Type: text/rdf+n3' --data-binary '@junk/z.nt'  --progress-bar | tee /dev/null
 ```
 
+```
+curl http://kg-blazegraph.sloppy.zone/blazegraph/sparql?context-uri=https://zenodo.org -H 'Content-Type: text/rdf+n3' --data-binary '@z.nt'  --progress-bar | tee /dev/null
+```
+
+
 
 
