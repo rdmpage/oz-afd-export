@@ -93,11 +93,16 @@ function parse_authors($authorstring)
 			
 			$a->type = 'Person';
 			
-			$a->name 		= $parts[1] . ' ' . $parts[0];
 			$a->givenName 	= $parts[1];
 			$a->familyName 	= $parts[0];
 			
 			//print_r($a);
+			
+			$a->givenName = preg_replace('/\.\s*/u', ' ', $a->givenName);
+			$a->givenName = preg_replace('/\s+$/u', '', $a->givenName);
+			
+			$a->name 		= $a->givenName . ' ' . $a->familyName;
+			
 			
 			$a->id = name_to_id($a->name);
 			
@@ -121,15 +126,27 @@ function parse_authors($authorstring)
 					$a->givenName 	= $m['givenName'];
 					$a->familyName 	= $m['familyName'];
 					
+					$a->givenName = preg_replace('/\.\s*/u', ' ', $a->givenName);
+					
+					$a->name 		= $a->givenName . ' ' . $a->familyName;
+					
 					$a->id = name_to_id($a->name);
 					
+					
+										
 					$matched = true;
 
 				}
 			}
+			
+			if ($matched)
+			{
+				$parsed_authors[] = $a;
+			}
 						
 		}	
 	}
+	
 	
 	
 	return $parsed_authors;
