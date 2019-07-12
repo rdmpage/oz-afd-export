@@ -98,12 +98,12 @@ function parse_authors($authorstring)
 			
 			//print_r($a);
 			
+			$a->givenName = preg_replace('/\.-/u', '-', $a->givenName);
 			$a->givenName = preg_replace('/\.\s*/u', ' ', $a->givenName);
 			$a->givenName = preg_replace('/\s+$/u', '', $a->givenName);
 			
 			$a->name 		= $a->givenName . ' ' . $a->familyName;
-			
-			
+						
 			$a->id = name_to_id($a->name);
 			
 			$parsed_authors[] = $a;
@@ -126,6 +126,7 @@ function parse_authors($authorstring)
 					$a->givenName 	= $m['givenName'];
 					$a->familyName 	= $m['familyName'];
 					
+					$a->givenName = preg_replace('/\.-/u', '-', $a->givenName);					
 					$a->givenName = preg_replace('/\.\s*/u', ' ', $a->givenName);
 					
 					$a->name 		= $a->givenName . ' ' . $a->familyName;
@@ -164,6 +165,11 @@ if (0)
 	'Evans, H.E. & Matthews, R.W.',
 	'Polhemus, J.T. & Polhemus, D.A.',
 	'Lambkin, C.L. in Lambkin, C.L. & Bartlett, J.S.'
+	);
+	
+	// epic fail!?!
+	$tests = array(
+	'Kim, B.-J. & Nakaya, K.'
 	);
 	
 	foreach ($tests as $authorstring)
