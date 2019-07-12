@@ -206,10 +206,13 @@ while (!$done)
 	FROM bibliography';
 	
 	// A specific journal or publication, otherwise we are getting everything
-	//$sql .= ' WHERE PUBLICATION_GUID = "bd037a86-690c-46ea-b7d8-24fc52f6971e"';
+	//$sql .= ' WHERE PUBLICATION_GUID = "0b7f5409-c5aa-40c0-ba3f-bf007b3021de"';	
+	//$sql .= ' WHERE PUB_PARENT_JOURNAL_TITLE="International Journal of Myriapodology"';
 	
+	// Updated after a given time
+	//$sql .= ' AND updated > "2019-07-11"';	
 	
-	$sql .= ' WHERE biostor IN (68348, 59978, 5734, 59963)';
+	//$sql .= ' WHERE biostor IN (68348, 59978, 5734, 59963)';
 	
 	//$sql .= ' WHERE PUBLICATION_GUID = "bd037a86-690c-46ea-b7d8-24fc52f6971e"';
 	
@@ -512,7 +515,7 @@ while (!$done)
 				default:
 					if ($result->fields['volume'] != '')
 					{
-						$triples[] = $s . ' <http://schema.org/volume> ' . '"' . addcslashes($result->fields['volume'], '"') . '" .';
+						$triples[] = $s . ' <http://schema.org/volumeNumber> ' . '"' . addcslashes($result->fields['volume'], '"') . '" .';
 					}
 					if ($result->fields['issue'] != '')
 					{
@@ -550,10 +553,9 @@ while (!$done)
 						$triples[] = $s . ' <http://schema.org/identifier> ' . $identifier_id . '.';			
 						$triples[] = $identifier_id . ' <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://schema.org/PropertyValue> .';
 						$triples[] = $identifier_id . ' <http://schema.org/propertyID> ' . '"doi"' . '.';
-						$triples[] = $identifier_id . ' <http://schema.org/value> ' . '"' . addcslashes($result->fields['doi'], '"') . '"' . '.';
+						$triples[] = $identifier_id . ' <http://schema.org/value> ' . '"' . addcslashes(strtolower($result->fields['doi']), '"') . '"' . '.';
 			
-						//$triples[] = $s . ' <http://schema.org/sameAs> ' . '<https://doi.org/' . $result->fields['doi'] . '> ' . '. ';
-						$triples[] = $s . ' <http://schema.org/sameAs> ' . '"https://doi.org/' . $result->fields['doi'] . '" ' . '. ';
+						$triples[] = $s . ' <http://schema.org/sameAs> ' . '"https://doi.org/' . strtolower($result->fields['doi']) . '" ' . '. ';
 					}
 					
 					break;
@@ -631,10 +633,9 @@ while (!$done)
 						$triples[] = $s . ' <http://schema.org/identifier> ' . $identifier_id . '.';			
 						$triples[] = $identifier_id . ' <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://schema.org/PropertyValue> .';
 						$triples[] = $identifier_id . ' <http://schema.org/propertyID> ' . '"doi"' . '.';
-						$triples[] = $identifier_id . ' <http://schema.org/value> ' . '"' . addcslashes($result->fields['doi'], '"') . '"' . '.';
+						$triples[] = $identifier_id . ' <http://schema.org/value> ' . '"' . addcslashes(strtolower($result->fields['doi']), '"') . '"' . '.';
 			
-						//$triples[] = $s . ' <http://schema.org/sameAs> ' . '<https://doi.org/' . $result->fields['doi'] . '> ' . '. ';
-						$triples[] = $s . ' <http://schema.org/sameAs> ' . '"https://doi.org/' . $result->fields['doi'] . '" ' . '. ';
+						$triples[] = $s . ' <http://schema.org/sameAs> ' . '"https://doi.org/' . strtolower($result->fields['doi']) . '" ' . '. ';
 					}
 			
 					// Handle
@@ -795,13 +796,13 @@ while (!$done)
 						$triples[] = $s . ' <http://schema.org/identifier> ' . $identifier_id . '.';			
 						$triples[] = $identifier_id . ' <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://schema.org/PropertyValue> .';
 						$triples[] = $identifier_id . ' <http://schema.org/propertyID> ' . '"zoobank"' . '.';
-						$triples[] = $identifier_id . ' <http://schema.org/value> ' . '"urn:lsid:zoobank.org:pub:' . $result->fields['zoobank'] . '"' . '.';
+						$triples[] = $identifier_id . ' <http://schema.org/value> ' . '"urn:lsid:zoobank.org:pub:' . strtoupper($result->fields['zoobank']) . '"' . '.';
 						
-						// uuid
-						$triples[] = $s . ' <http://schema.org/identifier> "' . $result->fields['zoobank'] . '" .';	
+						// uuid ()
+						$triples[] = $s . ' <http://schema.org/identifier> "' . strtolower($result->fields['zoobank']) . '" .';	
 				
 						// sameAs link?
-						$triples[] = $s . ' <http://schema.org/sameAs> "http://zoobank.org/References/' . $result->fields['zoobank'] . '" .';				
+						$triples[] = $s . ' <http://schema.org/sameAs> "http://zoobank.org/References/' . strtoupper($result->fields['zoobank']) . '" .';				
 					}	
 					
 					break;
